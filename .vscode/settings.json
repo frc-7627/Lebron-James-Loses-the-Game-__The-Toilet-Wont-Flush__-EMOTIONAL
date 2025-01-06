@@ -1,0 +1,4 @@
+{
+    "wpilib.autoSaveOnDeploy": true,
+    "wpilib.autoStartRioLog": true
+}
