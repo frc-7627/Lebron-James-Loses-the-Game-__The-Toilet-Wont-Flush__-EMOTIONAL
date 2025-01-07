@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.153809931506849,
+        "y": 2.8830479452054796
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.3273972602739725,
+        "y": 2.086686643835617
+      },
+      "isLocked": false,
+      "linkedName": "ReefBottomRight"
+    },
+    {
+      "anchor": {
+        "x": 1.1569777397260272,
+        "y": 1.0348886986301375
+      },
+      "prevControl": {
+        "x": 2.0302069061712915,
+        "y": 1.4605809895266353
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "BottomStation"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -125.53767779197433
+  },
+  "reversed": false,
+  "folder": "Forbiden Brake Fluid",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 119.31000707091616
+  },
+  "useDefaultConstraints": true
+}
