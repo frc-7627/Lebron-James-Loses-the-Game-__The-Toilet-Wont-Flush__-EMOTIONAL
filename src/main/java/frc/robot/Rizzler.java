@@ -7,7 +7,6 @@ package frc.robot;
      * to the console at startup
      * 
      * @see System.out.println
-     * 
      */
 public class Rizzler {
 
