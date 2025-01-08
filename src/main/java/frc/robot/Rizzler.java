@@ -1,5 +1,13 @@
 package frc.robot;
 
+
+   /**
+     * A simple startup Banner to run when the code starts
+     * Additionally runs checks and presents warnings
+     * to the console at startup
+     * 
+     * @see System.out.println
+     */
 public class Rizzler {
 
     public static void rizz() {
@@ -10,14 +18,28 @@ public class Rizzler {
                                 " |___| |_|\\___/|___/\\__|  \\__|_| |_|\\___|  \\__, |\\__,_|_| |_| |_|\\___|\r\n" + //
                                 "                                           |___/                      ");
         
-                                griddyemail();
+        griddyemail();
         check_skibbidi();
     }
 
+    /**
+     * Hits the griddy on the ops
+     * 
+     * @version 1.0
+     */
     public static void griddyemail() {
         System.out.println("\n hitting the griddy on the ops since 7627\n");
     }
 
+    /**
+     * Checks if coach controller is enabled in constants or not
+     * Prints a warning message if it is
+     * 
+     * @see Constants.skiibi_mode
+     * @return boolean - whether coach controller is enabled or not
+     * 
+     * @version 1.0
+     */
     public static boolean check_skibbidi() {
         if(Constants.skibbidi_mode) {
             System.out.println("Coach controller enabled!\r\n" + //

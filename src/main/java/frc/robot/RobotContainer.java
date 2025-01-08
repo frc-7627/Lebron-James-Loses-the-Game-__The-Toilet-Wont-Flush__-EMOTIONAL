@@ -125,6 +125,10 @@ public class RobotContainer
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
+   * @see edu.wpi.first.wpilibj2.command.Commands
+   * @see com.pathplanner.lib.auto.AutoBuilder;
+   * 
+   * @version 1.1
    */
   public RobotContainer()
   {
@@ -147,6 +151,9 @@ public class RobotContainer
    * named factories in {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
    * {@link CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4}
    * controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight joysticks}.
+   * 
+   * @return void
+   * @version 1.0
    */
   private void configureBindings()
   {
@@ -191,6 +198,7 @@ public class RobotContainer
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
+   * @version 1.1
    */
   public Command getAutonomousCommand()
   {
@@ -198,11 +206,25 @@ public class RobotContainer
     return autoChooser.getSelected();
   }
 
+  /**
+   * Run when robot is ready to drive
+   *
+   * @return void
+   * @version 1.1
+   */
   public void setDriveMode()
   {
     configureBindings();
   }
 
+  /**
+   * Sets all motors in the drivebase to brake mode or coast mode
+   * @see frc.robot.subsystems.swervedrive.SwerveSubsystem.setMotorBrake
+   * 
+   * @param boolean turn brake mode on or off
+   * @return void
+   * @version 1.0
+   */
   public void setMotorBrake(boolean brake)
   {
     drivebase.setMotorBrake(brake);

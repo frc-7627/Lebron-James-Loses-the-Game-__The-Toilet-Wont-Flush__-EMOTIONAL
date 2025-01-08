@@ -23,6 +23,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * The VM is configured to automatically run this class, and to call the functions corresponding to each mode, as
  * described in the TimedRobot documentation. If you change the name of this class or the package after creating this
  * project, you must also update the build.gradle file in the project.
+ * 
+ * @see org.littletonrobotics.junction.LoggedRobot
  */
 public class Robot extends LoggedRobot
 {
@@ -41,11 +43,25 @@ public class Robot extends LoggedRobot
    LoggerSetup();
   }
 
+  /**
+   * Returns the objects instance
+   * @return frc.robot.Robot
+   * 
+   * @version 1.0
+   */
   public static Robot getInstance()
   {
     return instance;
   }
 
+
+  /**
+   * Sets up the advatagekit logger
+   * @see org.littletonrobotics.junction.Logger
+   * @return void
+   * 
+   * @version 1.1
+   */
   public void LoggerSetup() {
     Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
 

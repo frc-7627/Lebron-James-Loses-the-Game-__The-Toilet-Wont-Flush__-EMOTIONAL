@@ -6,11 +6,18 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
 
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import frc.robot.Constants.OperatorConstants;
-
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
+
+/**
+ * Rotates the drivebase {@link frc.robot.subsystems.swervedrive.SwerveSubsystem}
+ * to face the direction of an apriltag or detected object
+ * given its position relative to the camera on Networktables 
+ * {@link edu.wpi.first.networktables.NetworkTable}
+ * 
+ * @see edu.wpi.first.wpilibj2.command.Command;
+ * @version 1.0
+ */
 public class DriveBaseRotationAdjust extends Command {
     private SwerveSubsystem drivebase;
 
@@ -32,7 +39,13 @@ public class DriveBaseRotationAdjust extends Command {
         //SmartDashboard.putNumber("Limelight/ArmAdjust/Mutiplyer", OperatorConstants.IntakeNoteAmps);
     }
 
-    /** Updates Motor Speeds and limits from shuffleboard */
+    /** Updates Motor Speeds and limits from shuffleboard 
+     * 
+     * @see TODO:
+     * 
+     * @return void
+     * @version 1.0
+    */
     public static void updateConstants() {
         //OperatorConstants.IntakeNoteAmps = SmartDashboard.getNumber("Intake/IntakeNote/Intake Note Amp Limit", OperatorConstants.IntakeNoteAmps);
 
