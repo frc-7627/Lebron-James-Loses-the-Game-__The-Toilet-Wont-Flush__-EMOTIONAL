@@ -460,7 +460,7 @@ def main():
           # This displays the frame as a new window, I was having trouble getting this to work on Windows
           #cv2.imshow("Frame", frame)
      
-          vision_nt.putNumber('NoteDetect/note_found', notefound)
+          vision_nt.putNumber('NoteDetect/note _found', notefound)
           vision_nt.putNumber('NoteDetect/target_x', cX)
           vision_nt.putNumber('NoteDetect/target_y', cY)
           vision_nt.putNumber('AprilDetect/apriltag_found', tagfound) 
