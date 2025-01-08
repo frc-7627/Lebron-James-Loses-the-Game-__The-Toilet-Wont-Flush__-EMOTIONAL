@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.831549657534247,
-        "y": 2.8830479452054796
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 1.8667800960111436,
-        "y": 2.654618234845365
-      },
-      "isLocked": false,
-      "linkedName": "ReefBottomLeft"
-    },
-    {
-      "anchor": {
         "x": 1.1569777397260272,
         "y": 1.0348886986301375
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.794777397260274,
+        "y": 1.9965325342465758
+      },
+      "isLocked": false,
+      "linkedName": "BottomStation"
+    },
+    {
+      "anchor": {
+        "x": 3.1704195205479455,
+        "y": 4.009974315068493
+      },
       "prevControl": {
-        "x": 2.5893442622950817,
-        "y": 1.8971823770491798
+        "x": 2.604449478139683,
+        "y": 3.09556095007901
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BottomStation"
+      "linkedName": "ReefLeft"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -126.16340886759153
+    "rotation": -179.46949868332624
   },
   "reversed": false,
   "folder": "Cha Cha Slide",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 59.386168736073905
+    "rotation": -126.38435181583584
   },
   "useDefaultConstraints": true
 }
