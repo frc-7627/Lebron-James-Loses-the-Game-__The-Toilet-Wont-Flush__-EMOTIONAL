@@ -45,7 +45,7 @@
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": "5 Day Weather Forecast",
+  "folder": "3 Day Weather Forecast",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 126.25383773744474
