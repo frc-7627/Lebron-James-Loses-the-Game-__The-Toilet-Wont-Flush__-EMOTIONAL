@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.334153026410842,
-        "y": 6.697254931991315
+        "x": 6.322119153779577,
+        "y": 6.677934944635775
       },
       "isLocked": false,
       "linkedName": "TopStart"
@@ -20,8 +20,8 @@
         "y": 5.136900684931507
       },
       "prevControl": {
-        "x": 5.780666077597679,
-        "y": 5.945031517196396
+        "x": 5.768465063322279,
+        "y": 5.944123705978452
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -120.96375653207346
+    "rotation": 59.98163257239095
   },
   "reversed": false,
   "folder": "2015 Kia class action lawsuit",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.7345210342548072
   },
   "useDefaultConstraints": false
 }
