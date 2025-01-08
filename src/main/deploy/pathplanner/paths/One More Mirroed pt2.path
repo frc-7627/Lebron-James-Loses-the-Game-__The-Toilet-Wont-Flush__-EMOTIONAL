@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.1569777397260272,
+        "y": 1.0348886986301375
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.727163949302474,
+        "y": 1.8991136077244302
+      },
+      "isLocked": false,
+      "linkedName": "BottomStation"
+    },
+    {
+      "anchor": {
+        "x": 3.16875,
+        "y": 4.015249999999999
+      },
+      "prevControl": {
+        "x": 2.9488733991467475,
+        "y": 3.89627823697524
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "Cha Cha Slide",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 54.111585467710526
+  },
+  "useDefaultConstraints": true
+}
