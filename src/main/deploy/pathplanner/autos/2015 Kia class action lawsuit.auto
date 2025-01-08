@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TopStart - ReefTopRight"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ReefTopRight - TopStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TopStation - ReefTopLeft"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
