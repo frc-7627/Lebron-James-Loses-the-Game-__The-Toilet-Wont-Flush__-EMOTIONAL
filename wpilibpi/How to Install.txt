@@ -1,4 +1,6 @@
-How to calibrate code (do for each change in lighting):
+How to calibrate code (do for each change in lighting) [OLD]:
+    !!! wont work on a normal computer unless wpilib python libraries are installed !!!
+
     Take robot on field (Keep robot off)
     Connect the robots usb camera to computer
     
@@ -9,6 +11,16 @@ How to calibrate code (do for each change in lighting):
 
     Edit all values until coral is properly detected
     Take each value and replace the existing value in the constants of main.py
+
+How to calibrate code (do for each change in lighting) [NEW]:
+    Take robot on field (Keep robot off)
+    Connect the robots usb camera to computer
+
+    Run testing.py
+    Place coral in front of robot
+
+    Edit all constants inside of testing.py until coral is properly detected
+    Stoping and restarting testing.py on each change
 
 
 How to install code:
