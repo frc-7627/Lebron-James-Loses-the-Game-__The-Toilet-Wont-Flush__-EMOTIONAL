@@ -20,7 +20,7 @@ How to calibrate code (do for each change in lighting) [NEW]:
     Place coral in front of robot
 
     Edit all constants inside of testing.py until coral is properly detected
-    Stoping and restarting testing.py on each change
+    Stopping and restarting testing.py on each change
 
 
 How to install code:
