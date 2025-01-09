@@ -29,7 +29,7 @@ D = [0, 0, 0.0, 0.0, 0] # Assuming no distortion
 lower_grey = np.array([200, 200, 200])
 upper_grey = np.array([255, 255, 255]) 
 # The minimum contour area to detect a note
-#MINIMUM_CONTOUR_AREA = 300
+min_contour_area = 5000
 # END OF VALUES THAT NEED TUNING
 
 # The threshold for a contour to be considered a disk
@@ -409,8 +409,20 @@ def main():
           contours,hierarchy = cv2.findContours(mask, 1, 2)
           print("Number of contours detected:", len(contours))
 
-          largest_contour = max(contours, key=cv2.contourArea)
-          img = cv2.drawContours(output_img, largest_contour, -1, (0,255,0), 3)
+         
+          # Loop through contours
+          for contour in contours:
+             # Approximate the contour with a polygon
+             epsilon = 0.04 * cv2.arcLength(contour, True)
+             approx = cv2.approxPolyDP(contour, epsilon, True)
+     
+             # Check if the polygon has 4 sides (rectangle)
+             if len(approx) == 4 and cv2.contourArea(contour) >= min_contour_area:
+                 # Draw the rectangle on the original image
+                 cv2.drawContours(img, [approx], 0, (0, 255, 0), 2)
+     
+         #largest_contour = max(contours, key=cv2.contourArea)
+         #img = cv2.drawContours(img, largest_contour, -1, (0,255,0), 3)
 
           # This displays the frame as a new window, I was having trouble getting this to work on Windows
           #cv2.imshow("Frame", frame)
