@@ -354,7 +354,7 @@ def main():
           distance = 0
 
           # Reset Detected Note information
-          notefound = 0
+          coralfound = 0
           cX = 0
           cY = 0
 
@@ -407,8 +407,7 @@ def main():
           # ret, thresh = cv2.threshold(gray, 100, 255, cv2.THRESH_BINARY)
           # thresh = np.invert(thresh) # Invert colors
           contours,hierarchy = cv2.findContours(mask, 1, 2)
-          print("Number of contours detected:", len(contours))
-
+          #print("Number of contours detected:", len(contours))    
          
           # Loop through contours
           for contour in contours:
@@ -418,8 +417,18 @@ def main():
      
              # Check if the polygon has 4 sides (rectangle)
              if len(approx) == 4 and cv2.contourArea(contour) >= min_contour_area:
+                 coralfound = true
+                  
                  # Draw the rectangle on the original image
                  cv2.drawContours(img, [approx], 0, (0, 255, 0), 2)
+
+                 # compute the center of the contour
+                 M = cv2.moments(contour)
+                 cX = int(M["m10"] / M["m00"])
+                 cY = int(M["m01"] / M["m00"])
+                
+                # print the detected note's center to console
+                print("Coral Detected: Center X: " + str(cX) + " Y: " + str(cY))
      
          #largest_contour = max(contours, key=cv2.contourArea)
          #img = cv2.drawContours(img, largest_contour, -1, (0,255,0), 3)
@@ -427,7 +436,7 @@ def main():
           # This displays the frame as a new window, I was having trouble getting this to work on Windows
           #cv2.imshow("Frame", frame)
      
-          vision_nt.putNumber('NoteDetect/note _found', notefound)
+          vision_nt.putNumber('NoteDetect/note _found', coralfound)
           vision_nt.putNumber('NoteDetect/target_x', cX)
           vision_nt.putNumber('NoteDetect/target_y', cY)
           vision_nt.putNumber('AprilDetect/apriltag_found', tagfound) 
