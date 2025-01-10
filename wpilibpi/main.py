@@ -25,15 +25,15 @@ D = [0, 0, 0.0, 0.0, 0] # Assuming no distortion
 
 
 # WE NEED TO TUNE THESE VALUES
-# Define lower and upper bounds for orange color in HSV
-LOWER_ORANGE_HSV = np.array([0, 15, 223])
-UPPER_ORANGE_HSV = np.array([179, 255, 255])
+# Define lower and upper bounds for white color in HSV
+lower_grey = np.array([200, 200, 200])
+upper_grey = np.array([255, 255, 255]) 
 # The minimum contour area to detect a note
-MINIMUM_CONTOUR_AREA = 300
+min_contour_area = 5000
 # END OF VALUES THAT NEED TUNING
 
 # The threshold for a contour to be considered a disk
-CONTOUR_DISK_THRESHOLD = 0.9
+#CONTOUR_DISK_THRESHOLD = 0.9
 #!/usr/bin/env python3
 
 # Copyright (c) FIRST and other WPILib contributors.
@@ -270,42 +270,6 @@ def plotText(image, center, color, text):
     return cv2.putText(image, str(text), center, cv2.FONT_HERSHEY_SIMPLEX,
                        1, color, 3)
 
-
-# ### Contour Stuff ###
-def find_largest_orange_contour(hsv_image: np.ndarray) -> np.ndarray:
-    """
-    Finds the largest orange contour in an HSV image
-    :param hsv_image: the image to find the contour in
-    :return: the largest orange contour
-    """
-    # Threshold the HSV image to get only orange colors
-    mask = cv2.inRange(hsv_image, LOWER_ORANGE_HSV, UPPER_ORANGE_HSV)
-    # Find contours in the mask
-    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-    if contours:
-        return max(contours, key=cv2.contourArea)
-
-
-def contour_is_note(contour: np.ndarray) -> bool:
-    """
-    Checks if the contour is shaped like a note
-    :param contour: the contour to check
-    :return: True if the contour is shaped like a note
-    """
-    # Makes sure the contour isn't some random small spec of noise
-    if cv2.contourArea(contour) < MINIMUM_CONTOUR_AREA:
-        return False
-
-    # Gets the smallest convex polygon that can fit around the contour
-    contour_hull = cv2.convexHull(contour)
-    # Fits an ellipse to the hull, and gets its area
-    ellipse = cv2.fitEllipse(contour_hull)
-    best_fit_ellipse_area = np.pi * (ellipse[1][0] / 2) * (ellipse[1][1] / 2)
-    # Returns True if the hull is almost as big as the ellipse
-    return cv2.contourArea(contour_hull) / best_fit_ellipse_area > CONTOUR_DISK_THRESHOLD
-
-
 def main():
     if len(sys.argv) >= 2:
         configFile = sys.argv[1]
@@ -390,7 +354,7 @@ def main():
           distance = 0
 
           # Reset Detected Note information
-          notefound = 0
+          coralfound = 0
           cX = 0
           cY = 0
 
@@ -438,29 +402,41 @@ def main():
                         output_img = plotPoint(output_img, corner, CORNER_COLOR)
 
           # Find Contour
-          if contour is not None and contour_is_note(contour):
-                notefound = 1
-                cv2.ellipse(output_img, cv2.fitEllipse(contour), (255, 0, 255), 2)
+          gray = cv2.cvtColor(output_img, cv2.COLOR_BGR2GRAY)
+          mask = cv2.inRange(output_img, lower_grey, upper_grey)
+          # ret, thresh = cv2.threshold(gray, 100, 255, cv2.THRESH_BINARY)
+          # thresh = np.invert(thresh) # Invert colors
+          contours,hierarchy = cv2.findContours(mask, 1, 2)
+          #print("Number of contours detected:", len(contours))    
+         
+          # Loop through contours
+          for contour in contours:
+             # Approximate the contour with a polygon
+             epsilon = 0.04 * cv2.arcLength(contour, True)
+             approx = cv2.approxPolyDP(contour, epsilon, True)
+     
+             # Check if the polygon has 4 sides (rectangle)
+             if len(approx) == 4 and cv2.contourArea(contour) >= min_contour_area:
+                 coralfound = true
+                  
+                 # Draw the rectangle on the original image
+                 cv2.drawContours(img, [approx], 0, (0, 255, 0), 2)
 
-                # compute the center of the contour
-                M = cv2.moments(contour)
-                cX = int(M["m10"] / M["m00"])
-                cY = int(M["m01"] / M["m00"])
-                # draw the contour and center of the shape on the image
-                #cv2.drawContours(frame, [contour], -1, (0, 255, 0), 2)
+                 # compute the center of the contour
+                 M = cv2.moments(contour)
+                 cX = int(M["m10"] / M["m00"])
+                 cY = int(M["m01"] / M["m00"])
                 
                 # print the detected note's center to console
-                print("Note Detected?: " + str(notefound) + ", Center X: " + str(cX) + " Y: " + str(cY))
-
-    
-          cv2.circle(output_img, (cX, cY), 7, (255, 255, 255), -1)
-          #cv2.putText(output_img, "center", (cX - 20, cY - 20),
-          #cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+                print("Coral Detected: Center X: " + str(cX) + " Y: " + str(cY))
+     
+         #largest_contour = max(contours, key=cv2.contourArea)
+         #img = cv2.drawContours(img, largest_contour, -1, (0,255,0), 3)
 
           # This displays the frame as a new window, I was having trouble getting this to work on Windows
           #cv2.imshow("Frame", frame)
      
-          vision_nt.putNumber('NoteDetect/note _found', notefound)
+          vision_nt.putNumber('NoteDetect/note _found', coralfound)
           vision_nt.putNumber('NoteDetect/target_x', cX)
           vision_nt.putNumber('NoteDetect/target_y', cY)
           vision_nt.putNumber('AprilDetect/apriltag_found', tagfound) 
