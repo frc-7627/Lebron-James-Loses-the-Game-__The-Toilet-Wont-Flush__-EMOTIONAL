@@ -20,9 +20,15 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Helpers.CaprisonCommands;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
+import frc.robot.commands.vision.DoritoCommands;
+import frc.robot.subsystems.LimeLight;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
+
+import org.photonvision.PhotonCamera;
+
 import swervelib.SwerveInputStream;
 
 /**
@@ -39,10 +45,18 @@ public class RobotContainer
   final         CommandXboxController operatorXbox = new CommandXboxController(1);
   final         CommandXboxController coachXbox = new CommandXboxController(2);
 
+  
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve/neo"));
+  private final CaprisonCommands visionCommands = new CaprisonCommands();
 
+
+
+
+
+   private final LimeLight Limelight = new LimeLight();
+  private final PhotonCamera apriltagCam = new PhotonCamera("");
   // Create pathplanner auto chooser                                                                              
   private final SendableChooser<Command> autoChooser;
 
@@ -190,6 +204,9 @@ public class RobotContainer
       driverXbox.back().whileTrue(Commands.none());
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       driverXbox.rightBumper().onTrue(Commands.none());
+      driverXbox.leftStick().whileTrue(visionCommands.AdjustDriveBase(drivebase));
+
+      
     }
 
   }
