@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.1569777397260272,
+        "y": 7.0151113013698625
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.296618852459016,
+        "y": 7.783145491803278
+      },
+      "isLocked": false,
+      "linkedName": "TopStation"
+    },
+    {
+      "anchor": {
+        "x": 5.814036885245901,
+        "y": 4.00701844262295
+      },
+      "prevControl": {
+        "x": 6.437397540983607,
+        "y": 5.157838114754097
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "ReefRight"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 2.5448043798130997
+  },
+  "reversed": false,
+  "folder": "MFNC 3 piece fish combo",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 129.85287482187508
+  },
+  "useDefaultConstraints": true
+}
