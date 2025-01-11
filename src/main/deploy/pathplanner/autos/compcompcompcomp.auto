@@ -1,0 +1,55 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.3337957445145674,
+      "y": 5.515621031242063
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Speaker - Note1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note1 to Speaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SpeakerToNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note1 - Speaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Speaker - Out of Wing Note"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Out of wing note - Amp"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

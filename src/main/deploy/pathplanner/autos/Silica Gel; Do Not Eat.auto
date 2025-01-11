@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.6093327560320605,
+      "y": 7.868459675234891
+    },
+    "rotation": 0.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Do Not Eat 0"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoAmp"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Do Not Eat 1"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

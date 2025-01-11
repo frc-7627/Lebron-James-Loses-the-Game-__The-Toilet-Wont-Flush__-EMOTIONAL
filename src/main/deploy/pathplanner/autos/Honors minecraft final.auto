@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.7867781190107834,
+      "y": 6.75715268691593
+    },
+    "rotation": 90.47362489733025
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Start - Amp"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Amp - Note1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note1 - Speaker"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

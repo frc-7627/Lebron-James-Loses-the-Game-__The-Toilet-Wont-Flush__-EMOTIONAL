@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.483694721825962,
+        "y": 4.813166904422253
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.321646634615385,
+        "y": 4.972007211538461
+      },
+      "isLocked": false,
+      "linkedName": "At home start"
+    },
+    {
+      "anchor": {
+        "x": 4.978972895863052,
+        "y": 5.345335235378031
+      },
+      "prevControl": {
+        "x": 4.308076923076924,
+        "y": 5.3008173076923075
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "At home end 1"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.5,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 3.0,
+    "rotation": -0.4021206641217687,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "At home challenge",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

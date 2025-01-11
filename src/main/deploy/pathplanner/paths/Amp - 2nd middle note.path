@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.520818272405777,
+        "y": 7.6
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.711279576405308,
+        "y": 7.218503026502676
+      },
+      "isLocked": false,
+      "linkedName": "avoid the note moment"
+    },
+    {
+      "anchor": {
+        "x": 8.05,
+        "y": 5.3972177175123575
+      },
+      "prevControl": {
+        "x": 7.5688655293414335,
+        "y": 5.841626172247767
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Mid Note 2"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.15,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AutoIntake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.032281672896424175,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "I'm Gonna Press the E-Stop",
+  "previewStartingState": {
+    "rotation": -90.50759359666976,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

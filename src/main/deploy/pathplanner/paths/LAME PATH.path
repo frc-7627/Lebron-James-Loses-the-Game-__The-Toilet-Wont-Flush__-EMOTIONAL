@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.7426336086361384,
+        "y": 4.450354048988052
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.209832229824261,
+        "y": 1.9090914922952225
+      },
+      "isLocked": false,
+      "linkedName": "Right Speaker"
+    },
+    {
+      "anchor": {
+        "x": 7.647012209801407,
+        "y": 0.8180081840590729
+      },
+      "prevControl": {
+        "x": 4.3012559402380885,
+        "y": 0.8180081840590732
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Lame2"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.65,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AutoIntake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -4.666858371438919,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "LAME",
+  "previewStartingState": {
+    "rotation": 119.88955002118446,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

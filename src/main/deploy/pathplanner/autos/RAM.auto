@@ -1,0 +1,92 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.1613758933330447,
+      "y": 5.52155524239874
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoSpeakerBackwards"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RAMSpeakerToNote"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RAMNoteToSpeaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoSpeakerLaunchBackwards"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RAMSpeakertoNote2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RAMNote2ToSpeaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoSpeakerLaunchBackwards"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RAMSpeaker - Note3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RAMNote3 - Speaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoSpeakerLaunchBackwards"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ArmToStow"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

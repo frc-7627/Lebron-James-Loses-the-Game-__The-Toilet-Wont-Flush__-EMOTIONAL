@@ -1,0 +1,87 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.442332115433463,
+      "y": 7.36073933686329
+    },
+    "rotation": -90.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Start - Amp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoAmp"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Avoid the note"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Amp - Top outside note"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "top outside note - amp"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top outside note - amp (pt2)"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoAmp"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Avoid the note"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Amp - 2nd middle note"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

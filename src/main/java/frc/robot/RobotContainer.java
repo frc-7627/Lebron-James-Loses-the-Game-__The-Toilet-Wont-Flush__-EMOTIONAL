@@ -44,7 +44,7 @@ public class RobotContainer
                                                                                 "swerve/neo"));
 
   // Create pathplanner auto chooser                                                                              
-  private final SendableChooser<Command> autoChooser;
+  //private final SendableChooser<Command> autoChooser;
 
 
   // Applies deadbands and inverts controls because joysticks
@@ -136,13 +136,13 @@ public class RobotContainer
     Rizzler.rizz();
 
     // Build an Pathplanner auto chooser. This will use Commands.none() as the default option.
-    autoChooser = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    //autoChooser = AutoBuilder.buildAutoChooser();
+    //SmartDashboard.putData("Auto Chooser", autoChooser);
 
     // Configure the trigger bindings
     configureBindings();
     DriverStation.silenceJoystickConnectionWarning(true);
-    NamedCommands.registerCommand("test", Commands.print("I EXIST"));
+    //NamedCommands.registerCommand("test", Commands.print("I EXIST"));
   }
 
   /**
@@ -203,7 +203,8 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // Pathplanner selected auto will be run in autonomous
-    return autoChooser.getSelected();
+    //return autoChooser.getSelected();
+    return null;
   }
 
   /**
