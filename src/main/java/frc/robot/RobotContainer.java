@@ -48,7 +48,7 @@ public class RobotContainer
   
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
-                                                                                "swerve/neo"));
+                                                                                "swerve/"));
   private final CaprisonCommands visionCommands = new CaprisonCommands();
 
 
@@ -58,7 +58,7 @@ public class RobotContainer
    private final LimeLight Limelight = new LimeLight();
   private final PhotonCamera apriltagCam = new PhotonCamera("");
   // Create pathplanner auto chooser                                                                              
-  //private final SendableChooser<Command> autoChooser;
+  private final SendableChooser<Command> autoChooser;
 
 
   // Applies deadbands and inverts controls because joysticks
@@ -150,8 +150,8 @@ public class RobotContainer
     Rizzler.rizz();
 
     // Build an Pathplanner auto chooser. This will use Commands.none() as the default option.
-    //autoChooser = AutoBuilder.buildAutoChooser();
-    //SmartDashboard.putData("Auto Chooser", autoChooser);
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
 
     // Configure the trigger bindings
     configureBindings();
@@ -172,11 +172,12 @@ public class RobotContainer
   private void configureBindings()
   {
     // (Condition) ? Return-On-True : Return-on-False
-    drivebase.setDefaultCommand(!RobotBase.isSimulation() ?
-                                driveFieldOrientedDirectAngle :
-                                driveFieldOrientedDirectAngleSim);
+    //drivebase.setDefaultCommand(!RobotBase.isSimulation() ?
+    //                            driveFieldOrientedDirectAngle :
+    //                            driveFieldOrientedDirectAngleSim);
+    drivebase.setDefaultCommand(closedAbsoluteDriveAdv);
 
-    if (Robot.isSimulation())
+   /*  if (Robot.isSimulation())
     {
       driverXbox.start().onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
     }
@@ -205,9 +206,7 @@ public class RobotContainer
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       driverXbox.rightBumper().onTrue(Commands.none());
       driverXbox.leftStick().whileTrue(visionCommands.AdjustDriveBase(drivebase));
-
-      
-    }
+    } */
 
   }
 
@@ -220,8 +219,7 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // Pathplanner selected auto will be run in autonomous
-    //return autoChooser.getSelected();
-    return null;
+    return autoChooser.getSelected();
   }
 
   /**
