@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.168835616438356,
-        "y": 5.136900684931507
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 4.151533774894368,
-        "y": 5.673217811478652
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
         "x": 1.1569777397260272,
         "y": 7.0151113013698625
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.404109589041096,
+        "y": 6.489212328767123
+      },
+      "isLocked": false,
+      "linkedName": "TopStation"
+    },
+    {
+      "anchor": {
+        "x": 3.1704195205479455,
+        "y": 4.009974315068493
+      },
       "prevControl": {
-        "x": 1.9798843171485734,
-        "y": 6.595007354692078
+        "x": 2.9636327890345364,
+        "y": 4.15047074801254
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "TopStation"
+      "linkedName": "ReefLeft"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.8698976458439
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "2015 Kia class action lawsuit",
+  "folder": "3 Day Weather Forecast",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 58.29857033049434
+    "rotation": 126.25383773744474
   },
   "useDefaultConstraints": true
 }

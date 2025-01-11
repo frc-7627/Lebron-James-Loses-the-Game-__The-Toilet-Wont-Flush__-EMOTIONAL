@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.168835616438356,
-        "y": 5.136900684931507
+        "x": 5.814036885245901,
+        "y": 4.00701844262295
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.151533774894368,
-        "y": 5.673217811478652
+        "x": 6.92889344262295,
+        "y": 5.145850409836064
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "ReefRight"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 7.0151113013698625
       },
       "prevControl": {
-        "x": 1.9798843171485734,
-        "y": 6.595007354692078
+        "x": 2.6492827868852458,
+        "y": 7.243698770491803
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.8698976458439
+    "rotation": 127.77096337234296
   },
   "reversed": false,
-  "folder": "2015 Kia class action lawsuit",
+  "folder": "MFNC 3 piece fish combo",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 58.29857033049434
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

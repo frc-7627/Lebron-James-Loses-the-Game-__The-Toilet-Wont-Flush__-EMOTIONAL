@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.168835616438356,
-        "y": 5.136900684931507
+        "x": 7.152226027397259,
+        "y": 7.541010273972603
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.151533774894368,
-        "y": 5.673217811478652
+        "x": 7.825071832692303,
+        "y": 8.022107583745662
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "TopStart"
     },
     {
       "anchor": {
-        "x": 1.1569777397260272,
-        "y": 7.0151113013698625
+        "x": 3.848053278688525,
+        "y": 5.157838114754097
       },
       "prevControl": {
-        "x": 1.9798843171485734,
-        "y": 6.595007354692078
+        "x": 3.6330663991126975,
+        "y": 5.030242497234338
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "TopStation"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.8698976458439
+    "rotation": -61.294047456598996
   },
   "reversed": false,
-  "folder": "2015 Kia class action lawsuit",
+  "folder": "YOU CANT PARK THERE",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 58.29857033049434
+    "velocity": 1.0,
+    "rotation": -179.35902404438195
   },
   "useDefaultConstraints": true
 }

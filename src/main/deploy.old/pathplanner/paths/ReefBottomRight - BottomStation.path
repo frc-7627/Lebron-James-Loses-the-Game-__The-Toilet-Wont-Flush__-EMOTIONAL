@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.3273972602739725,
-        "y": 2.086686643835617
+        "x": 4.2866174965012975,
+        "y": 2.406386430961029
       },
       "isLocked": false,
       "linkedName": "ReefBottomRight"
@@ -20,8 +20,8 @@
         "y": 1.0348886986301375
       },
       "prevControl": {
-        "x": 2.0302069061712915,
-        "y": 1.4605809895266353
+        "x": 2.066196590586116,
+        "y": 1.4612140083952947
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": "Forbiden Brake Fluid",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.31000707091616
+    "rotation": -60.642246457208735
   },
   "useDefaultConstraints": true
 }

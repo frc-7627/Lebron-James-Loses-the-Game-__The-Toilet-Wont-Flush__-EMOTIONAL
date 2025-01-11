@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.168835616438356,
-        "y": 5.136900684931507
+        "x": 1.1569777397260272,
+        "y": 1.0348886986301375
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.151533774894368,
-        "y": 5.673217811478652
+        "x": 2.794777397260274,
+        "y": 1.9965325342465758
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BottomStation"
     },
     {
       "anchor": {
-        "x": 1.1569777397260272,
-        "y": 7.0151113013698625
+        "x": 3.1704195205479455,
+        "y": 4.009974315068493
       },
       "prevControl": {
-        "x": 1.9798843171485734,
-        "y": 6.595007354692078
+        "x": 2.604449478139683,
+        "y": 3.09556095007901
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "TopStation"
+      "linkedName": "ReefLeft"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.8698976458439
+    "rotation": -179.46949868332624
   },
   "reversed": false,
-  "folder": "2015 Kia class action lawsuit",
+  "folder": "Cha Cha Slide",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 58.29857033049434
+    "rotation": -126.38435181583584
   },
   "useDefaultConstraints": true
 }
