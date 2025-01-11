@@ -49,14 +49,14 @@ public class RobotContainer
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve/"));
-  //private final CaprisonCommands visionCommands = new CaprisonCommands();
+  private final CaprisonCommands visionCommands = new CaprisonCommands();
 
 
 
 
 
   //private final LimeLight Limelight = new LimeLight();
-  //private final PhotonCamera apriltagCam = new PhotonCamera("");
+  private final PhotonCamera apriltagCam = new PhotonCamera("");
   // Create pathplanner auto chooser                                                                              
   private final SendableChooser<Command> autoChooser;
 
@@ -176,6 +176,7 @@ public class RobotContainer
     //                            driveFieldOrientedDirectAngle :
     //                            driveFieldOrientedDirectAngleSim);
     drivebase.setDefaultCommand(driveFieldOrientedDirectAngle);
+    driverXbox.a().whileTrue(visionCommands.AdjustDriveBase(drivebase));
 
    /*  if (Robot.isSimulation())
     {
