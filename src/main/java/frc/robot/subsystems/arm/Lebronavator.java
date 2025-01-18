@@ -22,7 +22,7 @@ public class Lebronavator extends SubsystemBase {
     private static double MotionMagicJerk = 1600; // Target jerk of 1600 rps/s/s (0.1 seconds)
 
     // Define Motor IDs
-    final TalonFX m_talonFX = new TalonFX(12);
+    final TalonFX m_talonFX = new TalonFX(40);
 
   
     public Lebronavator() {
@@ -53,6 +53,11 @@ public class Lebronavator extends SubsystemBase {
 
         // set target position
         m_talonFX.setControl(m_request.withPosition(position));
+    }
+
+
+    public double getPosition() {
+        return m_talonFX.getPosition().getValueAsDouble();
     }
 
     public void init_shuffleboard() {
