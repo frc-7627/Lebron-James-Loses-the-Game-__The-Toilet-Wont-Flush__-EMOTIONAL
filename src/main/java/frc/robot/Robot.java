@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.Bluetooth;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -34,7 +34,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class Robot extends LoggedRobot
 {
-
+  private final Bluetooth bluetooth = new Bluetooth();
   private static Robot   instance;
   private        Command m_autonomousCommand;
 
@@ -91,6 +91,7 @@ public class Robot extends LoggedRobot
   @Override
   public void robotInit()
   {
+    bluetooth.orange();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
