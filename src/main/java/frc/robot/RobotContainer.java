@@ -157,6 +157,8 @@ public class RobotContainer
     configureBindings();
     DriverStation.silenceJoystickConnectionWarning(true);
     //NamedCommands.registerCommand("test", Commands.print("I EXIST"));
+    //TODO: bob
+    allianceGryoReset();
   }
 
   /**
@@ -209,6 +211,10 @@ public class RobotContainer
       driverXbox.leftStick().whileTrue(visionCommands.AdjustDriveBase(drivebase));
     } */
 
+  }
+
+  public void allianceGryoReset(){
+    drivebase.zeroGyroWithAlliance();
   }
 
   /**
