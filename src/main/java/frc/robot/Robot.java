@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
@@ -28,7 +30,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends LoggedRobot
 {
-
+  //TODO: make sure the null isnt an issue
+  private final SwerveSubsystem  swerveDrive = new SwerveSubsystem(null);
   private static Robot   instance;
   private        Command m_autonomousCommand;
 
@@ -92,6 +95,7 @@ public class Robot extends LoggedRobot
     // Create a timer to disable motor brake a few seconds after disable.  This will let the robot stop
     // immediately when disabled, but then also let it be pushed more 
     disabledTimer = new Timer();
+    swerveDrive.zeroGyroWithAlliance();
 
     if (isSimulation())
     {
