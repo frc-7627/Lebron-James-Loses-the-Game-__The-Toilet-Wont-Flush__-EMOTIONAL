@@ -50,6 +50,7 @@ public class CaprisonCommands {
      * @return
      */
     public Command AdjustDriveBase(SwerveSubsystem drivebase) {
+        System.out.println("Adjusting drivebase");
         return new DriveBaseRotationAdjust(drivebase);
     }
 }

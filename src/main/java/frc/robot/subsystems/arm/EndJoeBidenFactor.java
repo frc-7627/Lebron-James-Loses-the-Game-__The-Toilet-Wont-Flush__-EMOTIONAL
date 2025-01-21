@@ -16,7 +16,7 @@ public class EndJoeBidenFactor extends SubsystemBase {
     private static double LoadSpeed = 0.5;
     private static double EjectSpeed = 0.5;
 
-    private static double CoralInValue = 10;
+    private static double CoralInValue = 500;
     private static double CoralOutValue = 10;
 
     private static final int ampLimit = 40;

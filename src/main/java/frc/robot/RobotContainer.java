@@ -26,6 +26,7 @@ import frc.robot.commands.vision.DoritoCommands;
 import frc.robot.subsystems.LimeLight;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
+import frc.robot.subsystems.arm.EndJoeBidenFactor;
 
 import org.photonvision.PhotonCamera;
 
@@ -50,7 +51,7 @@ public class RobotContainer
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve/"));
   private final CaprisonCommands visionCommands = new CaprisonCommands();
-
+  private final EndJoeBidenFactor BidenFactor = new EndJoeBidenFactor();
 
 
 
