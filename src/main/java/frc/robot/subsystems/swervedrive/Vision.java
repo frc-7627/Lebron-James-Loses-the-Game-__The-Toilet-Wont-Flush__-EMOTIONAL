@@ -53,7 +53,7 @@ public class Vision
    * April Tag Field Layout of the year.
    */
   public static final AprilTagFieldLayout fieldLayout                     = AprilTagFieldLayout.loadField(
-      AprilTagFields.kDefaultField);
+      AprilTagFields.k2025Reefscape);
   /**
    * Ambiguity defined as a value between (0,1). Used in {@link Vision#filterPose}.
    */
@@ -335,9 +335,6 @@ public class Vision
    */
   enum Cameras
   {
-    /**
-     * Center Camera
-     */
     CENTER_CAM("Camera_Front",
                new Rotation3d(0, Units.degreesToRadians(18), 0),
                new Translation3d(Units.inchesToMeters(-4.628),

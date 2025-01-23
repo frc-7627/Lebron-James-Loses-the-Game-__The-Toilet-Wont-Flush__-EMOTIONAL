@@ -1,5 +1,7 @@
 package frc.robot.commands.Helpers;
 
+import org.photonvision.PhotonCamera;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.LimelightHelpers;
@@ -11,6 +13,7 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 public class DriveBaseRotationAdjust extends Command {
     private SwerveSubsystem drivebase;
+    PhotonCamera camera = new PhotonCamera("Camera_Front");
 
     private double tx;
 
@@ -32,13 +35,20 @@ public class DriveBaseRotationAdjust extends Command {
 
     @Override
     public void initialize() {
-        System.out.println("[LimeLightCommands/DriveBaseRotationAdjust]] Rotating...");
+        System.out.println("[LimeLightCommands/DriveBaseRotationAdjust]] Seeking Target");
     }
 
     @Override
     public void execute() {
-        tx = LimelightHelpers.getTX("");
-        drivebase.drive(new Translation2d(0, 0), tx * Math.PI / 180, false);
+        var result = camera.getLatestResult();
+        if (result.hasTargets()) {
+            System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Rotating...");
+            tx = result.getBestTarget().getYaw();
+            drivebase.drive(new Translation2d(0, 0), -tx * Math.PI / 180, false);
+        }
+        else {
+            drivebase.drive(new Translation2d(0, 0), 0, false);
+        }
     }
 
 
