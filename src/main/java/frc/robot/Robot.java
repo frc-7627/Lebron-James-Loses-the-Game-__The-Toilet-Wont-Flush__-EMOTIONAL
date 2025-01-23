@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.TimedRobot;
 
 import java.io.File;
 
@@ -33,7 +34,7 @@ import frc.robot.commands.Endafector.WaitForCoral;
  * 
  * @see org.littletonrobotics.junction.LoggedRobot
  */
-public class Robot extends LoggedRobot
+public class Robot extends TimedRobot
 {
   private final Bluetooth bluetooth = new Bluetooth();
   private static Robot   instance;
@@ -71,21 +72,21 @@ public class Robot extends LoggedRobot
    * @version 1.1
    */
   public void LoggerSetup() {
-    Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
+    //Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
 
-    if (isReal()) {
+    //if (isReal()) {
         //Logger.addDataReceiver(new WPILOGWriter()); // Log to a USB stick ("/U/logs")
-        Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
+    //    Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
         //new PowerDistribution(1, ModuleType.kRev); // Enables power distribution logging
-    } else {
-        setUseTiming(false); // Run as fast as possible
+    //} else {
+    //    setUseTiming(false); // Run as fast as possible
     //    String logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
     //    Logger.setReplaySource(new WPILOGReader(logPath)); // Read replay log
     //    Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim"))); // Save outputs to a new log
     }
 
-    Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
-  }
+    //Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
+ // }
 
   /**
    * This function is run when the robot is first started up and should be used for any initialization code.
