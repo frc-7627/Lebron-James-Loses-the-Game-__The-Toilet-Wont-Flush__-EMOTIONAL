@@ -5,6 +5,7 @@ import org.photonvision.PhotonCamera;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.LimelightHelpers;
+import frc.robot.subsystems.Bluetooth;
 
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import frc.robot.Constants.OperatorConstants;
@@ -14,6 +15,7 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 public class DriveBaseRotationAdjust extends Command {
     private SwerveSubsystem drivebase;
     PhotonCamera camera = new PhotonCamera("Camera_Front");
+    Bluetooth color = new Bluetooth();
 
     private double tx;
 
@@ -45,6 +47,7 @@ public class DriveBaseRotationAdjust extends Command {
             System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Rotating...");
             tx = result.getBestTarget().getYaw();
             drivebase.drive(new Translation2d(0, 0), -tx * Math.PI / 180, false);
+            color.vomitGreen();
         }
         else {
             drivebase.drive(new Translation2d(0, 0), 0, false);
