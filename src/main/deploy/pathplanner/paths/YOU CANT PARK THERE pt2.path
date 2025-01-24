@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.0,
-        "y": 6.0
+        "x": 8.223565573770491,
+        "y": 6.50046106557377
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.69207893730037,
-        "y": 5.760232155303326
+        "x": 8.488393367580949,
+        "y": 6.502140249103199
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "parkend"
     },
     {
       "anchor": {
-        "x": 3.0,
-        "y": 6.0
+        "x": 7.732069672131147,
+        "y": 6.50046106557377
       },
       "prevControl": {
-        "x": 4.0271523560871305,
-        "y": 6.07075391207176
+        "x": 7.451920335645543,
+        "y": 6.513486712702027
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "unparked"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "She took the kids auto",
+  "folder": "YOU CANT PARK THERE",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 179.16142142386886
+    "rotation": 179.83863338120767
   },
   "useDefaultConstraints": true
 }

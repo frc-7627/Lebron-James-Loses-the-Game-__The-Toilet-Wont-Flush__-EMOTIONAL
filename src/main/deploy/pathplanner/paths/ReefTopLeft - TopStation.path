@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.0,
-        "y": 6.0
+        "x": 3.831549657534247,
+        "y": 5.16695205479452
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.69207893730037,
-        "y": 5.760232155303326
+        "x": 4.054697263081841,
+        "y": 5.279669161474808
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "ReefTopLeft"
     },
     {
       "anchor": {
-        "x": 3.0,
-        "y": 6.0
+        "x": 1.1569777397260272,
+        "y": 7.0151113013698625
       },
       "prevControl": {
-        "x": 4.0271523560871305,
-        "y": 6.07075391207176
+        "x": 2.113051716183213,
+        "y": 6.18673691619365
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "TopStation"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 129.23736711340152
   },
   "reversed": false,
-  "folder": "She took the kids auto",
+  "folder": "3 Day Weather Forecast",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 179.16142142386886
+    "rotation": 119.27525427725261
   },
   "useDefaultConstraints": true
 }

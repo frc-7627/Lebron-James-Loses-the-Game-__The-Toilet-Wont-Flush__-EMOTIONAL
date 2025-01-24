@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.0,
-        "y": 6.0
+        "x": 5.814036885245901,
+        "y": 4.00701844262295
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.69207893730037,
-        "y": 5.760232155303326
+        "x": 6.92889344262295,
+        "y": 5.145850409836064
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "ReefRight"
     },
     {
       "anchor": {
-        "x": 3.0,
-        "y": 6.0
+        "x": 1.1569777397260272,
+        "y": 7.0151113013698625
       },
       "prevControl": {
-        "x": 4.0271523560871305,
-        "y": 6.07075391207176
+        "x": 2.6492827868852458,
+        "y": 7.243698770491803
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "TopStation"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 127.77096337234296
   },
   "reversed": false,
-  "folder": "She took the kids auto",
+  "folder": "MFNC 3 piece fish combo",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 179.16142142386886
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }
