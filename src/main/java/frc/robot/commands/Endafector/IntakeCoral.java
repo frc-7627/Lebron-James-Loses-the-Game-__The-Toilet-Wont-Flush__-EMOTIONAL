@@ -23,17 +23,19 @@ public class IntakeCoral extends Command {
 
     @Override
     public void execute(){
-        if(module.CoralIn()) led.eggPlant();
+        //if(module.CoralIn()) 
+        led.eggPlant();
     }
 
     @Override
     public void end(boolean interrupted) {
         module.stop();
-        led.orange();
+        if(!interrupted) led.vomitGreen();
+        else led.bluetoothOFF();
     }
 
     @Override 
     public boolean isFinished() {
-        return (!module.CoralOut());
+        return (module.CoralOut());
     }
 }

@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Endafector.IntakeCoral;
 import frc.robot.commands.Helpers.CaprisonCommands;
 import frc.robot.commands.teleop.OperatorCommands;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -170,11 +171,13 @@ public class RobotContainer
     } else
     {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngle);
-      driverXbox.a().whileTrue(visionCommands.AdjustDriveBase(drivebase, led));
-      driverXbox.a().whileTrue(opCommands.AutoScoreL2());
+      //driverXbox.a().whileTrue(visionCommands.AdjustDriveBase(drivebase, led));
+      //driverXbox.b().whileTrue(opCommands.AutoScoreL2());
+      //driverXbox.a().whileTrue(opCommands.AutoScoreL1());
+      driverXbox.y().whileTrue(new IntakeCoral(BidenFactor, led));
     }
 
-    if (Robot.isSimulation())
+    /*if (Robot.isSimulation())
     {
       driverXbox.start().onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
       driverXbox.button(1).whileTrue(drivebase.sysIdDriveMotorCommand());
@@ -202,7 +205,7 @@ public class RobotContainer
       driverXbox.back().whileTrue(Commands.none());
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       driverXbox.rightBumper().onTrue(Commands.none());
-    }
+    } */
   }
 
   public void allianceGryoReset(){

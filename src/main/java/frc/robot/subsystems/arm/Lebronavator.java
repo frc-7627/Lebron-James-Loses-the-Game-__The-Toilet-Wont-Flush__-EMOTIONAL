@@ -21,16 +21,25 @@ public class Lebronavator extends SubsystemBase {
     private static double MotionMagicAcceleration = 160; // Target acceleration of 160 rps/s (0.5 seconds)
     private static double MotionMagicJerk = 1600; // Target jerk of 1600 rps/s/s (0.1 seconds)
 
+    private static double currentLimit = 40;
+
     // Define Motor IDs
-    final TalonFX m_talonFX = new TalonFX(40);
+    final TalonFX m_talonFX_left = new TalonFX(40);
+    final TalonFX m_talonFX_right = new TalonFX(41);
 
   
     public Lebronavator() {
         // in init function
-        var talonFXConfigs = new TalonFXConfiguration();
+        var talonFXConfig_right = new TalonFXConfiguration();
+
+        talonFXConfig_right.CurrentLimits.withStatorCurrentLimitEnable(true);
+        talonFXConfig_right.CurrentLimits.withStatorCurrentLimit(40);
+
+        talonFXConfig_right.MotorOutput.withPeakForwardDutyCycle(0.2);
+        talonFXConfig_right.MotorOutput.withPeakReverseDutyCycle(0.2);
 
         // set slot 0 gains
-        var slot0Configs = talonFXConfigs.Slot0;
+        var slot0Configs = talonFXConfig_right.Slot0;
         slot0Configs.kS = kS;
         slot0Configs.kV = kV;
         slot0Configs.kA = kA;
@@ -39,12 +48,25 @@ public class Lebronavator extends SubsystemBase {
         slot0Configs.kD = kD;
 
         // set Motion Magic settings
-        var motionMagicConfigs = talonFXConfigs.MotionMagic;
+        var motionMagicConfigs = talonFXConfig_right.MotionMagic;
         motionMagicConfigs.MotionMagicCruiseVelocity = MotionMagicCruiseVelocity;
         motionMagicConfigs.MotionMagicAcceleration = MotionMagicAcceleration;
         motionMagicConfigs.MotionMagicJerk = MotionMagicJerk;
 
-        m_talonFX.getConfigurator().apply(talonFXConfigs);
+        var talonFXConfig_left = new TalonFXConfiguration();
+        talonFXConfig_left.CurrentLimits.withStatorCurrentLimitEnable(true);
+        talonFXConfig_left.CurrentLimits.withStatorCurrentLimit(40);
+
+        talonFXConfig_left.MotorOutput.withPeakForwardDutyCycle(0.2);
+        talonFXConfig_left.MotorOutput.withPeakReverseDutyCycle(0.2);
+
+        //
+
+        //talonFXConfig_left.null
+
+
+        m_talonFX_right.getConfigurator().apply(talonFXConfig_right);
+        m_talonFX_left.getConfigurator().apply(talonFXConfig_left);
     }
 
     public void move(double position) {
@@ -52,12 +74,12 @@ public class Lebronavator extends SubsystemBase {
         final MotionMagicVoltage m_request = new MotionMagicVoltage(0);
 
         // set target position
-        m_talonFX.setControl(m_request.withPosition(position));
+        m_talonFX_right.setControl(m_request.withPosition(position));
     }
 
 
     public double getPosition() {
-        return m_talonFX.getPosition().getValueAsDouble();
+        return m_talonFX_right.getPosition().getValueAsDouble();
     }
 
     public void init_shuffleboard() {

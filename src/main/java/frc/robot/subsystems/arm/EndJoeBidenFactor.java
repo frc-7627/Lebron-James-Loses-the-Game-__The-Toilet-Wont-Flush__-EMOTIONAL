@@ -7,26 +7,28 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
+import static edu.wpi.first.units.Units.RadiansPerSecondPerSecond;
+
 import com.playingwithfusion.TimeOfFlight;
+import com.playingwithfusion.TimeOfFlight.RangingMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class EndJoeBidenFactor extends SubsystemBase {
 
-    private static double LoadSpeed = 0.5;
-    private static double EjectSpeed = 0.5;
+    private static double LoadSpeed = 0.1;
+    private static double EjectSpeed = 0.2;
 
     private static double CoralInValue = 500;
-    private static double CoralOutValue = 10;
+    private static double CoralOutValue = 500;
 
     private static final int ampLimit = 40;
 
-    private final SparkMax m_motor_front = new SparkMax(30, MotorType.kBrushless);  
-    private final SparkMax m_motor_rear = new SparkMax(31, MotorType.kBrushless);  
+    private final SparkMax m_motor = new SparkMax(30, MotorType.kBrushless);  
 
     
-    private final TimeOfFlight m_TOF_front = new TimeOfFlight(32);
-    private final TimeOfFlight m_TOF_rear = new TimeOfFlight(33);
+    private final TimeOfFlight m_TOF_front = new TimeOfFlight(33);
+    private final TimeOfFlight m_TOF_rear = new TimeOfFlight(32);
     
     public EndJoeBidenFactor () {
 
@@ -34,32 +36,33 @@ public class EndJoeBidenFactor extends SubsystemBase {
         motor_config.idleMode(IdleMode.kCoast);
         motor_config.smartCurrentLimit(ampLimit);
     
-        m_motor_front.configure(motor_config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        m_motor_rear.configure(motor_config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_motor.configure(motor_config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+        m_TOF_front.setRangingMode(RangingMode.Short, 50);
+        m_TOF_rear.setRangingMode(RangingMode.Short, 50);
 
         System.out.println("Joe Biden was here");
     }
 
     public void load() {
-        m_motor_front.set(LoadSpeed);
-        m_motor_rear.set(0.0);
+        m_motor.set(LoadSpeed);
     }
 
     public void eject() {
-        m_motor_front.set(EjectSpeed);
-        m_motor_rear.set(EjectSpeed);
+        m_motor.set(EjectSpeed);
     }
 
     public void stop() {
-        m_motor_front.set(0.0);
-        m_motor_rear.set(0.0);
+        m_motor.set(0.0);
     }
 
     public boolean CoralIn() {
+        System.out.println( m_TOF_front.getRange());
         return (m_TOF_front.isRangeValid() && CoralInValue > m_TOF_front.getRange());
     }
 
     public boolean CoralOut() {
+        System.out.println( m_TOF_rear.getRange());
         return (m_TOF_rear.isRangeValid() && CoralOutValue > m_TOF_rear.getRange());
     }
 }
