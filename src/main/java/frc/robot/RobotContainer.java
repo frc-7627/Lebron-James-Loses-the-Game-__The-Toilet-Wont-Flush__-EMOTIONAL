@@ -19,9 +19,13 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Helpers.CaprisonCommands;
+import frc.robot.commands.teleop.OperatorCommands;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
+
+import frc.robot.subsystems.Bluetooth;
 import frc.robot.subsystems.arm.EndJoeBidenFactor;
+import frc.robot.subsystems.arm.Lebronavator;
 
 import org.photonvision.PhotonCamera;
 
@@ -47,6 +51,11 @@ public class RobotContainer
                                                                                 "swerve/"));
   private final CaprisonCommands visionCommands = new CaprisonCommands();
   private final EndJoeBidenFactor BidenFactor = new EndJoeBidenFactor();
+  private final Lebronavator elevator = new Lebronavator();
+  private final Bluetooth led = new Bluetooth();
+
+  // Command Classes
+  private final OperatorCommands opCommands = new OperatorCommands(elevator, BidenFactor, led);
 
 
 
@@ -161,7 +170,7 @@ public class RobotContainer
     } else
     {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngle);
-      driverXbox.a().whileTrue(visionCommands.AdjustDriveBase(drivebase));
+      driverXbox.a().whileTrue(visionCommands.AdjustDriveBase(drivebase, led));
     }
 
     if (Robot.isSimulation())

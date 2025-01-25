@@ -5,9 +5,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.Helpers.DriveBaseRotationAdjust;
+import frc.robot.subsystems.Bluetooth;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
-import frc.robot.LimelightHelpers;
-
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import frc.robot.Constants.OperatorConstants;
 
@@ -33,7 +32,7 @@ public class CaprisonCommands {
      */
     public Command getPose(SwerveSubsystem drivebase) {     
         return Commands.runOnce(() -> {
-            Pose2d pose = LimelightHelpers.getBotPose2d("");
+          //  Pose2d pose = LimelightHelpers.getBotPose2d("");
            // drivebase.addVisionReading(pose,  Timer.getFPGATimestamp());
         }, drivebase);
     }
@@ -49,8 +48,8 @@ public class CaprisonCommands {
      * @param drivebase Swerve Drivebase provided by YAGSL
      * @return
      */
-    public Command AdjustDriveBase(SwerveSubsystem drivebase) {
+    public Command AdjustDriveBase(SwerveSubsystem drivebase, Bluetooth led) {
         System.out.println("Adjusting drivebase");
-        return new DriveBaseRotationAdjust(drivebase);
+        return new DriveBaseRotationAdjust(drivebase, led);
     }
 }

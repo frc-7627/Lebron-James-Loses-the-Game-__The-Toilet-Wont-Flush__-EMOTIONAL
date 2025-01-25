@@ -1,30 +1,36 @@
 package frc.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Elevator.ElevatorMove;
 import frc.robot.commands.Endafector.EjectCoral;
 import frc.robot.commands.Endafector.IntakeCoral;
 import frc.robot.commands.Endafector.WaitForCoral;
+import frc.robot.subsystems.Bluetooth;
 import frc.robot.subsystems.arm.EndJoeBidenFactor;
 import frc.robot.subsystems.arm.Lebronavator;
 
-public class Commands {
+public class OperatorCommands {
     private final Lebronavator elevator;
     private final EndJoeBidenFactor outake;
+    private final Bluetooth led;
 
 
-    public Commands(Lebronavator module1, EndJoeBidenFactor module2) {
+    public OperatorCommands(Lebronavator module1, EndJoeBidenFactor module2, Bluetooth led) {
         this.elevator = module1;
         this.outake   = module2;
+        this.led      = led;
+
+        new IntakeCoral(module2, led);
     }
     
     public Command ElevatorDown() {
         return new SequentialCommandGroup(
             new ElevatorMove(elevator, 0),
             new WaitForCoral(outake),
-            new IntakeCoral(outake)
+            new IntakeCoral(outake, led)
         );
     }
 
@@ -32,7 +38,7 @@ public class Commands {
         return new SequentialCommandGroup(
             new ElevatorMove(elevator, pos),
             new WaitCommand(0.0), // Reduce Jitter
-            new EjectCoral(outake)
+            new EjectCoral(outake, led)
         );
     }
 
