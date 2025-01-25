@@ -171,6 +171,7 @@ public class RobotContainer
     {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngle);
       driverXbox.a().whileTrue(visionCommands.AdjustDriveBase(drivebase, led));
+      driverXbox.a().whileTrue(opCommands.AutoScoreL2());
     }
 
     if (Robot.isSimulation())
