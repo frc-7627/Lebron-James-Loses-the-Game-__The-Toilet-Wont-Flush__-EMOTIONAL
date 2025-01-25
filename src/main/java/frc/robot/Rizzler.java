@@ -38,6 +38,8 @@ public class Rizzler {
         System.out.println("\n hitting the griddy on the ops since 7627\n");
     }
 
+	// This was written on a laptop older than me
+
     /**
      * Checks if coach controller is enabled in constants or not
      * Prints a warning message if it is
