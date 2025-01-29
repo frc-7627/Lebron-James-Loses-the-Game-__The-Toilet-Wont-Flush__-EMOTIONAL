@@ -1,18 +1,22 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.led.*;
+import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 public class Bluetooth extends SubsystemBase{
 
   private CANdle candle = new CANdle(40);
+  private int[] defaultColor = new int[]{255, 121, 0};
 
 
   // Animations
   private RainbowAnimation rainbowAnim = new RainbowAnimation(0.25, 0.5, 76);
-
 
   // Bofa these bluetooth
 
@@ -28,25 +32,33 @@ public class Bluetooth extends SubsystemBase{
    * Toggles the bluetooth
    * @return Status of blueooth (on/off) as a boolean
    */
-  public void orange() {//was public boolean toggle()
-    setColor(255, 121, 0);
-    //return toggle;
+  public void color(String color) {
+    candle.clearAnimation(0);
+    int rGBvalue[] = getColorValues(color);
+    setColor(rGBvalue[0], rGBvalue[1], rGBvalue[2]);
+
   }
 
-  public void eggPlant() {
-    setColor(97, 64, 81);
-  }  
-
-  public void vomitGreen(){
-    setColor(137, 162, 3);
-  }
-
-  public void beige(){
-    setColor(227, 180, 77);
-  }
-
-  public void white(){
-    setColor(255, 255, 255);
+  private int[] getColorValues(String color) {
+    switch(color) {
+      case "orange":
+        return new int[]{255, 121, 0};
+      case "eggPlant":
+        return new int[]{97, 64, 81};
+      case "vomitGreen":
+        return new int[]{137, 162, 3};
+      case "beige":
+        return new int[]{227, 180, 77};
+      case "red":
+        return new int[]{255, 0, 0};
+      case "blue":
+        return new int[]{0, 0, 255};
+      case "white":
+        return new int[]{255, 255, 255};
+      default:
+        System.out.print("[Bluetooth] Unkown argument passed!");
+        return new int[]{0, 0, 0};
+    }
   }
 
   /*public boolean th5() {
@@ -73,23 +85,47 @@ public class Bluetooth extends SubsystemBase{
   * @param b Blue brightness as int (0-255)
   */
   public void setColor(int r, int g, int b) {
-    candle.clearAnimation(0);
+    //candle.clearAnimation(0);
     candle.setLEDs(r, g, b);
+  }
+
+  public void setDefaultColor(String color) {
+    defaultColor = getColorValues(color);
   }
 
 
   /** Turns all Leds on with Rainbow Animation */
   public void rainbow(){
     //hackerman works
+    candle.clearAnimation(0);
     candle.animate(rainbowAnim, 0);
   }
 
+  
+  /** Turns all Leds on with Rainbow Animation */
+  public void blink(String color){
+    candle.clearAnimation(0);
+    int rGBvalue[] = getColorValues(color);
+    StrobeAnimation blinkingAnim = new StrobeAnimation(rGBvalue[0], rGBvalue[1], rGBvalue[2]);
+    blinkingAnim.setSpeed(0.000000009);
+    candle.animate(blinkingAnim, 0);
+  }
+
+  public void scroll(String color1) {
+    candle.clearAnimation(0);
+    int rGBvalue[] = getColorValues(color1);
+    //int rGBvalue2[] = getColorValues(color2);
+    ColorFlowAnimation Anim =  new ColorFlowAnimation(
+      rGBvalue[0], rGBvalue[1], rGBvalue[2], 0, 0.1, 100, Direction.Forward, 0);
+    //Anim.setSpeed(0.000000009);
+    candle.animate(Anim, 0);
+  }
 
   // Level 5 town hall ran out of elixer
   /** Turns All LEDs off */
   public void bluetoothOFF(){
     candle.clearAnimation(0);
-    candle.setLEDs(0, 0, 0);
+    candle.setLEDs(defaultColor[0], defaultColor[1], defaultColor[2]);
   }
 }
 

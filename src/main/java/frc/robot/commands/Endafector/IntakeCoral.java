@@ -24,13 +24,14 @@ public class IntakeCoral extends Command {
     @Override
     public void execute(){
         //if(module.CoralIn()) 
-        led.eggPlant();
+        //led.color("eggPlant");
+        led.blink("eggPlant");
     }
 
     @Override
     public void end(boolean interrupted) {
         module.stop();
-        if(!interrupted) led.vomitGreen();
+        if(!interrupted) led.color("vomitGreen");
         else led.bluetoothOFF();
     }
 

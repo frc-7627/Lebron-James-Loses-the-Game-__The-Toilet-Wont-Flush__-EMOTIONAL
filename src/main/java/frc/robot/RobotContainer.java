@@ -5,12 +5,13 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -23,13 +24,17 @@ import frc.robot.commands.Helpers.CaprisonCommands;
 import frc.robot.commands.teleop.OperatorCommands;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
+import java.sql.Driver;
+
+import org.photonvision.PhotonCamera;
+import org.photonvision.jni.TimeSyncServer;
 
 import frc.robot.subsystems.Bluetooth;
 import frc.robot.subsystems.arm.EndJoeBidenFactor;
 import frc.robot.subsystems.arm.Lebronavator;
 
-import org.photonvision.PhotonCamera;
-
+import frc.robot.commands.Elevator.horn;
+import frc.robot.commands.Elevator.playSong;
 import swervelib.SwerveInputStream;
 
 /**
@@ -50,13 +55,15 @@ public class RobotContainer
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve/"));
-  private final CaprisonCommands visionCommands = new CaprisonCommands();
+  //private final CaprisonCommands visionCommands = new CaprisonCommands();
   private final EndJoeBidenFactor BidenFactor = new EndJoeBidenFactor();
   private final Lebronavator elevator = new Lebronavator();
   private final Bluetooth led = new Bluetooth();
 
   // Command Classes
   private final OperatorCommands opCommands = new OperatorCommands(elevator, BidenFactor, led);
+
+  private final PhotonCamera photon_camera = new PhotonCamera("Camera_Front");
 
 
 
@@ -71,8 +78,8 @@ public class RobotContainer
    * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
    */
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
-                                                                () -> driverXbox.getLeftY() * -1,
-                                                                () -> driverXbox.getLeftX() * -1)
+                                                                () -> driverXbox.getLeftY() * 1,
+                                                                () -> driverXbox.getLeftX() * 1)
                                                             .withControllerRotationAxis(driverXbox::getRightX)
                                                             .deadband(OperatorConstants.DEADBAND)
                                                             .scaleTranslation(0.8)
@@ -131,6 +138,11 @@ public class RobotContainer
     // Rizz up the ops
     Rizzler.rizz();
 
+    // Blink color
+    led.scroll("orange");
+
+    //photon_camera.
+
     // Build an Pathplanner auto chooser. This will use Commands.none() as the default option.
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -139,7 +151,6 @@ public class RobotContainer
     configureBindings();
     DriverStation.silenceJoystickConnectionWarning(true);
     //NamedCommands.registerCommand("test", Commands.print("I EXIST"));
-    //TODO: bob
     allianceGryoReset();
   }
 
@@ -156,33 +167,33 @@ public class RobotContainer
   private void configureBindings()
   {
     Command driveFieldOrientedDirectAngle      = drivebase.driveFieldOriented(driveDirectAngle);
-    Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
-    Command driveRobotOrientedAngularVelocity  = drivebase.driveFieldOriented(driveRobotOriented);
-    Command driveSetpointGen = drivebase.driveWithSetpointGeneratorFieldRelative(
-        driveDirectAngle);
+    //Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
+    //Command driveRobotOrientedAngularVelocity  = drivebase.driveFieldOriented(driveRobotOriented);
+    //Command driveSetpointGen = drivebase.driveWithSetpointGeneratorFieldRelative(
+    //    driveDirectAngle);
     Command driveFieldOrientedDirectAngleKeyboard      = drivebase.driveFieldOriented(driveDirectAngleKeyboard);
-    Command driveFieldOrientedAnglularVelocityKeyboard = drivebase.driveFieldOriented(driveAngularVelocityKeyboard);
-    Command driveSetpointGenKeyboard = drivebase.driveWithSetpointGeneratorFieldRelative(
-        driveDirectAngleKeyboard);
+    //Command driveFieldOrientedAnglularVelocityKeyboard = drivebase.driveFieldOriented(driveAngularVelocityKeyboard);
+    //Command driveSetpointGenKeyboard = drivebase.driveWithSetpointGeneratorFieldRelative(
+    //    driveDirectAngleKeyboard);
 
     if (RobotBase.isSimulation())
     {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
+      driverXbox.start().onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
+      driverXbox.button(1).whileTrue(drivebase.sysIdDriveMotorCommand());
     } else
     {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngle);
+      driverXbox.a().whileTrue(Commands.runOnce(drivebase::zeroGyro));
       //driverXbox.a().whileTrue(visionCommands.AdjustDriveBase(drivebase, led));
-      //driverXbox.b().whileTrue(opCommands.AutoScoreL2());
-      //driverXbox.a().whileTrue(opCommands.AutoScoreL1());
+      driverXbox.leftTrigger().whileTrue(opCommands.AutoScoreL2());
+      driverXbox.rightTrigger().whileTrue(opCommands.AutoScoreL1());
       driverXbox.y().whileTrue(new IntakeCoral(BidenFactor, led));
+      driverXbox.start().whileTrue(new horn(elevator));
+      driverXbox.back().whileTrue(new playSong(elevator, "rickroll"));
+      //driverXbox.x().whileTrue(visionCommands.AdjustDriveBase(drivebase, led));
     }
-
-    /*if (Robot.isSimulation())
-    {
-      driverXbox.start().onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
-      driverXbox.button(1).whileTrue(drivebase.sysIdDriveMotorCommand());
-
-    }
+    /*
     if (DriverStation.isTest())
     {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngle); // Overrides drive command above!
@@ -246,5 +257,33 @@ public class RobotContainer
   public void setMotorBrake(boolean brake)
   {
     drivebase.setMotorBrake(brake);
+  }
+
+  public boolean isRedAlliance() {
+    var alliance = DriverStation.getAlliance();
+    if (alliance.isPresent())
+    {
+      return alliance.get() == DriverStation.Alliance.Red;
+    }
+    return false;
+  }
+
+  public void disabledInit() {
+    //led.bluetoothOFF();
+  }
+
+  public void disabledPeriodic() {
+    var alliance = DriverStation.getAlliance();
+    if (alliance.isPresent())
+    {
+      if(alliance.get() == DriverStation.Alliance.Red) {
+        led.color("red");
+        led.setDefaultColor("red");
+      }
+      else {
+        led.color("blue");
+        led.setDefaultColor("blue");
+      }
+    }
   }
 }

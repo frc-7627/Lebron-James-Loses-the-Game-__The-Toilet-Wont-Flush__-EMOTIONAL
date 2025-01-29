@@ -48,7 +48,7 @@
   "folder": "2015 Kia class action lawsuit",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.7345210342548073
+    "rotation": 0.0
   },
   "useDefaultConstraints": false
 }

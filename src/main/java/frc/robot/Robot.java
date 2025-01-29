@@ -4,28 +4,27 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.Bluetooth;
-
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.TimedRobot;
+/*
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
-import edu.wpi.first.wpilibj.TimedRobot;
 
 import java.io.File;
+
 
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
-import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter; */
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.commands.Endafector.WaitForCoral;
+//import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to each mode, as
@@ -36,12 +35,10 @@ import frc.robot.commands.Endafector.WaitForCoral;
  */
 public class Robot extends TimedRobot
 {
-  private final Bluetooth bluetooth = new Bluetooth();
   private static Robot   instance;
   private        Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  private WaitForCoral m_WaitForCoral;
 
   private Timer disabledTimer;
 
@@ -71,7 +68,7 @@ public class Robot extends TimedRobot
    * 
    * @version 1.1
    */
-  public void LoggerSetup() {
+  //public void LoggerSetup() {
     //Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
 
     //if (isReal()) {
@@ -83,7 +80,7 @@ public class Robot extends TimedRobot
     //    String logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
     //    Logger.setReplaySource(new WPILOGReader(logPath)); // Read replay log
     //    Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim"))); // Save outputs to a new log
-    }
+  //  }
 
     //Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
  // }
@@ -94,7 +91,6 @@ public class Robot extends TimedRobot
   @Override
   public void robotInit()
   {
-    bluetooth.bluetoothOFF();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
@@ -133,6 +129,7 @@ public class Robot extends TimedRobot
   public void disabledInit()
   {
     m_robotContainer.setMotorBrake(true);
+    m_robotContainer.disabledInit();
     disabledTimer.reset();
     disabledTimer.start();
   }
@@ -145,6 +142,8 @@ public class Robot extends TimedRobot
       m_robotContainer.setMotorBrake(false);
       disabledTimer.stop();
     }
+
+    m_robotContainer.disabledPeriodic();
   }
 
   /**

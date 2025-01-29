@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.404109589041096,
-        "y": 6.489212328767123
+        "x": 0.17948863636363654,
+        "y": 3.1425142045454546
       },
       "isLocked": false,
       "linkedName": "TopStation"
@@ -28,13 +28,18 @@
       "linkedName": "ReefLeft"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 180.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -48,7 +53,7 @@
   "folder": "3 Day Weather Forecast",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 126.25383773744474
+    "rotation": 129.23736711340152
   },
   "useDefaultConstraints": true
 }

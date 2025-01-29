@@ -27,7 +27,7 @@ public class WaitForCoral extends Command {
     public void execute(){
         System.out.println("TOF READING:" + tof.getRange());
         if (joe.CoralIn()){
-        bluetooth.eggPlant();
+        bluetooth.color("eggPlant");
     }
     }
 

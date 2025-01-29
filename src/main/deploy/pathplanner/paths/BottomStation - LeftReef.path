@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -179.46949868332624
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "Cha Cha Slide",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -126.38435181583584
+    "rotation": -125.53767779197433
   },
   "useDefaultConstraints": true
 }
