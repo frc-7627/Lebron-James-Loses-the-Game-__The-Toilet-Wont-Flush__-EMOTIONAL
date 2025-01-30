@@ -55,6 +55,8 @@ public class Bluetooth extends SubsystemBase{
         return new int[]{0, 0, 255};
       case "white":
         return new int[]{255, 255, 255};
+      case "default":
+        return defaultColor;
       default:
         System.out.print("[Bluetooth] Unkown argument passed!");
         return new int[]{0, 0, 0};

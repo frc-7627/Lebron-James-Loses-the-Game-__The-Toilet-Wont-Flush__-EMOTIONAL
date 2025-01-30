@@ -54,7 +54,7 @@ public class Lebronavator extends SubsystemBase {
 
         // Music stuff
         talonFXConfig_right.Audio.withBeepOnBoot(false);
-        talonFXConfig_right.Audio.withBeepOnConfig(true);
+        talonFXConfig_right.Audio.withBeepOnConfig(false);
         talonFXConfig_right.Audio.withAllowMusicDurDisable(true);
 
         // set slot 0 gains
@@ -83,7 +83,7 @@ public class Lebronavator extends SubsystemBase {
 
         // Music stuff
         talonFXConfig_left.Audio.withBeepOnBoot(false);
-        talonFXConfig_left.Audio.withBeepOnConfig(true);
+        talonFXConfig_left.Audio.withBeepOnConfig(false);
         talonFXConfig_left.Audio.withAllowMusicDurDisable(true);
 
         //talonFXConfig_left.null
@@ -106,13 +106,19 @@ public class Lebronavator extends SubsystemBase {
         m_Orchestra.addInstrument(m_talonFX_left);
         m_Orchestra.addInstrument(m_talonFX_right);
 
+        filename = "sus";
+
         // Load song and play
-        m_Orchestra.loadMusic(Filesystem.getDeployDirectory() + "midi/" + filename + ".chrp");
+        String filePath = Filesystem.getDeployDirectory() + "/midi/" + filename + ".chrp";
+        System.out.println(filePath);
+        System.out.println(new File(filePath).exists());
+        m_Orchestra.loadMusic(filePath);
         m_Orchestra.play();
     }
 
     public void resetControlMode() {
          // Clean up orchestra
+        m_Orchestra.stop();
         m_Orchestra.clearInstruments();
 
         // create a Motion Magic request, voltage output

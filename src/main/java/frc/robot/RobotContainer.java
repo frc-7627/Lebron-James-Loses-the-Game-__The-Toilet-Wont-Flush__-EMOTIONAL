@@ -190,7 +190,7 @@ public class RobotContainer
       driverXbox.rightTrigger().whileTrue(opCommands.AutoScoreL1());
       driverXbox.y().whileTrue(new IntakeCoral(BidenFactor, led));
       driverXbox.start().whileTrue(new horn(elevator));
-      driverXbox.back().whileTrue(new playSong(elevator, "rickroll"));
+      driverXbox.back().whileTrue(new playSong(elevator, "hcb"));
       //driverXbox.x().whileTrue(visionCommands.AdjustDriveBase(drivebase, led));
     }
     /*
@@ -243,6 +243,8 @@ public class RobotContainer
    */
   public void setDriveMode()
   {
+    led.scroll("default");
+    elevator.resetControlMode();
     configureBindings();
   }
 
@@ -269,7 +271,7 @@ public class RobotContainer
   }
 
   public void disabledInit() {
-    //led.bluetoothOFF();
+    elevator.playSong("amoungus");
   }
 
   public void disabledPeriodic() {
