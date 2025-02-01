@@ -78,8 +78,8 @@ public class RobotContainer
    * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
    */
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
-                                                                () -> driverXbox.getLeftY() * 1,
-                                                                () -> driverXbox.getLeftX() * 1)
+                                                                () -> driverXbox.getLeftY() * -1,
+                                                                () -> driverXbox.getLeftX() * -1)
                                                             .withControllerRotationAxis(driverXbox::getRightX)
                                                             .deadband(OperatorConstants.DEADBAND)
                                                             .scaleTranslation(0.8)
@@ -184,7 +184,7 @@ public class RobotContainer
     } else
     {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngle);
-      driverXbox.a().whileTrue(Commands.runOnce(drivebase::zeroGyro));
+      driverXbox.a().whileTrue(Commands.runOnce(drivebase::zeroGyroWithAlliance));
       //driverXbox.a().whileTrue(visionCommands.AdjustDriveBase(drivebase, led));
       driverXbox.leftTrigger().whileTrue(opCommands.AutoScoreL2());
       driverXbox.rightTrigger().whileTrue(opCommands.AutoScoreL1());
@@ -246,6 +246,11 @@ public class RobotContainer
     led.scroll("default");
     elevator.resetControlMode();
     configureBindings();
+  }
+
+  public void setGyroOffset()
+  {
+    //drivebase.setGyroOffset(180);
   }
 
   /**

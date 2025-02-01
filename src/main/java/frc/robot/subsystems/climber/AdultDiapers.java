@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class AdultDiapers extends SubsystemBase {
 
     private static double movementSpeed = 0.5;  
+    private static double slowMoveSpeed = 0.5 * movementSpeed;  
 
     // Define Motor IDs
     final TalonFX m_talonFX = new TalonFX(41);
@@ -21,6 +22,14 @@ public class AdultDiapers extends SubsystemBase {
 
     public void moveDown() {
         m_talonFX.set(-movementSpeed);
+    }
+
+    public void slowMoveUp() {
+        m_talonFX.set(slowMoveSpeed);
+    }
+
+    public void slowMoveDown() {
+        m_talonFX.set(-slowMoveSpeed);
     }
 
     public void stop() {

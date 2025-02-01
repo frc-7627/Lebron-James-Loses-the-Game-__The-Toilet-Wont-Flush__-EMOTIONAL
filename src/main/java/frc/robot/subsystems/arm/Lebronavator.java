@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.MusicTone;
@@ -29,6 +30,7 @@ public class Lebronavator extends SubsystemBase {
     private static double MotionMagicJerk = 1600; // Target jerk of 1600 rps/s/s (0.1 seconds)
     
     private static double maxSpeed = 0.2;
+    private static double shimSpeed = 0.2;
 
     private static double currentLimit = 40;
 
@@ -135,6 +137,28 @@ public class Lebronavator extends SubsystemBase {
 
         // set target position
         m_talonFX_right.setControl(m_request.withPosition(position));
+    }
+
+    public void shimUp() {
+        final DutyCycleOut m_request = new DutyCycleOut(shimSpeed);
+
+        m_talonFX_right.setControl(m_request);
+    }
+
+    public void shimDown() {
+        final DutyCycleOut m_request = new DutyCycleOut(-shimSpeed);
+
+        m_talonFX_right.setControl(m_request);
+    }
+
+    public void StopMotor() {
+        // Setup follower config
+        m_talonFX_left.setControl(new Follower(m_talonFX_right.getDeviceID(), true));
+
+
+        final DutyCycleOut m_request = new DutyCycleOut(0.0);
+
+        m_talonFX_right.setControl(m_request);
     }
 
 
