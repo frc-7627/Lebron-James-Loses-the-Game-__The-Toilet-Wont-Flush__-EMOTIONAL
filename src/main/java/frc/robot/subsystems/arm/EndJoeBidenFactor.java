@@ -6,7 +6,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.playingwithfusion.TimeOfFlight;
 import com.playingwithfusion.TimeOfFlight.RangingMode;
 
@@ -21,6 +21,8 @@ public class EndJoeBidenFactor extends SubsystemBase {
     private static double CoralOutValue = 500;
 
     private static final int ampLimit = 40;
+
+    private static double shimSpeed = 0.2;
 
     private final SparkMax m_motor = new SparkMax(30, MotorType.kBrushless);  
 
@@ -62,5 +64,13 @@ public class EndJoeBidenFactor extends SubsystemBase {
     public boolean CoralOut() {
         System.out.println( m_TOF_rear.getRange());
         return (m_TOF_rear.isRangeValid() && CoralOutValue > m_TOF_rear.getRange());
+    }
+
+    public void shimForward() {
+        m_motor.set(shimSpeed);
+    }
+
+    public void shimReverse() {
+        m_motor.set(-shimSpeed);
     }
 }
