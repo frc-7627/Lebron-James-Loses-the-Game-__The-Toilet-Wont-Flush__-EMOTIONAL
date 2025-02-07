@@ -159,7 +159,8 @@ public class Robot extends TimedRobot
     if (m_autonomousCommand != null)
     {
       m_autonomousCommand.schedule();
-      m_robotContainer.setGyroOffset();
+      //m_robotContainer.setGyroOffset();
+      //m_robotContainer.setHeadingCorrection();
     }
   }
 
@@ -186,7 +187,7 @@ public class Robot extends TimedRobot
       CommandScheduler.getInstance().cancelAll();
     }
     m_robotContainer.setDriveMode();
-    m_robotContainer.allianceGryoReset();
+    //m_robotContainer.allianceGryoReset();
   }
 
   /**

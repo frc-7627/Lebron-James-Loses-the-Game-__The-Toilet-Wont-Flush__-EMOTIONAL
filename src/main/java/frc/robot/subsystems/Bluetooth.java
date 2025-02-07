@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Bluetooth extends SubsystemBase{
 
-  private CANdle candle = new CANdle(40);
+  private CANdle candle = new CANdle(3);
   private int[] defaultColor = new int[]{255, 121, 0};
 
 

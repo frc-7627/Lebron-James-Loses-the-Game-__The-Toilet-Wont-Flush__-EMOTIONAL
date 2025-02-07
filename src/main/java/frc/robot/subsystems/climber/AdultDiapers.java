@@ -10,7 +10,7 @@ public class AdultDiapers extends SubsystemBase {
     private static double slowMoveSpeed = 0.5 * movementSpeed;  
 
     // Define Motor IDs
-    final TalonFX m_talonFX = new TalonFX(41);
+    final TalonFX m_talonFX = new TalonFX(50);
 
   
     public AdultDiapers() {

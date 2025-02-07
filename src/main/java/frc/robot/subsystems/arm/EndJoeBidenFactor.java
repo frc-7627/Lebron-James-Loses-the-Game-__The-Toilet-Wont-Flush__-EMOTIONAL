@@ -24,11 +24,11 @@ public class EndJoeBidenFactor extends SubsystemBase {
 
     private static double shimSpeed = 0.2;
 
-    private final SparkMax m_motor = new SparkMax(30, MotorType.kBrushless);  
+    private final SparkMax m_motor = new SparkMax(45, MotorType.kBrushless);  
 
     
-    private final TimeOfFlight m_TOF_front = new TimeOfFlight(33);
-    private final TimeOfFlight m_TOF_rear = new TimeOfFlight(32);
+    private final TimeOfFlight m_TOF_front = new TimeOfFlight(46);
+    private final TimeOfFlight m_TOF_rear = new TimeOfFlight(47);
     
     public EndJoeBidenFactor () {
 

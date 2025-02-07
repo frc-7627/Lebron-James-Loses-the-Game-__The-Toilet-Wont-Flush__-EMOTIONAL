@@ -146,7 +146,6 @@ public class Vision
       if (poseEst.isPresent())
       {
         var pose = poseEst.get();
-        System.out.println(pose.toString());
         swerveDrive.addVisionMeasurement(pose.estimatedPose.toPose2d(),
                                          pose.timestampSeconds,
                                          camera.curStdDevs);
@@ -191,7 +190,6 @@ public class Vision
    * @param pose Estimated robot pose.
    * @return Could be empty if there isn't a good reading.
    */
-  @SuppressWarnings("unused") // We don't know why they added this to yagsl
   @Deprecated(since = "2024", forRemoval = true)
   private Optional<EstimatedRobotPose> filterPose(Optional<EstimatedRobotPose> pose)
   {
@@ -338,11 +336,12 @@ public class Vision
   enum Cameras
   {
     CENTER_CAM("Camera_Front",
-               new Rotation3d(0, Units.degreesToRadians(90), 180),
-               new Translation3d(Units.inchesToMeters(0),
-                                 Units.inchesToMeters(0),
-                                 Units.inchesToMeters(12)),
-               VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
+    new Rotation3d(0, Units.degreesToRadians(90), 180),
+    new Translation3d(Units.inchesToMeters(0),
+                      Units.inchesToMeters(0),
+                      Units.inchesToMeters(12)),
+    VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
+  
 
     /**
      * Latency alert to use when high latency is detected.
@@ -375,7 +374,8 @@ public class Vision
     /**
      * Estimated robot pose.
      */
-    public        Optional<EstimatedRobotPose> estimatedRobotPose;
+    public Optional<EstimatedRobotPose> estimatedRobotPose = Optional.empty();
+
     /**
      * Simulated camera instance which only exists during simulations.
      */

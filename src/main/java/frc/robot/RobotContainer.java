@@ -11,7 +11,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -19,20 +18,21 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Endafector.EjectCoral;
 import frc.robot.commands.Endafector.IntakeCoral;
-import frc.robot.commands.Helpers.CaprisonCommands;
+import frc.robot.commands.Endafector.ManCoralForward;
+import frc.robot.commands.Endafector.ManCoralReverse;
 import frc.robot.commands.teleop.OperatorCommands;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
-import java.sql.Driver;
 
 import org.photonvision.PhotonCamera;
-import org.photonvision.jni.TimeSyncServer;
 
 import frc.robot.subsystems.Bluetooth;
 import frc.robot.subsystems.arm.EndJoeBidenFactor;
 import frc.robot.subsystems.arm.Lebronavator;
-
+import frc.robot.commands.Elevator.ManElevatorDown;
+import frc.robot.commands.Elevator.ManElevatorUp;
 import frc.robot.commands.Elevator.horn;
 import frc.robot.commands.Elevator.playSong;
 import swervelib.SwerveInputStream;
@@ -65,16 +65,14 @@ public class RobotContainer
 
   private final PhotonCamera photon_camera = new PhotonCamera("Camera_Front");
 
-
-
-
   //private final LimeLight Limelight = new LimeLight();
   //private final PhotonCamera apriltagCam = new PhotonCamera("Camera_Front");
   // Create pathplanner auto chooser                                                                              
   private final SendableChooser<Command> autoChooser;
 
 
-/**
+
+  /**
    * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
    */
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
@@ -89,7 +87,7 @@ public class RobotContainer
    * Clone's the angular velocity input stream and converts it to a fieldRelative input stream.
    */
   SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(driverXbox::getRightX,
-                                                                                             driverXbox::getRightY)
+                                                                                            driverXbox::getRightY)
                                                            .headingWhile(true);
 
   /**
@@ -123,7 +121,7 @@ public class RobotContainer
                                                                                                               (Math.PI *
                                                                                                                2))
                                                                                .headingWhile(true);
-
+ 
   /**
 
   /**
@@ -150,8 +148,6 @@ public class RobotContainer
     // Configure the trigger bindings
     configureBindings();
     DriverStation.silenceJoystickConnectionWarning(true);
-    //NamedCommands.registerCommand("test", Commands.print("I EXIST"));
-    allianceGryoReset();
   }
 
   /**
@@ -167,7 +163,7 @@ public class RobotContainer
   private void configureBindings()
   {
     Command driveFieldOrientedDirectAngle      = drivebase.driveFieldOriented(driveDirectAngle);
-    //Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
+    Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
     //Command driveRobotOrientedAngularVelocity  = drivebase.driveFieldOriented(driveRobotOriented);
     //Command driveSetpointGen = drivebase.driveWithSetpointGeneratorFieldRelative(
     //    driveDirectAngle);
@@ -183,16 +179,41 @@ public class RobotContainer
       driverXbox.button(1).whileTrue(drivebase.sysIdDriveMotorCommand());
     } else
     {
-      drivebase.setDefaultCommand(driveFieldOrientedDirectAngle);
+      /**  driver Xbox */
+      drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
+
+      driverXbox.start().whileTrue(new playSong(elevator, "sus"));
+      driverXbox.start().whileTrue(Commands.runOnce(elevator::resetControlMode));
+
       driverXbox.a().whileTrue(Commands.runOnce(drivebase::zeroGyroWithAlliance));
-      //driverXbox.a().whileTrue(visionCommands.AdjustDriveBase(drivebase, led));
+      driverXbox.b().whileTrue(new horn(elevator)); //rainbow
+      driverXbox.x().whileTrue(Commands.none());
+      driverXbox.y().whileTrue(Commands.none());
+
       driverXbox.leftTrigger().whileTrue(opCommands.AutoScoreL2());
-      driverXbox.rightTrigger().whileTrue(opCommands.AutoScoreL1());
-      driverXbox.y().whileTrue(new IntakeCoral(BidenFactor, led));
-      driverXbox.start().whileTrue(new horn(elevator));
-      driverXbox.back().whileTrue(new playSong(elevator, "hcb"));
-      //driverXbox.x().whileTrue(visionCommands.AdjustDriveBase(drivebase, led));
-    }
+      driverXbox.leftBumper().whileTrue(Commands.none());
+      driverXbox.rightTrigger().whileTrue(Commands.none());
+      driverXbox.rightBumper().whileTrue(Commands.none());
+
+      /** Operator Xbox 
+      operatorXbox.start().whileTrue(Commands.none());
+      operatorXbox.start().whileTrue(Commands.runOnce(elevator::resetControlMode));
+
+      operatorXbox.a().whileTrue(opCommands.AutoScoreL1());
+      operatorXbox.b().whileTrue(opCommands.AutoScoreL3()); //rainbow
+      operatorXbox.x().whileTrue(opCommands.AutoScoreL2());
+      operatorXbox.y().whileTrue(opCommands.AutoScoreL4());
+
+      operatorXbox.pov(0).whileTrue(new ManElevatorUp(elevator, led));
+      operatorXbox.pov(90).whileTrue(new ManCoralForward(BidenFactor, led));
+      operatorXbox.pov(180).whileTrue(new ManElevatorDown(elevator, led));
+      operatorXbox.pov(270).whileTrue(new ManCoralReverse(BidenFactor, led));
+
+      operatorXbox.leftTrigger().whileTrue(opCommands.ElevatorDown());
+      operatorXbox.leftBumper().whileTrue(new IntakeCoral(BidenFactor, led));
+      operatorXbox.rightTrigger().whileTrue(Commands.none());
+      operatorXbox.rightBumper().whileTrue(new EjectCoral(BidenFactor, led)); */
+    } 
     /*
     if (DriverStation.isTest())
     {
@@ -219,10 +240,6 @@ public class RobotContainer
     } */
   }
 
-  public void allianceGryoReset(){
-    drivebase.zeroGyroWithAlliance();
-  }
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -244,13 +261,9 @@ public class RobotContainer
   public void setDriveMode()
   {
     led.scroll("default");
+    elevator.StopMotor();
     elevator.resetControlMode();
     configureBindings();
-  }
-
-  public void setGyroOffset()
-  {
-    //drivebase.setGyroOffset(180);
   }
 
   /**
