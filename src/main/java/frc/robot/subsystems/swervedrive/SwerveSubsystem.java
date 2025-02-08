@@ -70,7 +70,7 @@ public class SwerveSubsystem extends SubsystemBase
   /**
    * Enable vision odometry updates while driving.
    */
-  private final boolean             visionDriveTest     = true;
+  private final boolean             visionDriveTest     = false;
   /**
    * PhotonVision class to keep an accurate odometry.
    */
@@ -92,7 +92,7 @@ public class SwerveSubsystem extends SubsystemBase
     //  In this case the wheel diameter is 4 inches, which must be converted to meters to get meters/second.
     //  The gear ratio is 6.75 motor revolutions per wheel rotation.
     //  The encoder resolution per motor revolution is 1 per motor revolution.
-    double driveConversionFactor = Math.PI * 4 / (6.12 * 42);
+    double driveConversionFactor = 0.047286787200699704;
 
 
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.

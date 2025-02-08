@@ -6,11 +6,8 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -18,23 +15,11 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Endafector.EjectCoral;
-import frc.robot.commands.Endafector.IntakeCoral;
-import frc.robot.commands.Endafector.ManCoralForward;
-import frc.robot.commands.Endafector.ManCoralReverse;
-import frc.robot.commands.teleop.OperatorCommands;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 
-import org.photonvision.PhotonCamera;
+//import org.photonvision.PhotonCamera;
 
-import frc.robot.subsystems.Bluetooth;
-import frc.robot.subsystems.arm.EndJoeBidenFactor;
-import frc.robot.subsystems.arm.Lebronavator;
-import frc.robot.commands.Elevator.ManElevatorDown;
-import frc.robot.commands.Elevator.ManElevatorUp;
-import frc.robot.commands.Elevator.horn;
-import frc.robot.commands.Elevator.playSong;
 import swervelib.SwerveInputStream;
 
 /**
@@ -55,15 +40,6 @@ public class RobotContainer
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve/"));
-  //private final CaprisonCommands visionCommands = new CaprisonCommands();
-  private final EndJoeBidenFactor BidenFactor = new EndJoeBidenFactor();
-  private final Lebronavator elevator = new Lebronavator();
-  private final Bluetooth led = new Bluetooth();
-
-  // Command Classes
-  private final OperatorCommands opCommands = new OperatorCommands(elevator, BidenFactor, led);
-
-  private final PhotonCamera photon_camera = new PhotonCamera("Camera_Front");
 
   //private final LimeLight Limelight = new LimeLight();
   //private final PhotonCamera apriltagCam = new PhotonCamera("Camera_Front");
@@ -136,9 +112,6 @@ public class RobotContainer
     // Rizz up the ops
     Rizzler.rizz();
 
-    // Blink color
-    led.scroll("orange");
-
     //photon_camera.
 
     // Build an Pathplanner auto chooser. This will use Commands.none() as the default option.
@@ -162,58 +135,52 @@ public class RobotContainer
    */
   private void configureBindings()
   {
-    Command driveFieldOrientedDirectAngle      = drivebase.driveFieldOriented(driveDirectAngle);
+    //Command driveFieldOrientedDirectAngle      = drivebase.driveFieldOriented(driveDirectAngle);
     Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
     //Command driveRobotOrientedAngularVelocity  = drivebase.driveFieldOriented(driveRobotOriented);
     //Command driveSetpointGen = drivebase.driveWithSetpointGeneratorFieldRelative(
     //    driveDirectAngle);
-    Command driveFieldOrientedDirectAngleKeyboard      = drivebase.driveFieldOriented(driveDirectAngleKeyboard);
+    //Command driveFieldOrientedDirectAngleKeyboard      = drivebase.driveFieldOriented(driveDirectAngleKeyboard);
     //Command driveFieldOrientedAnglularVelocityKeyboard = drivebase.driveFieldOriented(driveAngularVelocityKeyboard);
     //Command driveSetpointGenKeyboard = drivebase.driveWithSetpointGeneratorFieldRelative(
     //    driveDirectAngleKeyboard);
 
-    if (RobotBase.isSimulation())
-    {
-      drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
-      driverXbox.start().onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
-      driverXbox.button(1).whileTrue(drivebase.sysIdDriveMotorCommand());
-    } else
-    {
-      /**  driver Xbox */
-      drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
+  
+    /**  driver Xbox */
+    drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
 
-      driverXbox.start().whileTrue(new playSong(elevator, "sus"));
-      driverXbox.start().whileTrue(Commands.runOnce(elevator::resetControlMode));
+    //driverXbox.start().whileTrue(new playSong(elevator, "sus"));
+    //driverXbox.start().whileTrue(Commands.runOnce(elevator::resetControlMode));
 
-      driverXbox.a().whileTrue(Commands.runOnce(drivebase::zeroGyroWithAlliance));
-      driverXbox.b().whileTrue(new horn(elevator)); //rainbow
-      driverXbox.x().whileTrue(Commands.none());
-      driverXbox.y().whileTrue(Commands.none());
+    driverXbox.a().whileTrue(Commands.runOnce(drivebase::zeroGyroWithAlliance));
+    //driverXbox.b().whileTrue(new horn(elevator)); //rainbow
+    driverXbox.x().whileTrue(Commands.none());
+    driverXbox.y().whileTrue(Commands.none());
 
-      driverXbox.leftTrigger().whileTrue(opCommands.AutoScoreL2());
-      driverXbox.leftBumper().whileTrue(Commands.none());
-      driverXbox.rightTrigger().whileTrue(Commands.none());
-      driverXbox.rightBumper().whileTrue(Commands.none());
+    //driverXbox.leftTrigger().whileTrue(opCommands.AutoScoreL2());
+    driverXbox.leftBumper().whileTrue(Commands.none());
+    driverXbox.rightTrigger().whileTrue(Commands.none());
+    driverXbox.rightBumper().whileTrue(Commands.none());
 
-      /** Operator Xbox 
-      operatorXbox.start().whileTrue(Commands.none());
-      operatorXbox.start().whileTrue(Commands.runOnce(elevator::resetControlMode));
+    /** Operator Xbox 
+    operatorXbox.start().whileTrue(Commands.none());
+    operatorXbox.start().whileTrue(Commands.runOnce(elevator::resetControlMode));
 
-      operatorXbox.a().whileTrue(opCommands.AutoScoreL1());
-      operatorXbox.b().whileTrue(opCommands.AutoScoreL3()); //rainbow
-      operatorXbox.x().whileTrue(opCommands.AutoScoreL2());
-      operatorXbox.y().whileTrue(opCommands.AutoScoreL4());
+    operatorXbox.a().whileTrue(opCommands.AutoScoreL1());
+    operatorXbox.b().whileTrue(opCommands.AutoScoreL3()); //rainbow
+    operatorXbox.x().whileTrue(opCommands.AutoScoreL2());
+    operatorXbox.y().whileTrue(opCommands.AutoScoreL4());
 
-      operatorXbox.pov(0).whileTrue(new ManElevatorUp(elevator, led));
-      operatorXbox.pov(90).whileTrue(new ManCoralForward(BidenFactor, led));
-      operatorXbox.pov(180).whileTrue(new ManElevatorDown(elevator, led));
-      operatorXbox.pov(270).whileTrue(new ManCoralReverse(BidenFactor, led));
+    operatorXbox.pov(0).whileTrue(new ManElevatorUp(elevator, led));
+    operatorXbox.pov(90).whileTrue(new ManCoralForward(BidenFactor, led));
+    operatorXbox.pov(180).whileTrue(new ManElevatorDown(elevator, led));
+    operatorXbox.pov(270).whileTrue(new ManCoralReverse(BidenFactor, led));
 
-      operatorXbox.leftTrigger().whileTrue(opCommands.ElevatorDown());
-      operatorXbox.leftBumper().whileTrue(new IntakeCoral(BidenFactor, led));
-      operatorXbox.rightTrigger().whileTrue(Commands.none());
-      operatorXbox.rightBumper().whileTrue(new EjectCoral(BidenFactor, led)); */
-    } 
+    operatorXbox.leftTrigger().whileTrue(opCommands.ElevatorDown());
+    operatorXbox.leftBumper().whileTrue(new IntakeCoral(BidenFactor, led));
+    operatorXbox.rightTrigger().whileTrue(Commands.none());
+    operatorXbox.rightBumper().whileTrue(new EjectCoral(BidenFactor, led)); */
+     
     /*
     if (DriverStation.isTest())
     {
@@ -260,9 +227,6 @@ public class RobotContainer
    */
   public void setDriveMode()
   {
-    led.scroll("default");
-    elevator.StopMotor();
-    elevator.resetControlMode();
     configureBindings();
   }
 
@@ -289,21 +253,8 @@ public class RobotContainer
   }
 
   public void disabledInit() {
-    elevator.playSong("amoungus");
   }
 
   public void disabledPeriodic() {
-    var alliance = DriverStation.getAlliance();
-    if (alliance.isPresent())
-    {
-      if(alliance.get() == DriverStation.Alliance.Red) {
-        led.color("red");
-        led.setDefaultColor("red");
-      }
-      else {
-        led.color("blue");
-        led.setDefaultColor("blue");
-      }
-    }
   }
 }
