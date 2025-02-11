@@ -195,7 +195,7 @@ public class RobotContainer
       driverXbox.rightTrigger().whileTrue(Commands.none());
       driverXbox.rightBumper().whileTrue(Commands.none());
 
-      /** Operator Xbox 
+      /** Operator Xbox */
       operatorXbox.start().whileTrue(Commands.none());
       operatorXbox.back().whileTrue(Commands.runOnce(elevator::resetControlMode));
 
@@ -212,7 +212,7 @@ public class RobotContainer
       operatorXbox.leftTrigger().whileTrue(opCommands.ElevatorDown());
       operatorXbox.leftBumper().whileTrue(new IntakeCoral(BidenFactor, led));
       operatorXbox.rightTrigger().whileTrue(Commands.none());
-      operatorXbox.rightBumper().whileTrue(new EjectCoral(BidenFactor, led)); */
+      operatorXbox.rightBumper().whileTrue(new EjectCoral(BidenFactor, led));
 
       /** Coach Xbox */
       coachXbox.start().whileTrue(Commands.none());
