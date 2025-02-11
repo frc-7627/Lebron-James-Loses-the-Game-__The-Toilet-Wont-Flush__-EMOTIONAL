@@ -2,7 +2,6 @@ package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Bluetooth;
-import frc.robot.subsystems.arm.Lebronavator;
 import frc.robot.subsystems.climber.AdultDiapers;
 
 public class ClimberSlowUp extends Command {

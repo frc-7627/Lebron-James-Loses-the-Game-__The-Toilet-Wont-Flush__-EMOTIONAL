@@ -25,7 +25,7 @@ public class OperatorCommands {
         new IntakeCoral(module2, led);
     }
     
-    public Command ElevatorDown() {
+    public Command AutoStow() {
         return new SequentialCommandGroup(
             new ElevatorMove(elevator, 0),
             new WaitForCoral(outake),

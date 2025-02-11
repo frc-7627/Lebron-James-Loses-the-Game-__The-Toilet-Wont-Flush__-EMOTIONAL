@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -17,24 +15,26 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Endafector.EjectCoral;
-import frc.robot.commands.Endafector.IntakeCoral;
-import frc.robot.commands.Endafector.ManCoralForward;
-import frc.robot.commands.Endafector.ManCoralReverse;
-import frc.robot.commands.teleop.OperatorCommands;
-import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 
-import org.photonvision.PhotonCamera;
+import frc.robot.Constants.OperatorConstants;
 
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.Bluetooth;
 import frc.robot.subsystems.arm.EndJoeBidenFactor;
 import frc.robot.subsystems.arm.Lebronavator;
-import frc.robot.commands.Elevator.ManElevatorDown;
-import frc.robot.commands.Elevator.ManElevatorUp;
-import frc.robot.commands.Elevator.horn;
-import frc.robot.commands.Elevator.playSong;
+import frc.robot.subsystems.climber.AdultDiapers;
+
+import org.photonvision.PhotonCamera;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
+import frc.robot.commands.Endafector.*;
+import frc.robot.commands.Climber.*;
+import frc.robot.commands.Elevator.*;
+import frc.robot.commands.teleop.OperatorCommands;
+import frc.robot.helpers.vision.DriveBaseRotationAdjust;
 import swervelib.SwerveInputStream;
 
 /**
@@ -58,12 +58,13 @@ public class RobotContainer
   //private final CaprisonCommands visionCommands = new CaprisonCommands();
   private final EndJoeBidenFactor BidenFactor = new EndJoeBidenFactor();
   private final Lebronavator elevator = new Lebronavator();
+  private final AdultDiapers climber = new AdultDiapers();
   private final Bluetooth led = new Bluetooth();
 
   // Command Classes
   private final OperatorCommands opCommands = new OperatorCommands(elevator, BidenFactor, led);
 
-  private final PhotonCamera photon_camera = new PhotonCamera("Camera_Front");
+  //private final PhotonCamera photon_camera = new PhotonCamera("Camera_Front");
 
   //private final LimeLight Limelight = new LimeLight();
   //private final PhotonCamera apriltagCam = new PhotonCamera("Camera_Front");
@@ -144,6 +145,7 @@ public class RobotContainer
     // Build an Pathplanner auto chooser. This will use Commands.none() as the default option.
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
+    configureNamedCommands(); // Setup Pathplanner Commands
 
     // Configure the trigger bindings
     configureBindings();
@@ -162,19 +164,19 @@ public class RobotContainer
    */
   private void configureBindings()
   {
-    Command driveFieldOrientedDirectAngle      = drivebase.driveFieldOriented(driveDirectAngle);
+    //Command driveFieldOrientedDirectAngle      = drivebase.driveFieldOriented(driveDirectAngle);
     Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
     //Command driveRobotOrientedAngularVelocity  = drivebase.driveFieldOriented(driveRobotOriented);
     //Command driveSetpointGen = drivebase.driveWithSetpointGeneratorFieldRelative(
     //    driveDirectAngle);
-    Command driveFieldOrientedDirectAngleKeyboard      = drivebase.driveFieldOriented(driveDirectAngleKeyboard);
-    //Command driveFieldOrientedAnglularVelocityKeyboard = drivebase.driveFieldOriented(driveAngularVelocityKeyboard);
+    //Command driveFieldOrientedDirectAngleKeyboard      = drivebase.driveFieldOriented(driveDirectAngleKeyboard);
+    Command driveFieldOrientedAnglularVelocityKeyboard = drivebase.driveFieldOriented(driveAngularVelocityKeyboard);
     //Command driveSetpointGenKeyboard = drivebase.driveWithSetpointGeneratorFieldRelative(
     //    driveDirectAngleKeyboard);
 
     if (RobotBase.isSimulation())
     {
-      drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
+      drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocityKeyboard);
       driverXbox.start().onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
       driverXbox.button(1).whileTrue(drivebase.sysIdDriveMotorCommand());
     } else
@@ -209,7 +211,7 @@ public class RobotContainer
       operatorXbox.pov(180).whileTrue(new ManElevatorDown(elevator, led));
       operatorXbox.pov(270).whileTrue(new ManCoralReverse(BidenFactor, led));
 
-      operatorXbox.leftTrigger().whileTrue(opCommands.ElevatorDown());
+      operatorXbox.leftTrigger().whileTrue(opCommands.AutoStow());
       operatorXbox.leftBumper().whileTrue(new IntakeCoral(BidenFactor, led));
       operatorXbox.rightTrigger().whileTrue(Commands.none());
       operatorXbox.rightBumper().whileTrue(new EjectCoral(BidenFactor, led));
@@ -257,6 +259,42 @@ public class RobotContainer
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       driverXbox.rightBumper().onTrue(Commands.none());
     } */
+  }
+
+  private void configureNamedCommands() {
+    /* Vision - Requires vision readings from either apriltags or gamepeices, use near middle through end of auto*/
+    /* Manual - Only for certain edge cases, use Automated controls for most autos */
+    /* Rare Use Case - There is no thinkable reason to use these */
+
+    // AutoOperator
+    NamedCommands.registerCommand("AutoStow", opCommands.AutoStow()); 
+    NamedCommands.registerCommand("AutoScoreL1", opCommands.AutoScoreL1()); 
+    NamedCommands.registerCommand("AutoScoreL2", opCommands.AutoScoreL2()); 
+    NamedCommands.registerCommand("AutoScoreL3", opCommands.AutoScoreL3()); 
+    NamedCommands.registerCommand("AutoScoreL4", opCommands.AutoScoreL4()); 
+
+    // Climber
+    NamedCommands.registerCommand("ClimberDown", new ClimberDown(climber)); // Manual
+    NamedCommands.registerCommand("ClimberUp", new ClimberUp(climber)); // Manual
+    NamedCommands.registerCommand("ClimberSlowDown", new ClimberSlowDown(climber, led)); // Manual
+    NamedCommands.registerCommand("ClimberSlowUp", new ClimberSlowUp(climber, led)); // Manual TODO: investagate why normal climber commands don't require led
+
+    // Elevator
+    //NamedCommands.registerCommand("ArmToStow", new ElevatorMove(climber));
+    NamedCommands.registerCommand("Horn", new horn(elevator));
+    NamedCommands.registerCommand("playSong", new playSong(elevator, "sus")); 
+    NamedCommands.registerCommand("ManElevatorDown", new ManElevatorDown(elevator, led)); // Manual
+    NamedCommands.registerCommand("ManElevatorUp", new ManElevatorUp(elevator, led)); // Manual
+
+    // Endafector
+    NamedCommands.registerCommand("EjectCoral", new EjectCoral(BidenFactor, led));
+    NamedCommands.registerCommand("IntakeCoral", new IntakeCoral(BidenFactor, led));
+    NamedCommands.registerCommand("ManCoralForward", new ManCoralForward(BidenFactor, led)); // Manual
+    NamedCommands.registerCommand("ManCoralReverse", new ManCoralReverse(BidenFactor, led)); // Manual
+    NamedCommands.registerCommand("WaitForCoral", new WaitForCoral(BidenFactor)); // Rare use case
+
+    // Drivebase
+    NamedCommands.registerCommand("DriveBaseRotationAdjust", new DriveBaseRotationAdjust(drivebase)); // Vision
   }
 
   /**
