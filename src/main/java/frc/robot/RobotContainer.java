@@ -183,7 +183,7 @@ public class RobotContainer
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
 
       driverXbox.start().whileTrue(new playSong(elevator, "sus"));
-      driverXbox.start().whileTrue(Commands.runOnce(elevator::resetControlMode));
+      driverXbox.back().whileTrue(Commands.runOnce(elevator::resetControlMode));
 
       driverXbox.a().whileTrue(Commands.runOnce(drivebase::zeroGyroWithAlliance));
       driverXbox.b().whileTrue(new horn(elevator)); //rainbow
@@ -197,7 +197,7 @@ public class RobotContainer
 
       /** Operator Xbox 
       operatorXbox.start().whileTrue(Commands.none());
-      operatorXbox.start().whileTrue(Commands.runOnce(elevator::resetControlMode));
+      operatorXbox.back().whileTrue(Commands.runOnce(elevator::resetControlMode));
 
       operatorXbox.a().whileTrue(opCommands.AutoScoreL1());
       operatorXbox.b().whileTrue(opCommands.AutoScoreL3()); //rainbow
@@ -213,6 +213,25 @@ public class RobotContainer
       operatorXbox.leftBumper().whileTrue(new IntakeCoral(BidenFactor, led));
       operatorXbox.rightTrigger().whileTrue(Commands.none());
       operatorXbox.rightBumper().whileTrue(new EjectCoral(BidenFactor, led)); */
+
+      /** Coach Xbox */
+      coachXbox.start().whileTrue(Commands.none());
+      coachXbox.back().whileTrue(Commands.none());
+      coachXbox.a().whileTrue(Commands.none());
+      coachXbox.b().whileTrue(Commands.none());
+      coachXbox.x().whileTrue(Commands.none());
+      coachXbox.y().whileTrue(Commands.none());
+
+      coachXbox.pov(0).whileTrue(Commands.none());
+      coachXbox.pov(90).whileTrue(Commands.none());
+      coachXbox.pov(180).whileTrue(Commands.none());
+      coachXbox.pov(270).whileTrue(Commands.none());
+
+      coachXbox.leftTrigger().whileTrue(Commands.none());
+      coachXbox.leftBumper().whileTrue(Commands.none());
+      coachXbox.rightTrigger().whileTrue(Commands.none());
+      coachXbox.rightBumper().whileTrue(Commands.none());
+    
     } 
     /*
     if (DriverStation.isTest())
