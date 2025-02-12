@@ -8,6 +8,7 @@ import frc.robot.subsystems.Bluetooth;
 
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
+/** See Constructor for details */
 public class DriveBaseRotationAdjust extends Command {
     private SwerveSubsystem drivebase;
     PhotonCamera camera = new PhotonCamera("Camera_Front");
@@ -15,6 +16,13 @@ public class DriveBaseRotationAdjust extends Command {
 
     private double tx;
 
+    /**
+     * Turns the Robot to face an April Tag, using PhotonVison detections
+     * 
+     * @requires drivebase Swerve Drivebase provided by YAGSL
+     * @requires led visually indicated when an apriltag is being detected
+     * @version 2.0
+     */
     public DriveBaseRotationAdjust(SwerveSubsystem module, Bluetooth led) {
         this.drivebase = module;
         this.led = led;

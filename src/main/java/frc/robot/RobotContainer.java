@@ -25,16 +25,14 @@ import frc.robot.subsystems.arm.EndJoeBidenFactor;
 import frc.robot.subsystems.arm.Lebronavator;
 import frc.robot.subsystems.climber.AdultDiapers;
 
-import org.photonvision.PhotonCamera;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import frc.robot.commands.Endafector.*;
 import frc.robot.commands.Climber.*;
 import frc.robot.commands.Elevator.*;
-import frc.robot.commands.teleop.OperatorCommands;
-import frc.robot.helpers.vision.DriveBaseRotationAdjust;
+import frc.robot.helpers.vision.*;
+import frc.robot.commands.teleop.*;
 import swervelib.SwerveInputStream;
 
 /**
@@ -42,7 +40,6 @@ import swervelib.SwerveInputStream;
  * little robot logic should actually be handled in the {@link Robot} periodic methods (other than the scheduler calls).
  * Instead, the structure of the robot (including subsystems, commands, and trigger mappings) should be declared here.
  */
-
 public class RobotContainer
 {
 
@@ -202,7 +199,7 @@ public class RobotContainer
       operatorXbox.back().whileTrue(Commands.runOnce(elevator::resetControlMode));
 
       operatorXbox.a().whileTrue(opCommands.AutoScoreL1());
-      operatorXbox.b().whileTrue(opCommands.AutoScoreL3()); //rainbow
+      operatorXbox.b().whileTrue(opCommands.AutoScoreL3());
       operatorXbox.x().whileTrue(opCommands.AutoScoreL2());
       operatorXbox.y().whileTrue(opCommands.AutoScoreL4());
 
@@ -223,11 +220,6 @@ public class RobotContainer
       coachXbox.b().whileTrue(Commands.none());
       coachXbox.x().whileTrue(Commands.none());
       coachXbox.y().whileTrue(Commands.none());
-
-      coachXbox.pov(0).whileTrue(Commands.none());
-      coachXbox.pov(90).whileTrue(Commands.none());
-      coachXbox.pov(180).whileTrue(Commands.none());
-      coachXbox.pov(270).whileTrue(Commands.none());
 
       coachXbox.leftTrigger().whileTrue(Commands.none());
       coachXbox.leftBumper().whileTrue(Commands.none());
@@ -261,6 +253,15 @@ public class RobotContainer
     } */
   }
 
+  /**
+   * Defines Named Commands for use with Pathplanner
+   * Should include all available commands on in this code
+   * 
+   * @return void
+   * @version 1.0
+   * 
+   * @see com.pathplanner.lib.auto.NamedCommands
+   */
   private void configureNamedCommands() {
     /* Vision - Requires vision readings from either apriltags or gamepeices, use near middle through end of auto*/
     /* Manual - Only for certain edge cases, use Automated controls for most autos */
@@ -336,20 +337,17 @@ public class RobotContainer
     drivebase.setMotorBrake(brake);
   }
 
-  public boolean isRedAlliance() {
-    var alliance = DriverStation.getAlliance();
-    if (alliance.isPresent())
-    {
-      return alliance.get() == DriverStation.Alliance.Red;
-    }
-    return false;
-  }
-
-  public void disabledInit() {
-    elevator.playSong("amoungus");
-  }
-
-  public void disabledPeriodic() {
+  /** 
+   * Changes the Led Color to match the selected alliance
+   * in driverstation. Should be called periodically when disabled
+   * 
+   * @return void
+   * @version 1.0
+   * 
+   * @see edu.wpi.first.wpilibj.DriverStation.getAlliance
+   * @see frc.robot.subsystems.Bluetooth
+   * */
+  public void matchLedWithAlliance() {
     var alliance = DriverStation.getAlliance();
     if (alliance.isPresent())
     {
@@ -362,5 +360,25 @@ public class RobotContainer
         led.setDefaultColor("blue");
       }
     }
+  }
+
+  /**
+   * Run once when Robot is disabled in driverstation
+   *  
+   * @return void
+   */
+  public void disabledInit() {
+    elevator.playSong("amoungus"); // Play Amoung us theme to pass the time
+  }
+
+  /**
+   * Run every cycle when the robot is disabled in driverstation
+   *
+   *  - Changes Led color depending on which alliance the robot is on
+   * 
+   * @return void
+   */
+  public void disabledPeriodic() {
+    matchLedWithAlliance();
   }
 }

@@ -4,8 +4,22 @@ import frc.robot.subsystems.arm.Lebronavator;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
+/**
+* Moves the Elevator to one of 5 pre defined encoder positions,
+* given the int arguement passed to this command, then ends
+* With all 5 Encoder Positions are defined in this class
+*
+* @arg int location - used to lookup encoder position to move to
+*       0: Stow Elevator
+*       1-4: Scoring positions for L1-L4 on the reef 
+*
+* @requires AdultDiapers
+* @requires led - For visual manual control in use notification
+* @version 1.0
+*/
 public class ElevatorMove extends Command {
 
+    // Editable Constants
     private double setPoint_Down = 10;
     private double setPoint_L1 = 20;
     private double setPoint_L2 = 30;
