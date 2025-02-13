@@ -6,7 +6,14 @@ import com.ctre.phoenix.led.*;
 import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 
 
-
+/** 
+ * LED Subsystem
+ * 
+ * Capable of patterns
+ * 
+ * uses a CANdle for LED control
+ * @see ctre.phoenix.led
+ */
 public class Bluetooth extends SubsystemBase{
 
   private CANdle candle = new CANdle(3);
@@ -22,13 +29,20 @@ public class Bluetooth extends SubsystemBase{
   //so acurate
   //yes
 
+  /**
+   * Initializes the LED Subsystem
+   */
   public Bluetooth(){
   }
 
   
   /**
-   * Toggles the bluetooth
-   * @return Status of blueooth (on/off) as a boolean
+   * Sets all leds to a solid color given a string containing the name of the color
+   * {@link getColorValues} contains all preset color names
+   * 
+   * @param color The color as a string(Ex: "Blue") to set the led to
+   * @return void
+   * @version 1.1
    */
   public void color(String color) {
     candle.clearAnimation(0);
@@ -37,6 +51,23 @@ public class Bluetooth extends SubsystemBase{
 
   }
 
+  /**
+   * Returns an int array descibring a color in RGB format, provided 
+   * a String containing the name of the Color 
+   * 
+   * @param color The color as a string(Ex: "Blue") to set the led to
+   *   Supported Colors are:
+   *      orange
+   *      eggPlant
+   *      vomitGreen
+   *      beige
+   *      red
+   *      blue
+   *      white
+   * 
+   * @return int array containing the 3 RGB values as int
+   * @version 1.0
+   */
   private int[] getColorValues(String color) {
     switch(color) {
       case "orange":
@@ -61,29 +92,18 @@ public class Bluetooth extends SubsystemBase{
     }
   }
 
-  /*public boolean th5() {
-    th5 = !th5
-    ;if(th5){ setColor(255, 50, 2)
-    ;try {
-    wait(2000)
-    ;
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }candle.clearAnimation(0)
-    ;candle.setLEDs(0, 0, 0)
-    ;candle.setLEDs(255, 0, 0)
-    ;}
-    else bluetoothOFF()
-
-    ;return th5;
-  }
-*/
+  
   /**
-  * Sets color of the whole rgb strip
-  * @param r Red brightness as int (0-255)
-  * @param g Green brightness as int (0-255)
-  * @param b Blue brightness as int (0-255)
-  */
+   * Sets color of the whole rgb strip based on
+   * an RGB value
+   *
+   * @param r Red brightness as int (0-255)
+   * @param g Green brightness as int (0-255)
+   * @param b Blue brightness as int (0-255)
+   * 
+   * @return void
+   * @version 1.0
+   */
   public void setColor(int r, int g, int b) {
     //candle.clearAnimation(0);
     candle.setLEDs(r, g, b);
@@ -94,7 +114,16 @@ public class Bluetooth extends SubsystemBase{
   }
 
 
-  /** Turns all Leds on with Rainbow Animation */
+  /** 
+   * Turns all Leds on with Rainbow Animation 
+   * 
+   * @return void
+   * 
+   * @see com.ctre.phoenix.led.CANdle.animate
+   * @see com.ctre.phoenix.led.RainbowAnimation
+   * 
+   * @version 1.0
+   */
   public void rainbow(){
     //hackerman works
     candle.clearAnimation(0);
@@ -102,7 +131,18 @@ public class Bluetooth extends SubsystemBase{
   }
 
   
-  /** Turns all Leds on with Rainbow Animation */
+  /** 
+   * Blinks all Leds a certain color
+   * 
+   * @param color The color as a string(Ex: "Blue") to set the led to
+   * @return void
+   * 
+   * @see frc.robot.subsystems.Bluetooth.getColorValues for availible color names
+   * @see com.ctre.phoenix.led.StrobeAnimation.StrobeAnimation
+   * @see com.ctre.phoenix.led.CANdle.animate
+   * 
+   * @version 1.0
+   */
   public void blink(String color){
     candle.clearAnimation(0);
     int rGBvalue[] = getColorValues(color);
@@ -111,6 +151,19 @@ public class Bluetooth extends SubsystemBase{
     candle.animate(blinkingAnim, 0);
   }
 
+  /** 
+   * Scrolling effect by turning the leds off, and then to a solid color,
+   * then off again, in a wave-like motion.
+   * 
+   * @param color The color as a string(Ex: "Blue") to use
+   * @return void
+   * 
+   * @see frc.robot.subsystems.Bluetooth.getColorValues for availible color names
+   * @see com.ctre.phoenix.led.ColorFlowAnimation.ColorFlowAnimation
+   * @see com.ctre.phoenix.led.CANdle.animate
+   * 
+   * @version 1.0
+   */
   public void scroll(String color1) {
     candle.clearAnimation(0);
     int rGBvalue[] = getColorValues(color1);
@@ -122,7 +175,13 @@ public class Bluetooth extends SubsystemBase{
   }
 
   // Level 5 town hall ran out of elixer
-  /** Turns All LEDs off */
+
+  /** 
+   * Turns All LEDs off 
+   * 
+   * @return void
+   * @version 1.0
+   */
   public void bluetoothOFF(){
     candle.clearAnimation(0);
     candle.setLEDs(defaultColor[0], defaultColor[1], defaultColor[2]);

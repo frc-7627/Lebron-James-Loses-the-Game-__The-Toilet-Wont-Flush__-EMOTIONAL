@@ -11,6 +11,19 @@ import com.playingwithfusion.TimeOfFlight.RangingMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+/** 
+ * Our beloved Endefector Subsystem
+ * 
+ * Uses:
+ *  2 Revrobotics SparkMAX motor controllers with neos to move the gamepiece
+ *  2 playingwithfusion TOF sensors to check whether we are contacting
+ *    the gamepiece
+ * 
+ * @see com.revrobotics.spark.SparkMax
+ * @see com.playingwithfusion.TimeOfFlight
+ * 
+ * @version 1.0
+ */
 public class EndJoeBidenFactor extends SubsystemBase {
 
     private static double LoadSpeed = 0.1;
@@ -29,6 +42,16 @@ public class EndJoeBidenFactor extends SubsystemBase {
     private final TimeOfFlight m_TOF_front = new TimeOfFlight(46);
     private final TimeOfFlight m_TOF_rear = new TimeOfFlight(47);
     
+    /**
+     * Initializes the Endefector Subsystem
+     * 
+     * Configures two SparkMAX motor controllers
+     * with a follower config
+     * 
+     * @see com.revrobotics.spark.config.SparkMaxConfig
+     * 
+     * @version 1.0
+     */
     public EndJoeBidenFactor () {
 
         SparkMaxConfig motor_config = new SparkMaxConfig();
@@ -43,32 +66,93 @@ public class EndJoeBidenFactor extends SubsystemBase {
         System.out.println("Joe Biden was here");
     }
 
+    /**
+     * Runs the endefector at a constant speed
+     * defined in the instance variable LoadSpeed
+     * In order to load a gamepiece into the endefector
+     * 
+     * @return void
+     * @version 1.0
+     */
     public void load() {
         m_motor.set(LoadSpeed);
     }
 
+    /**
+     * Runs the endefector at a constant speed
+     * defined in the instance variable EjectSpeed
+     * In order to eject the gamepiece out the back
+     * of the endefector
+     * 
+     * @return void
+     * @version 1.0
+     */
     public void eject() {
         m_motor.set(EjectSpeed);
     }
 
+    /**
+     * Stops all motors in the endefector
+     * 
+     * @return void
+     * @version 1.0
+     */
     public void stop() {
         m_motor.set(0.0);
     }
 
+    /**
+     * A simple check using TOF sensors to detected whether
+     * a gamepeice is currently in front of the Front TOF 
+     * sensor, to find out when we securely are holding
+     * a gamepiece
+     * 
+     * @return boolean - True if gamepiece is detected
+     * 
+     * @see com.playingwithfusion.TimeOfFlight.getRange
+     * @version 1.0
+     */
     public boolean CoralIn() {
         System.out.println( m_TOF_front.getRange());
         return (m_TOF_front.isRangeValid() && CoralInValue > m_TOF_front.getRange());
     }
 
+    /**
+     * A simple check using TOF sensors to detected whether
+     * a gamepeice is currently in front of the Rear TOF 
+     * sensor, to find out when we are no longer in 
+     * possession of a gamepiece
+     * 
+     * @return boolean - True if gamepiece is detected
+     * 
+     * @see com.playingwithfusion.TimeOfFlight.getRange
+     * @version 1.0
+     */
     public boolean CoralOut() {
         System.out.println( m_TOF_rear.getRange());
         return (m_TOF_rear.isRangeValid() && CoralOutValue > m_TOF_rear.getRange());
     }
 
+    /**
+    * Slowly moves the Endefector forward at a slower constant speed,
+    * defined in the instance variable shimSpeed, used for 
+    * manual control and fine adjustments
+    * 
+    * @return void
+    * @version 1.0
+    */
     public void shimForward() {
         m_motor.set(shimSpeed);
     }
 
+    /**
+    * Slowly moves the Endefector backward at a slower constant speed,
+    * defined in the instance variable shimSpeed, used for 
+    * manual control and fine adjustments
+    * 
+    * @return void
+    * @version 1.0
+    */
     public void shimReverse() {
         m_motor.set(-shimSpeed);
     }

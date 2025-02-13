@@ -15,6 +15,17 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+
+
+/**
+ * The Elevator Subsystem
+ * 
+ * Capable of audio and music playback
+ * 
+ * Uses two TalonFX motor controllers
+ * @see com.ctre.phoenix6.Orchestra
+ * @see com.ctre.phoenix6.hardware.TalonFX
+ */
 public class Lebronavator extends SubsystemBase {
 
     // Define Constants
@@ -41,7 +52,20 @@ public class Lebronavator extends SubsystemBase {
     // Make an orchestra
     Orchestra m_Orchestra = new Orchestra();
 
-  
+
+
+    /** 
+     * Initializes the Elevator subsystem
+     * 
+     * Configures two TalonFX motor controllers
+     * with a follower config
+     * And puts them in an orchestra for music playback
+     * 
+     * @see com.ctre.phoenix6.configs.TalonFXConfiguration
+     * @see com.ctre.phoenix6.Orchestra
+     * 
+     * @version 1.0
+     */
     public Lebronavator() {
         // in init function
         var talonFXConfig_right = new TalonFXConfiguration();
@@ -98,17 +122,43 @@ public class Lebronavator extends SubsystemBase {
         resetControlMode();
     }
 
+
+
+    /**
+     * Plays a constant tone based on provided input
+     * using the talonFX controllers
+     * 
+     * Only use this when elevator is at 0
+     * 
+     * @param freq the frequency in hz of the tone 
+     * @return void
+     * @version 1.0
+     */
     public void playNote(int freq) {
         m_talonFX_right.setControl(new MusicTone(freq));
         m_talonFX_left.setControl(new MusicTone(freq));
     }
 
+    /**
+    * Plays a CHRP file using Pheonix Orchestra using both
+    * TalonFX motor controllers, limited to the amount of talonFXs
+    * used by subsystem
+    *
+    * Only use this when elevator is at 0
+    *
+    * MIDI files can be converted to CHRP files in the
+    * Pheonix Tuner X utilites
+    * 
+    * @param filename the name of the CHRP file as String (without the extension)
+    * @return void
+    * @version 1.0
+    */
     public void playSong(String filename) {
         // Add motors
         m_Orchestra.addInstrument(m_talonFX_left);
         m_Orchestra.addInstrument(m_talonFX_right);
 
-        filename = "sus";
+        filename = "sus"; // Bypass filename due to some unknown argument passing issue TODO: fix
 
         // Load song and play
         String filePath = Filesystem.getDeployDirectory() + "/midi/" + filename + ".chrp";
@@ -118,6 +168,16 @@ public class Lebronavator extends SubsystemBase {
         m_Orchestra.play();
     }
 
+
+
+    /**
+     * Resets the control modes of both TalonFXs
+     * Must use after playing audio on the Motor Controllers
+     * To revert them back to position control for elevator use
+     * 
+     * @return void
+     * @version 1.0
+     */
     public void resetControlMode() {
          // Clean up orchestra
         m_Orchestra.stop();
@@ -131,6 +191,18 @@ public class Lebronavator extends SubsystemBase {
         m_talonFX_left.setControl(new Follower(m_talonFX_right.getDeviceID(), true));
     }
 
+    /**
+     * Moves the elevator to the provided encoder positon, 
+     * using the MotionMagic motion controller built into 
+     * the talonFXs
+     * 
+     * @param position the goal encoder positon
+     * @return void
+     * 
+     * @version 1.0
+     * 
+     * @see com.ctre.phoenix6.controls.MotionMagicVoltage
+     */
     public void move(double position) {
         // create a Motion Magic request, voltage output
         final MotionMagicVoltage m_request = new MotionMagicVoltage(0);
@@ -139,18 +211,41 @@ public class Lebronavator extends SubsystemBase {
         m_talonFX_right.setControl(m_request.withPosition(position));
     }
 
+    /**
+     * Slowly moves the Elevator upwards at a constant speed,
+     * defined in the instance variable shimSpeed, used for
+     * manual control and fine adjustments
+     * 
+     * @return void
+     * @version 1.0
+     */
     public void shimUp() {
         final DutyCycleOut m_request = new DutyCycleOut(shimSpeed);
 
         m_talonFX_right.setControl(m_request);
     }
 
+    /**
+     * Slowly moves the Elevator downwards at a constant speed,
+     * defined in the instance variable shimSpeed, used for 
+     * manual control and fine adjustments
+     * 
+     * @return void
+     * @version 1.0
+     */
     public void shimDown() {
         final DutyCycleOut m_request = new DutyCycleOut(-shimSpeed);
 
         m_talonFX_right.setControl(m_request);
     }
 
+    /**
+     * Stops all motors, and sets the left motor to follow 
+     * the right motor again
+     * 
+     * @return void
+     * @version 1.0
+     */
     public void StopMotor() {
         // Setup follower config
         m_talonFX_left.setControl(new Follower(m_talonFX_right.getDeviceID(), true));
@@ -161,7 +256,13 @@ public class Lebronavator extends SubsystemBase {
         m_talonFX_right.setControl(m_request);
     }
 
-
+    /**
+     * Returns the current encoder postion of the right motor,
+     * 0 is it's initial position on startup (down)
+     * 
+     * @return Endcoder positon as double
+     * @version 1.0
+     */
     public double getPosition() {
         return m_talonFX_right.getPosition().getValueAsDouble();
     }
