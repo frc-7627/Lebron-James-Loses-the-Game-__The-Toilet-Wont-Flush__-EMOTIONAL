@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.152226027397259,
+        "y": 7.541010273972603
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.338459696495489,
+        "y": 7.879761892878055
+      },
+      "isLocked": false,
+      "linkedName": "TopStart"
+    },
+    {
+      "anchor": {
+        "x": 3.831549657534247,
+        "y": 5.16695205479452
+      },
+      "prevControl": {
+        "x": 3.4908123839631853,
+        "y": 4.904779943198936
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "ReefTopLeft"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 15.0,
+    "maxAcceleration": 7.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 119.27525427725261
+  },
+  "reversed": false,
+  "folder": "Quitting Softball",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}
