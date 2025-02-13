@@ -13,8 +13,8 @@
     "YOU CANT PARK THERE"
   ],
   "autoFolders": [],
-  "defaultMaxVel": 1.0,
-  "defaultMaxAccel": 2.0,
+  "defaultMaxVel": 15.0,
+  "defaultMaxAccel": 10.0,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,
   "defaultNominalVoltage": 12.0,
