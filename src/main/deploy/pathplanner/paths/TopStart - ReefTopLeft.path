@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.401982512178896,
-        "y": 7.529978578295153
+        "x": 7.338459696495489,
+        "y": 7.879761892878055
       },
       "isLocked": false,
       "linkedName": "TopStart"
     },
     {
       "anchor": {
-        "x": 5.814036885245901,
-        "y": 4.00701844262295
+        "x": 3.831549657534247,
+        "y": 5.16695205479452
       },
       "prevControl": {
-        "x": 5.825395194689147,
-        "y": 4.2567602869474275
+        "x": 3.4908123839631853,
+        "y": 4.904779943198936
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ReefRight"
+      "linkedName": "ReefTopLeft"
     }
   ],
   "rotationTargets": [],
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 2.5448043798130997
+    "rotation": 119.27525427725261
   },
   "reversed": false,
-  "folder": "MFNC 3 piece fish combo",
+  "folder": "Quitting Softball",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0
