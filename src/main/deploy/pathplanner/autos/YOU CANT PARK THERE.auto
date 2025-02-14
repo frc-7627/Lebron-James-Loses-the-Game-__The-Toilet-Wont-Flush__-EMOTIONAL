@@ -25,6 +25,12 @@
         {
           "type": "path",
           "data": {
+            "pathName": "TopStart - TopStart - seam fixer"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
             "pathName": "TopStart - Reef"
           }
         }

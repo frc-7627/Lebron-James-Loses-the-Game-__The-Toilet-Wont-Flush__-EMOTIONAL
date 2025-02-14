@@ -48,7 +48,7 @@
   "folder": "Quitting Softball",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 0.4628632301640064
   },
   "useDefaultConstraints": true
 }
