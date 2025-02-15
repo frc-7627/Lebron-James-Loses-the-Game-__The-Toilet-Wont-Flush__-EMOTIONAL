@@ -6,19 +6,25 @@ import org.photonvision.PhotonUtils;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Bluetooth;
 
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.swervedrive.Vision;
 
 /** See Constructor for details */
-public class DriveBaseRotationAdjust extends Command {
+public class DriveBasePoseAdjust extends Command {
     private SwerveSubsystem drivebase;
     PhotonCamera camera = new PhotonCamera("Camera_Front");
     Bluetooth led;
 
     private double tx;
+    private double y_offset;
 
     /**
      * Turns the Robot to face an April Tag, using PhotonVison detections
@@ -27,9 +33,10 @@ public class DriveBaseRotationAdjust extends Command {
      * @requires led visually indicated when an apriltag is being detected
      * @version 2.0
      */
-    public DriveBaseRotationAdjust(SwerveSubsystem module, Bluetooth led) {
+    public DriveBasePoseAdjust(SwerveSubsystem module, Bluetooth led, double offset) {
         this.drivebase = module;
         this.led = led;
+        this.y_offset = offset;
         addRequirements(drivebase);
         addRequirements(led);
 
@@ -54,11 +61,12 @@ public class DriveBaseRotationAdjust extends Command {
     public void execute() {
         var result = camera.getLatestResult();
         if (result.hasTargets()) {
-            System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Rotating...");
+            System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Moving...");
 
-            tx = result.getBestTarget().getYaw();
-            
-            drivebase.drive(new Translation2d(0, tx/180), -tx * Math.PI / 180, false);
+            int tagID = result.getBestTarget().getFiducialId();
+            Pose2d new_pose = Vision.getAprilTagPose(tagID, new Transform2d(0, y_offset, new Rotation2d(0, 0)));
+            System.out.println(new_pose.toString());
+            drivebase.driveToPose(new_pose);
             led.color("vomitGreen");
         }
         else {
