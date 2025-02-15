@@ -1,5 +1,6 @@
 package frc.robot.commands.Climber;
 
+import frc.robot.subsystems.Bluetooth;
 import frc.robot.subsystems.climber.AdultDiapers;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -14,7 +15,7 @@ public class ClimberDown extends Command {
     * @requires AdultDiapers
     * @version 1.0
     */
-    public ClimberDown(AdultDiapers module) {
+    public ClimberDown(AdultDiapers module, Bluetooth led) {
         this.module = module;
         addRequirements(module);
      }
