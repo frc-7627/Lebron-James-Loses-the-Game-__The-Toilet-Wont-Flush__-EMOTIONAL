@@ -296,7 +296,7 @@ public class RobotContainer
 
     // Drivebase
     NamedCommands.registerCommand("DriveBaseRotationAdjust", new DriveBaseRotationAdjust(drivebase)); // Vision
-  }
+  } // TODO: Create a lateral adjustment cmd and replace this ^ with that in pathplanner
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
