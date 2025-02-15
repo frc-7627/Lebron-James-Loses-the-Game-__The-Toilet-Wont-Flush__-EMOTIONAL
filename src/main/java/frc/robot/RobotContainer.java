@@ -278,7 +278,7 @@ public class RobotContainer
     NamedCommands.registerCommand("ClimberDown", new ClimberDown(climber, led)); // Manual
     NamedCommands.registerCommand("ClimberUp", new ClimberUp(climber, led)); // Manual
     NamedCommands.registerCommand("ClimberSlowDown", new ClimberSlowDown(climber, led)); // Manual
-    NamedCommands.registerCommand("ClimberSlowUp", new ClimberSlowUp(climber, led)); // Manual TODO: investagate why normal climber commands don't require led
+    NamedCommands.registerCommand("ClimberSlowUp", new ClimberSlowUp(climber, led)); // Manual
 
     // Elevator
     //NamedCommands.registerCommand("ArmToStow", new ElevatorMove(climber));
