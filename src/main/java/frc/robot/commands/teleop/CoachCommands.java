@@ -17,7 +17,7 @@ public class CoachCommands {
     private final AdultDiapers      climber;
     private final Bluetooth         led;
     
-    CoachCommands(SwerveSubsystem drivebase, Lebronavator elevator, EndJoeBidenFactor endefector, AdultDiapers climber, Bluetooth led) {
+    public CoachCommands(SwerveSubsystem drivebase, Lebronavator elevator, EndJoeBidenFactor endefector, AdultDiapers climber, Bluetooth led) {
         this.drivebase = drivebase;
         this.elevator = elevator;
         this.endefector = endefector;

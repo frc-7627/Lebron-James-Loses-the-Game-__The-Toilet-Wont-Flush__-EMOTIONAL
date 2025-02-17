@@ -60,6 +60,7 @@ public class RobotContainer
 
   // Command Classes
   private final OperatorCommands opCommands = new OperatorCommands(elevator, BidenFactor, led);
+  private final CoachCommands chCommands = new CoachCommands(drivebase, elevator, BidenFactor, climber, led);
 
   //private final PhotonCamera photon_camera = new PhotonCamera("Camera_Front");
 
@@ -203,6 +204,9 @@ public class RobotContainer
       operatorXbox.x().whileTrue(opCommands.AutoScoreL2());
       operatorXbox.y().whileTrue(opCommands.AutoScoreL4());
 
+      operatorXbox.leftStick().whileTrue(Commands.none());
+      operatorXbox.rightStick().whileTrue(Commands.none());
+
       operatorXbox.pov(0).whileTrue(new ManElevatorUp(elevator, led));
       operatorXbox.pov(90).whileTrue(new ManCoralForward(BidenFactor, led));
       operatorXbox.pov(180).whileTrue(new ManElevatorDown(elevator, led));
@@ -216,12 +220,15 @@ public class RobotContainer
       /** Coach Xbox */
       coachXbox.start().whileTrue(Commands.none());
       coachXbox.back().whileTrue(Commands.none());
-      coachXbox.a().whileTrue(Commands.none());
-      coachXbox.b().whileTrue(Commands.none());
-      coachXbox.x().whileTrue(Commands.none());
-      coachXbox.y().whileTrue(Commands.none());
+      coachXbox.a().whileTrue(chCommands.breakDrivebase());
+      coachXbox.b().whileTrue(chCommands.breakVision());
+      coachXbox.x().whileTrue(chCommands.breakElevator());
+      coachXbox.y().whileTrue(chCommands.breakLed());
 
-      coachXbox.leftTrigger().whileTrue(Commands.none());
+      coachXbox.leftStick().whileTrue(chCommands.breakClimber());
+      coachXbox.rightStick().whileTrue(chCommands.breakClimber());
+
+      coachXbox.leftTrigger().whileTrue(chCommands.breakEndefector());
       coachXbox.leftBumper().whileTrue(Commands.none());
       coachXbox.rightTrigger().whileTrue(Commands.none());
       coachXbox.rightBumper().whileTrue(Commands.none());
