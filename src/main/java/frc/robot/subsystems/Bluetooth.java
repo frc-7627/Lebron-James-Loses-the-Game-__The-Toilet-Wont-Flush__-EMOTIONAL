@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 import com.ctre.phoenix.led.*;
 import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
@@ -188,8 +189,17 @@ public class Bluetooth extends SubsystemBase{
   }
 
   public void simulateFault() {
+    // Check for Coach Mode
+    if(!Constants.skibbidi_mode) {
+      System.out.println("[Endefector] Coach Controller Disabled!");
+      return; // Do not finish running method
+    }
+
+    // Danger Zone
     bluetoothOFF();
     candle = new CANdle(99);
+    System.out.println("[Climber] broken");
+
 }
 }
 

@@ -743,7 +743,15 @@ public class SwerveSubsystem extends SubsystemBase
   }
 
   public void simulateFault() {
+    // Check for Coach Mode
+    if(!Constants.skibbidi_mode) {
+      System.out.println("[Endefector] Coach Controller Disabled!");
+      return; // Do not finish running method
+    }
+
+    // Danger Zone
     zeroGyro();
     addFakeVisionReading();
+    System.out.println("[Drivebase] broken");
   }
 }

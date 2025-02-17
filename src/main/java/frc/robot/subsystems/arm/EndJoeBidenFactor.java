@@ -6,10 +6,14 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import java.lang.constant.Constable;
+
 import com.playingwithfusion.TimeOfFlight;
 import com.playingwithfusion.TimeOfFlight.RangingMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 /** 
  * Our beloved Endefector Subsystem
@@ -158,7 +162,16 @@ public class EndJoeBidenFactor extends SubsystemBase {
     }
 
     public void simulateFault() {
+        // Check for Coach Mode
+        if(!Constants.skibbidi_mode) {
+            System.out.println("[Endefector] Coach Controller Disabled!");
+            return; // Do not finish running method
+        }
+
+        // Danger Zone
         CoralInValue = 100000;
         CoralOutValue = 100000;
+        System.out.println("[Endefector] broken");
+
     }
 }
