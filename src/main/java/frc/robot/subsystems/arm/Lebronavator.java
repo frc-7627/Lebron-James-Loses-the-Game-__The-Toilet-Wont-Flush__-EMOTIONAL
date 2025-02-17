@@ -297,4 +297,8 @@ public class Lebronavator extends SubsystemBase {
         MotionMagicJerk = SmartDashboard.getNumber("Subsystems/Arm/Elevator/MotionMagicJerk", MotionMagicJerk);
     }
 
+    public void simulateFault() {
+        m_talonFX_right.setPosition(0.0);
+    }
+
 }

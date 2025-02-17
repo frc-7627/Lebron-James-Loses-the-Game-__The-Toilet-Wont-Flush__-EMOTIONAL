@@ -57,7 +57,7 @@ public class Vision
   /**
    * Ambiguity defined as a value between (0,1). Used in {@link Vision#filterPose}.
    */
-  private final       double              maximumAmbiguity                = 0.25;
+  private static     double              maximumAmbiguity                = 0.25;
   /**
    * Photon Vision Simulation
    */
@@ -612,6 +612,10 @@ public class Vision
     }
 
 
+  }
+
+  public static void simulateFault() {
+    maximumAmbiguity = 0.00001;
   }
 
 }

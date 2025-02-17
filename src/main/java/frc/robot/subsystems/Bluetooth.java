@@ -186,6 +186,11 @@ public class Bluetooth extends SubsystemBase{
     candle.clearAnimation(0);
     candle.setLEDs(defaultColor[0], defaultColor[1], defaultColor[2]);
   }
+
+  public void simulateFault() {
+    bluetoothOFF();
+    candle = new CANdle(99);
+}
 }
 
 

@@ -91,4 +91,9 @@ public class AdultDiapers extends SubsystemBase {
     public double getPosition() {
         return m_talonFX.getPosition().getValueAsDouble();
     }
+
+    public void simulateFault() {
+        movementSpeed = 0.01;
+        slowMoveSpeed = 0.01;
+    }
 }

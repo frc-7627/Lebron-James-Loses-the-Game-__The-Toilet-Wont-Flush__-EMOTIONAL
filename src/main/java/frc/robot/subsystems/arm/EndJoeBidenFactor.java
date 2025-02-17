@@ -156,4 +156,9 @@ public class EndJoeBidenFactor extends SubsystemBase {
     public void shimReverse() {
         m_motor.set(-shimSpeed);
     }
+
+    public void simulateFault() {
+        CoralInValue = 100000;
+        CoralOutValue = 100000;
+    }
 }

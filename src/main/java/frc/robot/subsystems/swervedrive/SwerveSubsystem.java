@@ -741,4 +741,9 @@ public class SwerveSubsystem extends SubsystemBase
   {
     return swerveDrive;
   }
+
+  public void simulateFault() {
+    zeroGyro();
+    addFakeVisionReading();
+  }
 }
