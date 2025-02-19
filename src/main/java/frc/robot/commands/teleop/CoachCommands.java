@@ -14,7 +14,7 @@ import frc.robot.subsystems.swervedrive.Vision;
 public class CoachCommands {
     private final SwerveSubsystem   drivebase;
     private final Lebronavator      elevator;
-    private final EndJoeBidenFactor endefector;
+  //  private final EndJoeBidenFactor endefector; TODO: PUT THIS BACK
     private final AdultDiapers      climber;
     private final Bluetooth         led;
     
@@ -31,7 +31,7 @@ public class CoachCommands {
     public CoachCommands(SwerveSubsystem drivebase, Lebronavator elevator, EndJoeBidenFactor endefector, AdultDiapers climber, Bluetooth led) {
         this.drivebase = drivebase;
         this.elevator = elevator;
-        this.endefector = endefector;
+       // this.endefector = endefector; TODO: PUT THIS BACK
         this.climber = climber;
         this.led = led;
     }
@@ -111,7 +111,7 @@ public class CoachCommands {
     public Command breakEndefector() {
         if(!Constants.skibbidi_mode) return coachDisabled(); // Check for Coach Mode 
         else return Commands.runOnce(() -> { 
-            endefector.simulateFault();
+        //    endefector.simulateFault(); TODO: PUT THIS BACK
           });
     }
 
