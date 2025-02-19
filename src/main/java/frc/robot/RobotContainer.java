@@ -60,7 +60,7 @@ public class RobotContainer
 
   // Command Classes
  // private final OperatorCommands opCommands = new OperatorCommands(elevator, BidenFactor, led); TODO: PUT THIS BACK
-  private final CoachCommands chCommands = new CoachCommands(drivebase, elevator, BidenFactor, climber, led);
+  private final CoachCommands chCommands = new CoachCommands(drivebase, elevator, climber, led);
 
 
   //private final PhotonCamera photon_camera = new PhotonCamera("Camera_Front");
