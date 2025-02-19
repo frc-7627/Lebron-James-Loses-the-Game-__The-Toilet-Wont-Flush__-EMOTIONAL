@@ -161,6 +161,15 @@ public class EndJoeBidenFactor extends SubsystemBase {
         m_motor.set(-shimSpeed);
     }
 
+    /**
+    * Similates an issue with the current subsystem
+    * Only works if skibbidi-mode is enabled
+    *
+    * Prevents TOF from working
+    * 
+    * @return void
+    * @version 1.0
+    */
     public void simulateFault() {
         // Check for Coach Mode
         if(!Constants.skibbidi_mode) {

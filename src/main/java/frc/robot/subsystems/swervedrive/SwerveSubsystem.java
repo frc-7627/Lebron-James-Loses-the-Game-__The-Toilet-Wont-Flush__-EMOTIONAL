@@ -742,6 +742,15 @@ public class SwerveSubsystem extends SubsystemBase
     return swerveDrive;
   }
 
+  /**
+    * Similates an issue with the current subsystem
+    * Only works if skibbidi-mode is enabled
+    *
+    * Resets Gyro, and messes up Odometry
+    * 
+    * @return void
+    * @version 1.0
+    */
   public void simulateFault() {
     // Check for Coach Mode
     if(!Constants.skibbidi_mode) {

@@ -10,6 +10,7 @@ import frc.robot.subsystems.climber.AdultDiapers;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
 
+/** See Constructor for details */
 public class CoachCommands {
     private final SwerveSubsystem   drivebase;
     private final Lebronavator      elevator;
@@ -17,6 +18,16 @@ public class CoachCommands {
     private final AdultDiapers      climber;
     private final Bluetooth         led;
     
+    /**
+     * A collecton of Commands that replicate subsystem failures, 
+     * ideally useful for drive-practice and only drive-practice
+     * 
+     * @param drivebase - The robot's SwerveSubsystem
+     * @param elevator - The robot's Lebronavator Subsystem
+     * @param endefector - The robot's EndJoeBiden Subsystem
+     * @param climber - The robot's AdultDiapers Subsystem
+     * @param led - The robot's Bluetooth subsystem
+     */
     public CoachCommands(SwerveSubsystem drivebase, Lebronavator elevator, EndJoeBidenFactor endefector, AdultDiapers climber, Bluetooth led) {
         this.drivebase = drivebase;
         this.elevator = elevator;
@@ -25,12 +36,30 @@ public class CoachCommands {
         this.led = led;
     }
 
-    public Command coachDisabled() {
+
+    /**
+    * Logs that this Command was run, typically called when
+    * skibbidi_mode in {@link frc.robot.constants} is set to false
+    * and therefore coach commands should not be called
+    *
+    * @returns Command
+    * @version 1.0
+    */
+    private Command coachDisabled() {
         return Commands.runOnce(() -> { 
             System.out.println("[CoachCommands] Coach commands Disabled!");
           });
     }
 
+    /**
+    * Breaks the drivebase Subsystem, check SwerveSubsystem.simulateFault 
+    * for details {@link frc.robot.subsystems.swervedrive.SwerveSubsystem.simulateFault}
+    *
+    * @requires SwerveSubsystem
+    *
+    * @returns Command
+    * @version 1.0
+    */
     public Command breakDrivebase() {
         if(!Constants.skibbidi_mode) return coachDisabled(); // Check for Coach Mode 
         else return Commands.runOnce(() -> { 
@@ -38,6 +67,15 @@ public class CoachCommands {
                 });
     }
 
+    /**
+    * Breaks the Vision Subsystem, check Vision.simulateFault 
+    * for details {@link frc.robot.subsystems.swervedrive.Vision.simulateFault}
+    *
+    * @requires Vision
+    *
+    * @returns Command
+    * @version 1.0
+    */
     public Command breakVision() {
         if(!Constants.skibbidi_mode) return coachDisabled(); // Check for Coach Mode 
         else return Commands.runOnce(() -> { 
@@ -45,6 +83,15 @@ public class CoachCommands {
           });
     }
 
+    /**
+    * Breaks the Elevator Subsystem, check Lebronavator.simulateFault 
+    * for details {@link frc.robot.subsystems.arm.Lebronavator.simulateFault}
+    *
+    * @requires Lebronavator
+    *
+    * @returns Command
+    * @version 1.0
+    */
     public Command breakElevator() {
         if(!Constants.skibbidi_mode) return coachDisabled(); // Check for Coach Mode 
         else return Commands.runOnce(() -> { 
@@ -52,6 +99,15 @@ public class CoachCommands {
           });
     }
 
+    /**
+    * Breaks the Endefector Subsystem, check EndJoeBidenFactor.simulateFault 
+    * for details {@link frc.robot.subsystems.arm.EndJoeBidenFactor.simulateFault}
+    *
+    * @requires EndJoeBidenFactor
+    *
+    * @returns Command
+    * @version 1.0
+    */
     public Command breakEndefector() {
         if(!Constants.skibbidi_mode) return coachDisabled(); // Check for Coach Mode 
         else return Commands.runOnce(() -> { 
@@ -59,6 +115,15 @@ public class CoachCommands {
           });
     }
 
+    /**
+    * Breaks the Climber Subsystem, check AdultDiapers.simulateFault 
+    * for details {@link frc.robot.subsystems.climber.AdultDiapers.simulateFault}
+    *
+    * @requires AdultDiapers
+    *
+    * @returns Command
+    * @version 1.0
+    */
     public Command breakClimber() {
         if(!Constants.skibbidi_mode) return coachDisabled(); // Check for Coach Mode 
         else return Commands.runOnce(() -> { 
@@ -66,6 +131,15 @@ public class CoachCommands {
           });
     }
 
+    /**
+    * Breaks the Led Subsystem, check Bluetooth.simulateFault 
+    * for details {@link frc.robot.subsystems.Bluetooth.simulateFault}
+    *
+    * @requires Bluetooth
+    *
+    * @returns Command
+    * @version 1.0
+    */
     public Command breakLed() {
         if(!Constants.skibbidi_mode) return coachDisabled(); // Check for Coach Mode 
         else return Commands.runOnce(() -> { 

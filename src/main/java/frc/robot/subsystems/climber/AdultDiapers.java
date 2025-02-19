@@ -93,6 +93,15 @@ public class AdultDiapers extends SubsystemBase {
         return m_talonFX.getPosition().getValueAsDouble();
     }
 
+    /**
+    * Similates an issue with the current subsystem
+    * Only works if skibbidi-mode is enabled
+    *
+    * Slows climber motors down to nothing
+    * 
+    * @return void
+    * @version 1.0
+    */
     public void simulateFault() {
         // Check for Coach Mode
         if(!Constants.skibbidi_mode) {
