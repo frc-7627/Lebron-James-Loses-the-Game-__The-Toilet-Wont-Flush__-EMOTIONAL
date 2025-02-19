@@ -188,6 +188,15 @@ public class Bluetooth extends SubsystemBase{
     candle.setLEDs(defaultColor[0], defaultColor[1], defaultColor[2]);
   }
 
+    /**
+    * Similates an issue with the current subsystem
+    * Only works if skibbidi-mode is enabled
+    *
+    * Keeps the LEDs from changing color or pattern
+    * 
+    * @return void
+    * @version 1.0
+    */
   public void simulateFault() {
     // Check for Coach Mode
     if(!Constants.skibbidi_mode) {
@@ -196,7 +205,6 @@ public class Bluetooth extends SubsystemBase{
     }
 
     // Danger Zone
-    bluetoothOFF();
     candle = new CANdle(99);
     System.out.println("[Climber] broken");
 

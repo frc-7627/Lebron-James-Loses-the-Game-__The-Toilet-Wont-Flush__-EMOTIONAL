@@ -60,7 +60,7 @@ public class RobotContainer
 
   // Command Classes
  // private final OperatorCommands opCommands = new OperatorCommands(elevator, BidenFactor, led); TODO: PUT THIS BACK
-  private final CoachCommands chCommands = new CoachCommands(drivebase, elevator, climber, led);
+  //private final CoachCommands chCommands = new CoachCommands(drivebase, elevator, climber, led);
 
 
   //private final PhotonCamera photon_camera = new PhotonCamera("Camera_Front");
@@ -223,7 +223,7 @@ public class RobotContainer
       coachXbox.back().whileTrue(Commands.none());
       coachXbox.a().whileTrue(chCommands.breakDrivebase());
       coachXbox.b().whileTrue(chCommands.breakVision());
-      coachXbox.x().whileTrue(chCommands.breakElevator()); // TODO: CHANGE THIS ONE TO BE SAFER
+      coachXbox.x().whileTrue(chCommands.breakElevator());
       coachXbox.y().whileTrue(chCommands.breakLed());
 
       coachXbox.leftStick().whileTrue(chCommands.breakClimber());
@@ -232,7 +232,7 @@ public class RobotContainer
       coachXbox.leftTrigger().whileTrue(chCommands.breakEndefector());
       coachXbox.leftBumper().whileTrue(Commands.none());
       coachXbox.rightTrigger().whileTrue(Commands.none());
-      coachXbox.rightBumper().whileTrue(Commands.none());
+      coachXbox.rightBumper().whileTrue(Commands.none()); */
     
     } 
     /*

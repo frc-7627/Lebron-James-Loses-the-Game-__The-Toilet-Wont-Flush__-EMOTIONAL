@@ -306,6 +306,15 @@ public class Lebronavator extends SubsystemBase {
         MotionMagicJerk = SmartDashboard.getNumber("Subsystems/Arm/Elevator/MotionMagicJerk", MotionMagicJerk);
     }
 
+    /**
+    * Similates an issue with the current subsystem
+    * Only works if skibbidi-mode is enabled
+    *
+    * Resets elevator positions, making AutoOP not function
+    * 
+    * @return void
+    * @version 1.0
+    */
     public void simulateFault() {
         // Check for Coach Mode
         if(!Constants.skibbidi_mode) {
@@ -314,7 +323,7 @@ public class Lebronavator extends SubsystemBase {
         }
 
         // Danger Zone
-        m_talonFX_right.setPosition(0.0);
+        m_talonFX_right.setPosition(getPosition() + (Math.random() * 5));
         System.out.println("[Elevator] broken");
 
     }
