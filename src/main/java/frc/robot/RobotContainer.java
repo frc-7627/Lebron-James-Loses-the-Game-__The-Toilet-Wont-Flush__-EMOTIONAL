@@ -223,7 +223,7 @@ public class RobotContainer
       coachXbox.back().whileTrue(Commands.none());
       coachXbox.a().whileTrue(chCommands.breakDrivebase());
       coachXbox.b().whileTrue(chCommands.breakVision());
-      coachXbox.x().whileTrue(chCommands.breakElevator());
+      coachXbox.x().whileTrue(chCommands.breakElevator()); // TODO: CHANGE THIS ONE TO BE SAFER
       coachXbox.y().whileTrue(chCommands.breakLed());
 
       coachXbox.leftStick().whileTrue(chCommands.breakClimber());
