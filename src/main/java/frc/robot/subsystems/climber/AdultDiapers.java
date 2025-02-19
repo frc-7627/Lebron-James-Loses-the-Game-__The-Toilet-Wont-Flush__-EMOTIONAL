@@ -3,6 +3,7 @@ package frc.robot.subsystems.climber;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 /** 
  * Climber Subsystem
@@ -90,5 +91,18 @@ public class AdultDiapers extends SubsystemBase {
      */
     public double getPosition() {
         return m_talonFX.getPosition().getValueAsDouble();
+    }
+
+    public void simulateFault() {
+        // Check for Coach Mode
+        if(!Constants.skibbidi_mode) {
+            System.out.println("[Endefector] Coach Controller Disabled!");
+            return; // Do not finish running method
+        }
+
+        // Danger Zone
+        movementSpeed = 0.01;
+        slowMoveSpeed = 0.01;
+        System.out.println("[Climber] broken");
     }
 }

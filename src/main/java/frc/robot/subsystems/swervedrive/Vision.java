@@ -22,6 +22,7 @@ import edu.wpi.first.networktables.NetworkTablesJNI;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import frc.robot.Constants;
 import frc.robot.Robot;
 import java.awt.Desktop;
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class Vision
   /**
    * Ambiguity defined as a value between (0,1). Used in {@link Vision#filterPose}.
    */
-  private final       double              maximumAmbiguity                = 0.25;
+  private static     double              maximumAmbiguity                = 0.25;
   /**
    * Photon Vision Simulation
    */
@@ -612,6 +613,18 @@ public class Vision
     }
 
 
+  }
+
+  public static void simulateFault() {
+    // Check for Coach Mode
+    if(!Constants.skibbidi_mode) {
+      System.out.println("[Endefector] Coach Controller Disabled!");
+      return; // Do not finish running method
+    }
+
+    // Danger Zone
+    maximumAmbiguity = 0.00001;
+    System.out.println("[Vision] broken");
   }
 
 }

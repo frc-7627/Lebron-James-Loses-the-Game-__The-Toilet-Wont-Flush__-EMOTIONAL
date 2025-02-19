@@ -14,6 +14,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 
 
@@ -295,6 +296,19 @@ public class Lebronavator extends SubsystemBase {
         MotionMagicCruiseVelocity = SmartDashboard.getNumber("Subsystems/Arm/Elevator/MotionMagicCruiseVelocity", MotionMagicCruiseVelocity);
         MotionMagicAcceleration = SmartDashboard.getNumber("Subsystems/Arm/Elevator/MotionMagicAcceleration", MotionMagicAcceleration);
         MotionMagicJerk = SmartDashboard.getNumber("Subsystems/Arm/Elevator/MotionMagicJerk", MotionMagicJerk);
+    }
+
+    public void simulateFault() {
+        // Check for Coach Mode
+        if(!Constants.skibbidi_mode) {
+            System.out.println("[Endefector] Coach Controller Disabled!");
+            return; // Do not finish running method
+        }
+
+        // Danger Zone
+        m_talonFX_right.setPosition(0.0);
+        System.out.println("[Elevator] broken");
+
     }
 
 }
