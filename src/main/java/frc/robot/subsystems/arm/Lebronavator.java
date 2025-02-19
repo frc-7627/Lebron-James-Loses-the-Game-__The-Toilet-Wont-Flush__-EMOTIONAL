@@ -315,7 +315,7 @@ public class Lebronavator extends SubsystemBase {
         }
 
         // Danger Zone
-        m_talonFX_right.setPosition(0.0);
+        m_talonFX_right.setPosition(getPosition() + (Math.random() * 5));
         System.out.println("[Elevator] broken");
 
     }
