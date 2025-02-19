@@ -53,6 +53,8 @@ public class Lebronavator extends SubsystemBase {
     // Make an orchestra
     Orchestra m_Orchestra = new Orchestra();
 
+    private final MotionMagicVoltage m_request = new MotionMagicVoltage(0);
+
 
 
     /** 
@@ -77,7 +79,7 @@ public class Lebronavator extends SubsystemBase {
         talonFXConfig_right.MotorOutput.withPeakForwardDutyCycle(maxSpeed);
         talonFXConfig_right.MotorOutput.withPeakReverseDutyCycle(maxSpeed);
 
-        talonFXConfig_right.MotorOutput.withNeutralMode(NeutralModeValue.Coast); // Set to coast
+        talonFXConfig_right.MotorOutput.withNeutralMode(NeutralModeValue.Brake); // Set to coast
 
         // Music stuff
         talonFXConfig_right.Audio.withBeepOnBoot(false);
@@ -112,6 +114,8 @@ public class Lebronavator extends SubsystemBase {
         talonFXConfig_left.Audio.withBeepOnBoot(false);
         talonFXConfig_left.Audio.withBeepOnConfig(false);
         talonFXConfig_left.Audio.withAllowMusicDurDisable(true);
+
+        //
 
         //talonFXConfig_left.null
 
@@ -185,11 +189,11 @@ public class Lebronavator extends SubsystemBase {
         m_Orchestra.clearInstruments();
 
         // create a Motion Magic request, voltage output
-        final MotionMagicVoltage m_request = new MotionMagicVoltage(0);
+        //final MotionMagicVoltage m_request = new MotionMagicVoltage(0);
         m_talonFX_right.setControl(m_request.withPosition(getPosition()));
 
         // Setup follower config
-        m_talonFX_left.setControl(new Follower(m_talonFX_right.getDeviceID(), true));
+        m_talonFX_left.setControl(new Follower(m_talonFX_right.getDeviceID(), false));
     }
 
     /**
@@ -206,7 +210,7 @@ public class Lebronavator extends SubsystemBase {
      */
     public void move(double position) {
         // create a Motion Magic request, voltage output
-        final MotionMagicVoltage m_request = new MotionMagicVoltage(0);
+        //final MotionMagicVoltage m_request = new MotionMagicVoltage(0);
 
         // set target position
         m_talonFX_right.setControl(m_request.withPosition(position));
@@ -221,9 +225,17 @@ public class Lebronavator extends SubsystemBase {
      * @version 1.0
      */
     public void shimUp() {
-        final DutyCycleOut m_request = new DutyCycleOut(shimSpeed);
+      //  final DutyCycleOut m_request = new DutyCycleOut(shimSpeed);
+     //   final DutyCycleOut m_otherRequest = new DutyCycleOut(shimSpeed); //TODO: TEST
 
-        m_talonFX_right.setControl(m_request);
+       // m_talonFX_right.setControl(m_request);
+      //  m_talonFX_left.setControl(m_otherRequest);
+
+              // create a Motion Magic request, voltage outpu
+
+              // set target position
+              m_talonFX_right.setControl(m_request.withPosition(getPosition() + 15));
+              //m_talonFX_left.setControl(new Follower(m_talonFX_right.getDeviceID(), false));
     }
 
     /**
@@ -235,9 +247,9 @@ public class Lebronavator extends SubsystemBase {
      * @version 1.0
      */
     public void shimDown() {
-        final DutyCycleOut m_request = new DutyCycleOut(-shimSpeed);
+        final DutyCycleOut m_request2 = new DutyCycleOut(-shimSpeed);
 
-        m_talonFX_right.setControl(m_request);
+        m_talonFX_right.setControl(m_request2);
     }
 
     /**
@@ -248,13 +260,7 @@ public class Lebronavator extends SubsystemBase {
      * @version 1.0
      */
     public void StopMotor() {
-        // Setup follower config
-        m_talonFX_left.setControl(new Follower(m_talonFX_right.getDeviceID(), true));
-
-
-        final DutyCycleOut m_request = new DutyCycleOut(0.0);
-
-        m_talonFX_right.setControl(m_request);
+        resetControlMode();
     }
 
     /**
