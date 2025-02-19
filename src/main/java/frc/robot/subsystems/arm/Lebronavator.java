@@ -43,6 +43,7 @@ public class Lebronavator extends SubsystemBase {
     
     private static double maxSpeed = 0.2;
     private static double shimSpeed = 0.2;
+    private static double shimAmount = 15;
 
     private static double currentLimit = 40;
 
@@ -247,9 +248,10 @@ public class Lebronavator extends SubsystemBase {
      * @version 1.0
      */
     public void shimDown() {
-        final DutyCycleOut m_request2 = new DutyCycleOut(-shimSpeed);
+       // final DutyCycleOut m_request2 = new DutyCycleOut(-shimSpeed);
+       m_talonFX_right.setControl(m_request.withPosition(getPosition() - 15));
 
-        m_talonFX_right.setControl(m_request2);
+       // m_talonFX_right.setControl(m_request2);
     }
 
     /**
