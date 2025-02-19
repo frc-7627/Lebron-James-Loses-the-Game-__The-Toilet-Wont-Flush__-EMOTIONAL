@@ -53,13 +53,13 @@ public class RobotContainer
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve/"));
   //private final CaprisonCommands visionCommands = new CaprisonCommands();
-  private final EndJoeBidenFactor BidenFactor = new EndJoeBidenFactor();
+  // private final EndJoeBidenFactor BidenFactor = new EndJoeBidenFactor(); TODO: PUT BACK
   private final Lebronavator elevator = new Lebronavator();
   private final AdultDiapers climber = new AdultDiapers();
   private final Bluetooth led = new Bluetooth();
 
   // Command Classes
-  private final OperatorCommands opCommands = new OperatorCommands(elevator, BidenFactor, led);
+ // private final OperatorCommands opCommands = new OperatorCommands(elevator, BidenFactor, led); TODO: PUT BACK
 
   //private final PhotonCamera photon_camera = new PhotonCamera("Camera_Front");
 
@@ -189,12 +189,12 @@ public class RobotContainer
       driverXbox.x().whileTrue(Commands.none());
       driverXbox.y().whileTrue(Commands.none());
 
-      driverXbox.leftTrigger().whileTrue(opCommands.AutoScoreL2());
+      // driverXbox.leftTrigger().whileTrue(opCommands.AutoScoreL2()); TODO: PUT BACK
       driverXbox.leftBumper().whileTrue(Commands.none());
       driverXbox.rightTrigger().whileTrue(Commands.none());
       driverXbox.rightBumper().whileTrue(Commands.none());
 
-      /** Operator Xbox */
+      /** Operator Xbox TODO: PUT BACK
       operatorXbox.start().whileTrue(Commands.none());
       operatorXbox.back().whileTrue(Commands.runOnce(elevator::resetControlMode));
 
@@ -212,7 +212,7 @@ public class RobotContainer
       operatorXbox.leftBumper().whileTrue(new IntakeCoral(BidenFactor, led));
       operatorXbox.rightTrigger().whileTrue(Commands.none());
       operatorXbox.rightBumper().whileTrue(new EjectCoral(BidenFactor, led));
-
+*/
       /** Coach Xbox */
       coachXbox.start().whileTrue(Commands.none());
       coachXbox.back().whileTrue(Commands.none());
@@ -268,11 +268,11 @@ public class RobotContainer
     /* Rare Use Case - There is no thinkable reason to use these */
 
     // AutoOperator
-    NamedCommands.registerCommand("AutoStow", opCommands.AutoStow()); 
+    /*  NamedCommands.registerCommand("AutoStow", opCommands.AutoStow()); TODO: PUT BACK
     NamedCommands.registerCommand("AutoScoreL1", opCommands.AutoScoreL1()); 
     NamedCommands.registerCommand("AutoScoreL2", opCommands.AutoScoreL2()); 
     NamedCommands.registerCommand("AutoScoreL3", opCommands.AutoScoreL3()); 
-    NamedCommands.registerCommand("AutoScoreL4", opCommands.AutoScoreL4()); 
+    NamedCommands.registerCommand("AutoScoreL4", opCommands.AutoScoreL4()); */
 
     // Climber
     NamedCommands.registerCommand("ClimberDown", new ClimberDown(climber, led)); // Manual
@@ -287,12 +287,13 @@ public class RobotContainer
     NamedCommands.registerCommand("ManElevatorDown", new ManElevatorDown(elevator, led)); // Manual
     NamedCommands.registerCommand("ManElevatorUp", new ManElevatorUp(elevator, led)); // Manual
 
-    // Endafector
+    /*  Endafector
     NamedCommands.registerCommand("EjectCoral", new EjectCoral(BidenFactor, led));
     NamedCommands.registerCommand("IntakeCoral", new IntakeCoral(BidenFactor, led));
     NamedCommands.registerCommand("ManCoralForward", new ManCoralForward(BidenFactor, led)); // Manual
     NamedCommands.registerCommand("ManCoralReverse", new ManCoralReverse(BidenFactor, led)); // Manual
-    NamedCommands.registerCommand("WaitForCoral", new WaitForCoral(BidenFactor)); // Rare use case
+    NamedCommands.registerCommand("WaitForCoral", new WaitForCoral(BidenFactor)); // Rare use case TODO: PUT BACK
+    */
 
     // Drivebase
     NamedCommands.registerCommand("DriveBaseRotationAdjust", new DriveBaseRotationAdjust(drivebase)); // Vision
