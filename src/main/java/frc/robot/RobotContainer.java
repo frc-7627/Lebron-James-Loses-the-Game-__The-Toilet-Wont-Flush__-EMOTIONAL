@@ -196,29 +196,29 @@ public class RobotContainer
       driverXbox.rightTrigger().whileTrue(Commands.none());
       driverXbox.rightBumper().whileTrue(Commands.none());
 
-      /** Operator Xbox TODO: PUT BACK
+      /** Operator Xbox TODO: PUT BACK */
       operatorXbox.start().whileTrue(Commands.none());
       operatorXbox.back().whileTrue(Commands.runOnce(elevator::resetControlMode));
-
+/* 
       operatorXbox.a().whileTrue(opCommands.AutoScoreL1());
       operatorXbox.b().whileTrue(opCommands.AutoScoreL3());
       operatorXbox.x().whileTrue(opCommands.AutoScoreL2());
       operatorXbox.y().whileTrue(opCommands.AutoScoreL4());
-
+*/
       operatorXbox.leftStick().whileTrue(Commands.none());
       operatorXbox.rightStick().whileTrue(Commands.none());
 
       operatorXbox.pov(0).whileTrue(new ManElevatorUp(elevator, led));
-      operatorXbox.pov(90).whileTrue(new ManCoralForward(BidenFactor, led));
+     // operatorXbox.pov(90).whileTrue(new ManCoralForward(BidenFactor, led));
       operatorXbox.pov(180).whileTrue(new ManElevatorDown(elevator, led));
-      operatorXbox.pov(270).whileTrue(new ManCoralReverse(BidenFactor, led));
+     // operatorXbox.pov(270).whileTrue(new ManCoralReverse(BidenFactor, led));
 
-      operatorXbox.leftTrigger().whileTrue(opCommands.AutoStow());
-      operatorXbox.leftBumper().whileTrue(new IntakeCoral(BidenFactor, led));
+     // operatorXbox.leftTrigger().whileTrue(opCommands.AutoStow());
+   //   operatorXbox.leftBumper().whileTrue(new IntakeCoral(BidenFactor, led));
       operatorXbox.rightTrigger().whileTrue(Commands.none());
-      operatorXbox.rightBumper().whileTrue(new EjectCoral(BidenFactor, led));
-*/
-      /** Coach Xbox 
+     // operatorXbox.rightBumper().whileTrue(new EjectCoral(BidenFactor, led));
+
+      /** Coach Xbox */
       coachXbox.start().whileTrue(Commands.none());
       coachXbox.back().whileTrue(Commands.none());
       coachXbox.a().whileTrue(chCommands.breakDrivebase());
