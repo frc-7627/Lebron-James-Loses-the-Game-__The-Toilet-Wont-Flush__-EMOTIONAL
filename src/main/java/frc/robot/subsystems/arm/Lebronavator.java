@@ -8,7 +8,6 @@ import java.lang.reflect.Modifier;
 
 import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.MusicTone;
@@ -20,7 +19,6 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.LoggedSubsystemBase;
 
 
 
@@ -33,7 +31,7 @@ import frc.robot.LoggedSubsystemBase;
  * @see com.ctre.phoenix6.Orchestra
  * @see com.ctre.phoenix6.hardware.TalonFX
  */
-public class Lebronavator extends LoggedSubsystemBase {
+public class Lebronavator extends SubsystemBase {
 
     // Define Constants
     private static double kS = 0.25; // Add 0.25 V output to overcome static friction

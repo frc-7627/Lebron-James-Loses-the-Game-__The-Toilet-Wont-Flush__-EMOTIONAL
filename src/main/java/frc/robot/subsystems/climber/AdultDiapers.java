@@ -173,6 +173,7 @@ public class AdultDiapers extends SubsystemBase {
         System.out.println("[Climber] broken");
     }
 
+    
     /**
      * Gets all fields and getter methods in this class and 
      * places their values from shuffleboard

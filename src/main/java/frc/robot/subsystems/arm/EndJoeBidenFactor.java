@@ -212,15 +212,32 @@ public class EndJoeBidenFactor extends SubsystemBase {
         return m_motor_enc.getVelocity();
     }
 
+    /**
+     * Gets the current Front TOF Range reading
+     * Allows us to tell the distance between TOF
+     * and the object in front of it
+     * 
+     * @version 1.0
+     * @return Range Reading as double
+     */
     public double getFrontTOFValue() {
         return m_TOF_front.getRange();
     }
 
+    /**
+     * Gets the current Rear TOF Range reading
+     * Allows us to tell the distance between TOF
+     * and the object in front of it
+     * 
+     * @version 1.0
+     * @return Range Reading as double
+     */
     public double getRearTOFValue() {
         return m_TOF_rear.getRange();
     }
 
-        /**
+
+    /**
      * Gets all fields and getter methods in this class and 
      * places their values from shuffleboard
      * 
