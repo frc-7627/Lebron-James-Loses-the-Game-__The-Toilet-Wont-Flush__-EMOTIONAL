@@ -11,6 +11,18 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "AutoScoreL4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoStow"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "ReefBottomRight - BottomStation"
@@ -23,6 +35,18 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "AutoScoreL4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoStow"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "ReefBottomLeft - BottomStation"
@@ -32,6 +56,18 @@
           "type": "path",
           "data": {
             "pathName": "BottomStation - LeftReef"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoScoreL4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoStow"
           }
         }
       ]
