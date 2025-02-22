@@ -1,5 +1,6 @@
 package frc.robot.subsystems.arm;
 
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -45,7 +46,8 @@ public class EndJoeBidenFactor extends SubsystemBase {
 
     private static double shimSpeed = 0.6;
 
-    private final SparkMax m_motor = new SparkMax(45, MotorType.kBrushless);  
+    private final SparkMax m_motor = new SparkMax(45, MotorType.kBrushless);
+    private final RelativeEncoder m_motor_enc = m_motor.getEncoder();
 
     
     private final TimeOfFlight m_TOF_front = new TimeOfFlight(46);
@@ -186,7 +188,16 @@ public class EndJoeBidenFactor extends SubsystemBase {
         CoralInValue = 100000;
         CoralOutValue = 100000;
         System.out.println("[Endefector] broken");
+    }
 
+    /**
+     * Gets the current Endefector Motor RPM
+     * 
+     * @version 1.0
+     * @return Motor RPM as double
+     */
+    public double getMotorRPM() {
+        return m_motor_enc.getVelocity();
     }
 
         /**
