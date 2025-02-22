@@ -307,37 +307,6 @@ public class Lebronavator extends LoggedSubsystemBase {
         return m_talonFX_right.getSupplyCurrent().getValueAsDouble();
     }
 
-
-    public void init_shuffleboard() {
-        // PID Values
-        SmartDashboard.putNumber("Subsystems/Arm/Elevator/PID/kS", kS);
-        SmartDashboard.putNumber("Subsystems/Arm/Elevator/PID/kS", kS);
-        SmartDashboard.putNumber("Subsystems/Arm/Elevator/PID/kS", kS);
-        SmartDashboard.putNumber("Subsystems/Arm/Elevator/PID/kS", kS);
-        SmartDashboard.putNumber("Subsystems/Arm/Elevator/PID/kS", kS);
-        SmartDashboard.putNumber("Subsystems/Arm/Elevator/PID/kS", kS);
-
-        // Magic Motion Values
-        SmartDashboard.putNumber("Subsystems/Arm/Elevator/MotionMagicCruiseVelocity", MotionMagicCruiseVelocity);
-        SmartDashboard.putNumber("Subsystems/Arm/Elevator/MotionMagicAcceleration", MotionMagicAcceleration);
-        SmartDashboard.putNumber("Subsystems/Arm/Elevator/MotionMagicJerk", MotionMagicJerk);
-    }
-
-    public void update_shuffleboard() {
-        // PID Values
-        kS = SmartDashboard.getNumber("Subsystems/Arm/Elevator/PID/kS", kS);
-        kV = SmartDashboard.getNumber("Subsystems/Arm/Elevator/PID/kS", kS);
-        kA = SmartDashboard.getNumber("Subsystems/Arm/Elevator/PID/kS", kS);
-        kP = SmartDashboard.getNumber("Subsystems/Arm/Elevator/PID/kS", kS);
-        kI = SmartDashboard.getNumber("Subsystems/Arm/Elevator/PID/kS", kS);
-        kD = SmartDashboard.getNumber("Subsystems/Arm/Elevator/PID/kS", kS);
-
-        // Magic Motion Values
-        MotionMagicCruiseVelocity = SmartDashboard.getNumber("Subsystems/Arm/Elevator/MotionMagicCruiseVelocity", MotionMagicCruiseVelocity);
-        MotionMagicAcceleration = SmartDashboard.getNumber("Subsystems/Arm/Elevator/MotionMagicAcceleration", MotionMagicAcceleration);
-        MotionMagicJerk = SmartDashboard.getNumber("Subsystems/Arm/Elevator/MotionMagicJerk", MotionMagicJerk);
-    }
-
     /**
     * Similates an issue with the current subsystem
     * Only works if skibbidi-mode is enabled
