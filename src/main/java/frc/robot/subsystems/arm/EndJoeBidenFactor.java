@@ -126,8 +126,10 @@ public class EndJoeBidenFactor extends SubsystemBase {
      * @version 1.0
      */
     public boolean CoralIn() {
-        System.out.println( m_TOF_front.getRange());
-        return (m_TOF_front.isRangeValid() && CoralInValue > m_TOF_front.getRange());
+        double range = getFrontTOFValue();
+        System.out.println(range);
+        if (range != 0.0) return (CoralInValue > range);
+        else return false;
     }
 
     /**
@@ -142,8 +144,10 @@ public class EndJoeBidenFactor extends SubsystemBase {
      * @version 1.0
      */
     public boolean CoralOut() {
-        System.out.println( m_TOF_rear.getRange());
-        return (m_TOF_rear.isRangeValid() && CoralOutValue > m_TOF_rear.getRange());
+        double range = getFrontTOFValue();
+        System.out.println(range);
+        if (range != 0.0) return (CoralOutValue > range);
+        else return false;
     }
 
     /**
@@ -170,27 +174,6 @@ public class EndJoeBidenFactor extends SubsystemBase {
         m_motor.set(-shimSpeed);
     }
 
-    /**
-    * Similates an issue with the current subsystem
-    * Only works if skibbidi-mode is enabled
-    *
-    * Prevents TOF from working
-    * 
-    * @return void
-    * @version 1.0
-    */
-    public void simulateFault() {
-        // Check for Coach Mode
-        if(!Constants.skibbidi_mode) {
-            System.out.println("[Endefector] Coach Controller Disabled!");
-            return; // Do not finish running method
-        }
-
-        // Danger Zone
-        CoralInValue = 100000;
-        CoralOutValue = 100000;
-        System.out.println("[Endefector] broken");
-    }
 
     /**
      * Gets the output current of the Endefector Motor
@@ -221,7 +204,8 @@ public class EndJoeBidenFactor extends SubsystemBase {
      * @return Range Reading as double
      */
     public double getFrontTOFValue() {
-        return m_TOF_front.getRange();
+        if(m_TOF_rear.isRangeValid()) return m_TOF_rear.getRange();
+        else return 0.0;
     }
 
     /**
@@ -233,9 +217,32 @@ public class EndJoeBidenFactor extends SubsystemBase {
      * @return Range Reading as double
      */
     public double getRearTOFValue() {
-        return m_TOF_rear.getRange();
+        if(m_TOF_rear.isRangeValid()) return m_TOF_rear.getRange();
+        else return 0.0;
     }
 
+
+    /**
+    * Similates an issue with the current subsystem
+    * Only works if skibbidi-mode is enabled
+    *
+    * Prevents TOF from working
+    * 
+    * @return void
+    * @version 1.0
+    */
+    public void simulateFault() {
+        // Check for Coach Mode
+        if(!Constants.skibbidi_mode) {
+            System.out.println("[Endefector] Coach Controller Disabled!");
+            return; // Do not finish running method
+        }
+
+        // Danger Zone
+        CoralInValue = 100000;
+        CoralOutValue = 100000;
+        System.out.println("[Endefector] broken");
+    }
 
     /**
      * Gets all fields and getter methods in this class and 
