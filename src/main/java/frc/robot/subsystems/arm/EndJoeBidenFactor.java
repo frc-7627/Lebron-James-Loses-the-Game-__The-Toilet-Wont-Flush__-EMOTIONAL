@@ -41,10 +41,12 @@ public class EndJoeBidenFactor extends SubsystemBase {
 
     private static double CoralInValue = 500;
     private static double CoralOutValue = 500;
+    private static double CoralInMesuredValue;
+    private static double CoralOutMesuredValue;
 
     private static final int ampLimit = 40;
 
-    private static double shimSpeed = 0.6;
+    private static double shimSpeed = 0.8;
 
     private final SparkMax m_motor = new SparkMax(45, MotorType.kBrushless);
     private final RelativeEncoder m_motor_enc = m_motor.getEncoder();
@@ -264,6 +266,8 @@ public class EndJoeBidenFactor extends SubsystemBase {
     /** Run once every periodic call */
     @Override
     public void periodic() {
+        CoralInMesuredValue = m_TOF_front.getRange();
+        CoralOutMesuredValue = m_TOF_rear.getRange();
         if(Constants.verbose_shuffleboard_logging) {
             putData();
             getData();

@@ -21,10 +21,10 @@ public class ElevatorMove extends Command {
 
     // Editable Constants
     private double setPoint_Down = 0;
-    private double setPoint_L1 = 20;
-    private double setPoint_L2 = 30;
-    private double setPoint_L3 = 40;
-    private double setPoint_L4 = 56.4;
+    private double setPoint_L1 = 13;
+    private double setPoint_L2 = 21;
+    private double setPoint_L3 = 35;
+    private double setPoint_L4 = 59;
 
     private final double goal; 
 
