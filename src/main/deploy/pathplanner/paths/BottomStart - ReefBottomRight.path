@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -60.642246457208735
+    "rotation": 118.36335355549208
   },
   "reversed": false,
   "folder": "Forbiden Brake Fluid",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -0.8425242607403925
+    "rotation": 178.53296322962532
   },
   "useDefaultConstraints": true
 }

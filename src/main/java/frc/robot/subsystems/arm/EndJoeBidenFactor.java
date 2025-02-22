@@ -43,7 +43,7 @@ public class EndJoeBidenFactor extends SubsystemBase {
 
     private static final int ampLimit = 40;
 
-    private static double shimSpeed = 0.4;
+    private static double shimSpeed = 0.6;
 
     private final SparkMax m_motor = new SparkMax(45, MotorType.kBrushless);  
 
