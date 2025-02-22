@@ -41,9 +41,7 @@ public class EndJoeBidenFactor extends SubsystemBase {
 
     private static double CoralInValue = 500;
     private static double CoralOutValue = 500;
-    private static double CoralInMesuredValue;
-    private static double CoralOutMesuredValue;
-
+    
     private static final int ampLimit = 40;
 
     private static double shimSpeed = 0.8;
