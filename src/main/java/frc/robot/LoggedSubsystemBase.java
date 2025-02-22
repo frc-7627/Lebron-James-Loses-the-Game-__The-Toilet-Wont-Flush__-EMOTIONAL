@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LoggedSubsystemBase extends SubsystemBase{
     
-    public void putData() {
+    public void pushData() {
     String shuffleboardName = this.getClass().getCanonicalName().replace('.', '/').substring(10);
         Field[] declaredFields = this.getClass().getDeclaredFields();
         for (Field field : declaredFields) {
@@ -48,7 +48,7 @@ public class LoggedSubsystemBase extends SubsystemBase{
         }   
     }
 
-    public void getData() {
+    public void pullData() {
         String shuffleboardName = this.getClass().getCanonicalName().replace('.', '/').substring(10);
         Field[] declaredFields = this.getClass().getDeclaredFields();
         for (Field field : declaredFields) {

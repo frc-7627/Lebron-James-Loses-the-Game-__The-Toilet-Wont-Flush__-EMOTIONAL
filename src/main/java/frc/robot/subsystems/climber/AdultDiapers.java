@@ -131,6 +131,27 @@ public class AdultDiapers extends SubsystemBase {
     }
 
     /**
+     * Gets the output current of the Endefector Motor
+     * 
+     * @version 1.0
+     * @return Output amperage (double)
+     */
+    public double getCurrent() {
+        return m_talonFX.getSupplyCurrent(false).getValueAsDouble();
+    }
+
+    /**
+     * Gets the current Endefector Motor Velocity (NOT RPM)
+     * 
+     * @version 1.0
+     * @return Motor Velocity as a double
+     */
+    public double getVelocity() {
+        return m_talonFX.getVelocity().getValueAsDouble();
+    }
+
+
+    /**
     * Similates an issue with the current subsystem
     * Only works if skibbidi-mode is enabled
     *
@@ -159,7 +180,7 @@ public class AdultDiapers extends SubsystemBase {
      * @return void
      * @version 1.0
      */
-    public void putData() {
+    public void pushData() {
         String shuffleboardName = this.getClass().getCanonicalName().replace('.', '/').substring(10);
 
         Method[] methods = this.getClass().getDeclaredMethods();
@@ -193,12 +214,12 @@ public class AdultDiapers extends SubsystemBase {
 
     /**
      * Gets all feilds in this class and updates their values from shuffleboard
-     * !! Make sure to run putData first !!
+     * !! Make sure to run pushData first !!
      * 
      * @return void
      * @version 1.0
      */
-    public void getData() {
+    public void pullData() {
         String shuffleboardName = this.getClass().getCanonicalName().replace('.', '/').substring(10);
         Field[] declaredFields = this.getClass().getDeclaredFields();
         for (Field field : declaredFields) {
@@ -217,8 +238,8 @@ public class AdultDiapers extends SubsystemBase {
     @Override
     public void periodic() {
         if(Constants.verbose_shuffleboard_logging) {
-            putData();
-            getData();
+            pushData();
+            pullData();
         }
     }
 }

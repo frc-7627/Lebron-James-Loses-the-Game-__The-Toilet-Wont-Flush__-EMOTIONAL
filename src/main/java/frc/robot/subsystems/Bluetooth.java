@@ -223,7 +223,7 @@ public class Bluetooth extends SubsystemBase{
      * @return void
      * @version 1.0
      */
-    public void putData() {
+    public void pushData() {
         String shuffleboardName = this.getClass().getCanonicalName().replace('.', '/').substring(10);
 
         Method[] methods = this.getClass().getDeclaredMethods();
@@ -257,12 +257,12 @@ public class Bluetooth extends SubsystemBase{
 
     /**
      * Gets all feilds in this class and updates their values from shuffleboard
-     * !! Make sure to run putData first !!
+     * !! Make sure to run pushData first !!
      * 
      * @return void
      * @version 1.0
      */
-    public void getData() {
+    public void pullData() {
         String shuffleboardName = this.getClass().getCanonicalName().replace('.', '/').substring(10);
         Field[] declaredFields = this.getClass().getDeclaredFields();
         for (Field field : declaredFields) {
@@ -281,8 +281,8 @@ public class Bluetooth extends SubsystemBase{
     @Override
     public void periodic() {
         if(Constants.verbose_shuffleboard_logging) {
-            putData();
-            getData();
+            pushData();
+            pullData();
         }
     }
 }
