@@ -191,6 +191,16 @@ public class EndJoeBidenFactor extends SubsystemBase {
     }
 
     /**
+     * Gets the output current of the Endefector Motor
+     * 
+     * @version 1.0
+     * @return Output amperage (double)
+     */
+    public double getCurrent() {
+        return m_motor.getOutputCurrent();
+    }
+
+    /**
      * Gets the current Endefector Motor RPM
      * 
      * @version 1.0
@@ -207,7 +217,7 @@ public class EndJoeBidenFactor extends SubsystemBase {
      * @return void
      * @version 1.0
      */
-    public void putData() {
+    public void pushData() {
         String shuffleboardName = this.getClass().getCanonicalName().replace('.', '/').substring(10);
 
         Method[] methods = this.getClass().getDeclaredMethods();
@@ -241,12 +251,12 @@ public class EndJoeBidenFactor extends SubsystemBase {
 
     /**
      * Gets all feilds in this class and updates their values from shuffleboard
-     * !! Make sure to run putData first !!
+     * !! Make sure to run pushData first !!
      * 
      * @return void
      * @version 1.0
      */
-    public void getData() {
+    public void pullData() {
         String shuffleboardName = this.getClass().getCanonicalName().replace('.', '/').substring(10);
         Field[] declaredFields = this.getClass().getDeclaredFields();
         for (Field field : declaredFields) {
@@ -265,8 +275,8 @@ public class EndJoeBidenFactor extends SubsystemBase {
     @Override
     public void periodic() {
         if(Constants.verbose_shuffleboard_logging) {
-            putData();
-            getData();
+            pushData();
+            pullData();
         }
     }
 }
