@@ -28,6 +28,7 @@ public class EjectCoral extends Command {
     */
     public EjectCoral(EndJoeBidenFactor module, Bluetooth led) {
         this.module = module;
+        this.led = led;
         addRequirements(module);
      }
 

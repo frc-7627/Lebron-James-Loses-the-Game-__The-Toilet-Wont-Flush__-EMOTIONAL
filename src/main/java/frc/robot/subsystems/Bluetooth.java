@@ -1,7 +1,13 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import com.ctre.phoenix.led.*;
 import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
@@ -47,7 +53,7 @@ public class Bluetooth extends SubsystemBase{
    */
   public void color(String color) {
     candle.clearAnimation(0);
-    int rGBvalue[] = getColorValues(color);
+    int rGBvalue[] = findColorValues(color);
     setColor(rGBvalue[0], rGBvalue[1], rGBvalue[2]);
 
   }
@@ -69,7 +75,7 @@ public class Bluetooth extends SubsystemBase{
    * @return int array containing the 3 RGB values as int
    * @version 1.0
    */
-  private int[] getColorValues(String color) {
+  private int[] findColorValues(String color) {
     switch(color) {
       case "orange":
         return new int[]{255, 121, 0};
@@ -111,7 +117,7 @@ public class Bluetooth extends SubsystemBase{
   }
 
   public void setDefaultColor(String color) {
-    defaultColor = getColorValues(color);
+    defaultColor = findColorValues(color);
   }
 
 
@@ -146,7 +152,7 @@ public class Bluetooth extends SubsystemBase{
    */
   public void blink(String color){
     candle.clearAnimation(0);
-    int rGBvalue[] = getColorValues(color);
+    int rGBvalue[] = findColorValues(color);
     StrobeAnimation blinkingAnim = new StrobeAnimation(rGBvalue[0], rGBvalue[1], rGBvalue[2]);
     blinkingAnim.setSpeed(0.000000009);
     candle.animate(blinkingAnim, 0);
@@ -167,7 +173,7 @@ public class Bluetooth extends SubsystemBase{
    */
   public void scroll(String color1) {
     candle.clearAnimation(0);
-    int rGBvalue[] = getColorValues(color1);
+    int rGBvalue[] = findColorValues(color1);
     //int rGBvalue2[] = getColorValues(color2);
     ColorFlowAnimation Anim =  new ColorFlowAnimation(
       rGBvalue[0], rGBvalue[1], rGBvalue[2], 0, 0.1, 100, Direction.Forward, 0);
@@ -208,7 +214,77 @@ public class Bluetooth extends SubsystemBase{
     candle = new CANdle(99);
     System.out.println("[Climber] broken");
 
-}
+  }
+
+      /**
+     * Gets all fields and getter methods in this class and 
+     * places their values from shuffleboard
+     * 
+     * @return void
+     * @version 1.0
+     */
+    public void putData() {
+        String shuffleboardName = this.getClass().getCanonicalName().replace('.', '/').substring(10);
+
+        Method[] methods = this.getClass().getDeclaredMethods();
+        for (Method method:methods)
+        {
+            if(method.getName().substring(0, 3).equals("get")) {
+                try {
+                    Object value = method.invoke(this);
+                    if(value == null) value = 0.0; // Set to zero in case we can't run method
+                    SmartDashboard.putNumber(shuffleboardName + "/" + method.getName().substring(3), Double.parseDouble(value.toString()));
+                    //System.out.println(method.getName().substring(3) + " value:" + Double.parseDouble(value.toString()));
+                } catch(IllegalAccessException e) {
+                    System.out.println("[" + shuffleboardName + "] Somthing went wrong getting Shuffleboard data for: " + method.getName());
+                } catch(InvocationTargetException e) {
+                    System.out.println("[" + shuffleboardName + "] Somthing went wrong getting Shuffleboard data for: " + method.getName());
+                }
+            }
+        }
+        Field[] declaredFields = this.getClass().getDeclaredFields();
+        for (Field field : declaredFields) {  
+            if (field.getType().isPrimitive()) {
+                try {
+                    SmartDashboard.putNumber(shuffleboardName + "/" + field.getName(), field.getDouble(this.getClass()));
+                    //System.out.println(field.getName() + " value: " + field.getDouble(this.getClass()));
+                } catch(IllegalAccessException e) {
+                    System.out.println("[" + shuffleboardName + "] Somthing went wrong getting Shuffleboard data for: " + field.getName());
+                }
+            }
+        }   
+    }
+
+    /**
+     * Gets all feilds in this class and updates their values from shuffleboard
+     * !! Make sure to run putData first !!
+     * 
+     * @return void
+     * @version 1.0
+     */
+    public void getData() {
+        String shuffleboardName = this.getClass().getCanonicalName().replace('.', '/').substring(10);
+        Field[] declaredFields = this.getClass().getDeclaredFields();
+        for (Field field : declaredFields) {
+            if (field.getType().isPrimitive() && !Modifier.isStatic(field.getModifiers())) {
+                try {
+                    field.setDouble(this, SmartDashboard.getNumber(shuffleboardName + "/const/" + field.getName(), field.getDouble(this.getClass())));
+                    System.out.println(field.getName() + " set " + field.getDouble(this.getClass()));
+                } catch(IllegalAccessException e) {
+                    System.out.println("[" + shuffleboardName + "] Somthing went wrong getting Shuffleboard data for: " + field.getName());
+                }
+            }
+        }   
+    }
+
+    /** Run once every periodic call */
+    @Override
+    public void periodic() {
+        if(Constants.verbose_shuffleboard_logging) {
+            putData();
+            getData();
+        }
+    }
 }
 
 

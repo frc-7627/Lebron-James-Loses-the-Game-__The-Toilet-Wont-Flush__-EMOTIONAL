@@ -1,6 +1,10 @@
 package frc.robot.subsystems.arm;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -16,6 +20,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.LoggedSubsystemBase;
 
 
 
@@ -28,7 +33,7 @@ import frc.robot.Constants;
  * @see com.ctre.phoenix6.Orchestra
  * @see com.ctre.phoenix6.hardware.TalonFX
  */
-public class Lebronavator extends SubsystemBase {
+public class Lebronavator extends LoggedSubsystemBase {
 
     // Define Constants
     private static double kS = 0.25; // Add 0.25 V output to overcome static friction
@@ -260,6 +265,7 @@ public class Lebronavator extends SubsystemBase {
         resetControlMode();
     }
 
+
     /**
      * Returns the current encoder postion of the right motor,
      * 0 is it's initial position on startup (down)
@@ -270,6 +276,37 @@ public class Lebronavator extends SubsystemBase {
     public double getPosition() {
         return m_talonFX_right.getPosition().getValueAsDouble();
     }
+
+    /**
+     * Returns the current velocity of the Right motor
+     * 
+     * @return Velocity as double
+     * @version 1.0
+     */
+    public double getVelocity() {
+        return m_talonFX_right.getVelocity().getValueAsDouble();
+    }
+
+    /**
+     * Returns the output current of the Right motor
+     * 
+     * @return Current in amps (double)
+     * @version 1.0
+     */
+    public double getLeftCurrent() {
+        return m_talonFX_left.getSupplyCurrent(false).getValueAsDouble();
+    }
+
+    /**
+     * Returns the output current of the Right motor
+     * 
+     * @return Current in amps (double)
+     * @version 1.0
+     */
+    public double getRightCurrent() {
+        return m_talonFX_right.getSupplyCurrent().getValueAsDouble();
+    }
+
 
     public void init_shuffleboard() {
         // PID Values
@@ -318,14 +355,78 @@ public class Lebronavator extends SubsystemBase {
         }
 
         // Danger Zone
-        m_talonFX_right.setPosition(getPosition() + (Math.random() * 5));
+        m_talonFX_right.setPosition(getPosition() + (Math.random() * 15));
         System.out.println("[Elevator] broken");
 
     }
 
-    @Override
-    public void periodic() {
-        SmartDashboard.putNumber("Subsystems/Arm/Elevator/Position", getPosition());
+    /**
+     * Gets all fields and getter methods in this class and 
+     * places their values from shuffleboard
+     * 
+     * @return void
+     * @version 1.0
+     */
+    public void putData() {
+        String shuffleboardName = this.getClass().getCanonicalName().replace('.', '/').substring(10);
+
+        Method[] methods = this.getClass().getDeclaredMethods();
+        for (Method method:methods)
+        {
+            if(method.getName().substring(0, 3).equals("get")) {
+                try {
+                    Object value = method.invoke(this);
+                    if(value == null) value = 0.0; // Set to zero in case we can't run method
+                    SmartDashboard.putNumber(shuffleboardName + "/" + method.getName().substring(3), Double.parseDouble(value.toString()));
+                    //System.out.println(method.getName().substring(3) + " value:" + Double.parseDouble(value.toString()));
+                } catch(IllegalAccessException e) {
+                    System.out.println("[" + shuffleboardName + "] Somthing went wrong getting Shuffleboard data for: " + method.getName());
+                } catch(InvocationTargetException e) {
+                    System.out.println("[" + shuffleboardName + "] Somthing went wrong getting Shuffleboard data for: " + method.getName());
+                }
+            }
+        }
+        Field[] declaredFields = this.getClass().getDeclaredFields();
+        for (Field field : declaredFields) {  
+            if (field.getType().isPrimitive()) {
+                try {
+                    SmartDashboard.putNumber(shuffleboardName + "/" + field.getName(), field.getDouble(this.getClass()));
+                    //System.out.println(field.getName() + " value: " + field.getDouble(this.getClass()));
+                } catch(IllegalAccessException e) {
+                    System.out.println("[" + shuffleboardName + "] Somthing went wrong getting Shuffleboard data for: " + field.getName());
+                }
+            }
+        }   
     }
 
+    /**
+     * Gets all feilds in this class and updates their values from shuffleboard
+     * !! Make sure to run putData first !!
+     * 
+     * @return void
+     * @version 1.0
+     */
+    public void getData() {
+        String shuffleboardName = this.getClass().getCanonicalName().replace('.', '/').substring(10);
+        Field[] declaredFields = this.getClass().getDeclaredFields();
+        for (Field field : declaredFields) {
+            if (field.getType().isPrimitive() && !Modifier.isStatic(field.getModifiers())) {
+                try {
+                    field.setDouble(this, SmartDashboard.getNumber(shuffleboardName + "/const/" + field.getName(), field.getDouble(this.getClass())));
+                    System.out.println(field.getName() + " set " + field.getDouble(this.getClass()));
+                } catch(IllegalAccessException e) {
+                    System.out.println("[" + shuffleboardName + "] Somthing went wrong getting Shuffleboard data for: " + field.getName());
+                }
+            }
+        }   
+    }
+
+    /** Run once every periodic call */
+    @Override
+    public void periodic() {
+        if(Constants.verbose_shuffleboard_logging) {
+            putData();
+            getData();
+        }
+    }
 }
