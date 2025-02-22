@@ -212,6 +212,14 @@ public class EndJoeBidenFactor extends SubsystemBase {
         return m_motor_enc.getVelocity();
     }
 
+    public double getFrontTOFValue() {
+        return m_TOF_front.getRange();
+    }
+
+    public double getRearTOFValue() {
+        return m_TOF_rear.getRange();
+    }
+
         /**
      * Gets all fields and getter methods in this class and 
      * places their values from shuffleboard
@@ -276,8 +284,6 @@ public class EndJoeBidenFactor extends SubsystemBase {
     /** Run once every periodic call */
     @Override
     public void periodic() {
-        CoralInMesuredValue = m_TOF_front.getRange();
-        CoralOutMesuredValue = m_TOF_rear.getRange();
         if(Constants.verbose_shuffleboard_logging) {
             pushData();
             pullData();
