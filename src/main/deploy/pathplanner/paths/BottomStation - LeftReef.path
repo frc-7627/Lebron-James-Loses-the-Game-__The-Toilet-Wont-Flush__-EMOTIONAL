@@ -20,7 +20,7 @@
         "y": 4.009974315068493
       },
       "prevControl": {
-        "x": -0.35897727272727353,
+        "x": -0.358977272727274,
         "y": 4.319161931818181
       },
       "nextControl": null,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -0.6028010355924953
   },
   "reversed": false,
   "folder": "Cha Cha Slide",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -125.53767779197433
+    "rotation": 52.50175117984347
   },
   "useDefaultConstraints": true
 }

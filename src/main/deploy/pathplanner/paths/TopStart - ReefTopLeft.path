@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.338459696495489,
-        "y": 7.879761892878055
+        "x": 7.338457092762279,
+        "y": 7.879763324305531
       },
       "isLocked": false,
       "linkedName": "TopStart"
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 119.27525427725261
+    "rotation": -59.66473820707253
   },
   "reversed": false,
   "folder": "Quitting Softball",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.4628632301640064
+    "rotation": 178.8302766930558
   },
   "useDefaultConstraints": true
 }

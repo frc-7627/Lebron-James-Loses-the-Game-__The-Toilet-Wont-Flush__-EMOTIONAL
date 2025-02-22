@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 129.23736711340152
+    "rotation": -53.4679422761472
   },
   "reversed": false,
   "folder": "3 Day Weather Forecast",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.27525427725261
+    "rotation": -59.66473820707253
   },
   "useDefaultConstraints": true
 }

@@ -31,7 +31,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.5,
-      "rotationDegrees": 180.0
+      "rotationDegrees": -1.8142423081228072
     }
   ],
   "constraintZones": [],
@@ -47,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -0.6028010355924953
   },
   "reversed": false,
   "folder": "3 Day Weather Forecast",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 129.23736711340152
+    "rotation": -53.4679422761472
   },
   "useDefaultConstraints": true
 }

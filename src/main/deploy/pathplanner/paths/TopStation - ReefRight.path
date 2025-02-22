@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 2.5448043798130997
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "MFNC 3 piece fish combo",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 129.23736711340152
+    "rotation": -53.4679422761472
   },
   "useDefaultConstraints": true
 }

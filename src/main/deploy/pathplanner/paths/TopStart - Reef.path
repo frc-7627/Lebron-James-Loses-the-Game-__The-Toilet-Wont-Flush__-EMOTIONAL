@@ -58,13 +58,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 121.20913310263899
+    "rotation": -61.33181160846825
   },
   "reversed": false,
   "folder": "YOU CANT PARK THERE",
   "idealStartingState": {
     "velocity": 1.0,
-    "rotation": 0.4628632301640064
+    "rotation": 178.8302766930558
   },
   "useDefaultConstraints": true
 }
