@@ -11,27 +11,15 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "ReefTopLeft - TopStation"
+            "name": "AutoScoreL2"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "TopStation - ReefTopLeft"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "ReefTopLeft - TopStation"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "TopStation - ReefTopLeft"
+            "name": "AutoStow"
           }
         },
         {
@@ -44,6 +32,66 @@
           "type": "path",
           "data": {
             "pathName": "TopStation - ReefTopLeft"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoScoreL3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoStow"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ReefTopLeft - TopStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TopStation - ReefTopLeft"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoScoreL4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoStow"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ReefTopLeft - TopStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TopStation - ReefTopLeft"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoScoreL4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoStow"
           }
         }
       ]

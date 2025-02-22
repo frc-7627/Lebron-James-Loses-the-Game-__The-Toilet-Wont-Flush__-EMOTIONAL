@@ -11,6 +11,18 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "AutoScoreL4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoStow"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "ReefTopRight - TopStation"
@@ -20,6 +32,18 @@
           "type": "path",
           "data": {
             "pathName": "TopStation - ReefTopLeft"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoScoreL4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoStow"
           }
         }
       ]

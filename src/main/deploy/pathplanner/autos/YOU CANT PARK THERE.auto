@@ -33,6 +33,18 @@
           "data": {
             "pathName": "TopStart - Reef"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoScoreL1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoStow"
+          }
         }
       ]
     }
