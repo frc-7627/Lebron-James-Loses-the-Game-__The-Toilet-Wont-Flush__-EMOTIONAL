@@ -30,8 +30,8 @@ import frc.robot.Constants;
  */
 public class EndJoeBidenFactor extends SubsystemBase {
 
-    private static double LoadSpeed = 0.1;
-    private static double EjectSpeed = 0.2;
+    private static double LoadSpeed = 0.3;
+    private static double EjectSpeed = 0.3;
 
     private static double CoralInValue = 500;
     private static double CoralOutValue = 500;

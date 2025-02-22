@@ -7,9 +7,8 @@ import frc.robot.subsystems.Bluetooth;
 
 /** See Constructor for details */
 public class WaitForCoral extends Command {
-    private EndJoeBidenFactor module;
-    Bluetooth bluetooth = new Bluetooth();
-    EndJoeBidenFactor joe = new EndJoeBidenFactor();
+    private final EndJoeBidenFactor module;
+    private final Bluetooth led;
 
     /**
     * Stops the Endefector, waits and ends when the Rear TOF is triggered,
@@ -22,8 +21,9 @@ public class WaitForCoral extends Command {
     * @requires led - Indicates when robot is in possession of gamepiece
     * @version 1.0
     */
-    public WaitForCoral(EndJoeBidenFactor module) {
+    public WaitForCoral(EndJoeBidenFactor module, Bluetooth led) {
         this.module = module;
+        this.led = led;
         addRequirements(module);
      }
 
@@ -34,8 +34,8 @@ public class WaitForCoral extends Command {
 
     @Override
     public void execute(){
-        if (joe.CoralIn()){
-        bluetooth.color("eggPlant");
+        if (module.CoralIn()){
+        led.color("eggPlant");
     }
     }
 
