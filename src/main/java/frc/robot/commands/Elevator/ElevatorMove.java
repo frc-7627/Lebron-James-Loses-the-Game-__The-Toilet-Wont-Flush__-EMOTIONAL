@@ -20,11 +20,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class ElevatorMove extends Command {
 
     // Editable Constants
-    private double setPoint_Down = 10;
+    private double setPoint_Down = 0;
     private double setPoint_L1 = 20;
     private double setPoint_L2 = 30;
     private double setPoint_L3 = 40;
-    private double setPoint_L4 = 50;
+    private double setPoint_L4 = 56.4;
 
     private final double goal; 
 

@@ -30,15 +30,15 @@ import frc.robot.Constants;
  */
 public class EndJoeBidenFactor extends SubsystemBase {
 
-    private static double LoadSpeed = 0.1;
-    private static double EjectSpeed = 0.2;
+    private static double LoadSpeed = 0.3;
+    private static double EjectSpeed = 0.3;
 
     private static double CoralInValue = 500;
     private static double CoralOutValue = 500;
 
     private static final int ampLimit = 40;
 
-    private static double shimSpeed = 0.2;
+    private static double shimSpeed = 0.4;
 
     private final SparkMax m_motor = new SparkMax(45, MotorType.kBrushless);  
 

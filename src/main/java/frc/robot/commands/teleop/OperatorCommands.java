@@ -45,7 +45,7 @@ public class OperatorCommands {
     public Command AutoStow() {
         return new SequentialCommandGroup(
             new ElevatorMove(elevator, 0),
-            new WaitForCoral(outake),
+            new WaitForCoral(outake, led),
             new IntakeCoral(outake, led)
         );
     }

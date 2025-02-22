@@ -9,6 +9,7 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.MusicTone;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.Filesystem;
@@ -78,9 +79,10 @@ public class Lebronavator extends SubsystemBase {
         talonFXConfig_right.CurrentLimits.withStatorCurrentLimit(currentLimit);
 
         talonFXConfig_right.MotorOutput.withPeakForwardDutyCycle(maxSpeed);
-        talonFXConfig_right.MotorOutput.withPeakReverseDutyCycle(maxSpeed);
+        talonFXConfig_right.MotorOutput.withPeakReverseDutyCycle(-maxSpeed);
 
-        talonFXConfig_right.MotorOutput.withNeutralMode(NeutralModeValue.Brake); // Set to coast
+        talonFXConfig_right.MotorOutput.withNeutralMode(NeutralModeValue.Coast); // Set to coast
+        talonFXConfig_right.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
 
         // Music stuff
         talonFXConfig_right.Audio.withBeepOnBoot(false);
@@ -101,15 +103,18 @@ public class Lebronavator extends SubsystemBase {
         motionMagicConfigs.MotionMagicCruiseVelocity = MotionMagicCruiseVelocity;
         motionMagicConfigs.MotionMagicAcceleration = MotionMagicAcceleration;
         motionMagicConfigs.MotionMagicJerk = MotionMagicJerk;
+       // motionMagicConfigs.Mot
 
         var talonFXConfig_left = new TalonFXConfiguration();
         talonFXConfig_left.CurrentLimits.withStatorCurrentLimitEnable(true);
         talonFXConfig_left.CurrentLimits.withStatorCurrentLimit(currentLimit);
 
         talonFXConfig_left.MotorOutput.withPeakForwardDutyCycle(maxSpeed);
-        talonFXConfig_left.MotorOutput.withPeakReverseDutyCycle(maxSpeed);
+        talonFXConfig_left.MotorOutput.withPeakReverseDutyCycle(-maxSpeed);
 
         talonFXConfig_left.MotorOutput.withNeutralMode(NeutralModeValue.Coast); // Set to coast
+        talonFXConfig_left.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
+
 
         // Music stuff
         talonFXConfig_left.Audio.withBeepOnBoot(false);
@@ -123,6 +128,9 @@ public class Lebronavator extends SubsystemBase {
         // Save configs to motors
         m_talonFX_right.getConfigurator().apply(talonFXConfig_right);
         m_talonFX_left.getConfigurator().apply(talonFXConfig_left);
+
+        // Reset encoder position for stability
+        m_talonFX_right.setPosition(getPosition());
 
         // Setup follower mode
         resetControlMode();
@@ -226,17 +234,7 @@ public class Lebronavator extends SubsystemBase {
      * @version 1.0
      */
     public void shimUp() {
-      //  final DutyCycleOut m_request = new DutyCycleOut(shimSpeed);
-     //   final DutyCycleOut m_otherRequest = new DutyCycleOut(shimSpeed); //TODO: TEST
-
-       // m_talonFX_right.setControl(m_request);
-      //  m_talonFX_left.setControl(m_otherRequest);
-
-              // create a Motion Magic request, voltage outpu
-
-              // set target position
-              m_talonFX_right.setControl(m_request.withPosition(getPosition() + 15));
-              //m_talonFX_left.setControl(new Follower(m_talonFX_right.getDeviceID(), false));
+        m_talonFX_right.setControl(m_request.withPosition(getPosition() + 1));
     }
 
     /**
@@ -247,11 +245,8 @@ public class Lebronavator extends SubsystemBase {
      * @return void
      * @version 1.0
      */
-    public void shimDown() {
-       // final DutyCycleOut m_request2 = new DutyCycleOut(-shimSpeed);
-       m_talonFX_right.setControl(m_request.withPosition(getPosition() - 15));
-
-       // m_talonFX_right.setControl(m_request2);
+    public void shimDown() { 
+       m_talonFX_right.setControl(m_request.withPosition(getPosition() - 1));
     }
 
     /**
@@ -326,6 +321,11 @@ public class Lebronavator extends SubsystemBase {
         m_talonFX_right.setPosition(getPosition() + (Math.random() * 5));
         System.out.println("[Elevator] broken");
 
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Subsystems/Arm/Elevator/Position", getPosition());
     }
 
 }

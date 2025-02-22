@@ -300,7 +300,7 @@ public class RobotContainer
     NamedCommands.registerCommand("IntakeCoral", new IntakeCoral(BidenFactor, led));
     NamedCommands.registerCommand("ManCoralForward", new ManCoralForward(BidenFactor, led)); // Manual
     NamedCommands.registerCommand("ManCoralReverse", new ManCoralReverse(BidenFactor, led)); // Manual
-    NamedCommands.registerCommand("WaitForCoral", new WaitForCoral(BidenFactor));
+    NamedCommands.registerCommand("WaitForCoral", new WaitForCoral(BidenFactor, led));
     
 
     // Drivebase
