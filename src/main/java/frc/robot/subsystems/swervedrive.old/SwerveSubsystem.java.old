@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems.swervedrive;
+package frc.robot.subsystems.swervedrive.old;
 
 import static edu.wpi.first.units.Units.Meter;
 
@@ -21,6 +21,7 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -28,13 +29,15 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import frc.robot.Constants;
-import frc.robot.subsystems.swervedrive.Vision.Cameras;
+import frc.robot.subsystems.swervedrive.old.Vision.Cameras;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -62,9 +65,13 @@ public class SwerveSubsystem extends SubsystemBase
    */
   private final SwerveDrive         swerveDrive;
   /**
+   * AprilTag field layout.
+   */
+  private final AprilTagFieldLayout aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2024Crescendo);
+  /**
    * Enable vision odometry updates while driving.
    */
-  private final boolean             visionDriveTest     = true;
+  private final boolean             visionDriveTest     = false;
   /**
    * PhotonVision class to keep an accurate odometry.
    */
@@ -77,22 +84,25 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public SwerveSubsystem(File directory)
   {
+    
+    // Angle conversion factor is 360 / (GEAR RATIO * ENCODER RESOLUTION)
+    //  In this case the gear ratio is 12.8 motor revolutions per wheel rotation.
+    //  The encoder resolution per motor revolution is 1 per motor revolution.
+    double angleConversionFactor =  16.8;
+    // Motor conversion factor is (PI * WHEEL DIAMETER IN METERS) / (GEAR RATIO * ENCODER RESOLUTION).
+    //  In this case the wheel diameter is 4 inches, which must be converted to meters to get meters/second.
+    //  The gear ratio is 6.75 motor revolutions per wheel rotation.
+    //  The encoder resolution per motor revolution is 1 per motor revolution.
+    double driveConversionFactor = Math.PI * 4 / (6.12 * 42);
+
+
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
     try
     {
-      // Angle conversion factor is 360 / (GEAR RATIO * ENCODER RESOLUTION)
-      //  In this case the gear ratio is 12.8 motor revolutions per wheel rotation.
-      //  The encoder resolution per motor revolution is 1 per motor revolution.
-      double angleConversionFactor =  16.8;
-      // Motor conversion factor is (PI * WHEEL DIAMETER IN METERS) / (GEAR RATIO * ENCODER RESOLUTION).
-      //  In this case the wheel diameter is 4 inches, which must be converted to meters to get meters/second.
-      //  The gear ratio is 6.75 motor revolutions per wheel rotation.
-      //  The encoder resolution per motor revolution is 1 per motor revolution.
-      double driveConversionFactor = Math.PI * 4 / (6.12 * 42);
-
-      swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.MAX_SPEED, angleConversionFactor, 			driveConversionFactor);
-      // ^ Alternative method if you don't want to supply the conversion factor via JSON files.
+     swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.MAX_SPEED, angleConversionFactor, 			driveConversionFactor);
+          // Alternative method if you don't want to supply the conversion factor via JSON files.
+      // swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumSpeed, angleConversionFactor, driveConversionFactor);
     } catch (Exception e)
     {
       throw new RuntimeException(e);
@@ -584,7 +594,6 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public void zeroGyroWithAlliance()
   {
-    System.out.println("Gyro Gyroing mega gyro style");
     if (isRedAlliance())
     {
       zeroGyro();
@@ -734,7 +743,7 @@ public class SwerveSubsystem extends SubsystemBase
     return swerveDrive;
   }
 
-    /**
+  /**
     * Similates an issue with the current subsystem
     * Only works if skibbidi-mode is enabled
     *
@@ -743,16 +752,16 @@ public class SwerveSubsystem extends SubsystemBase
     * @return void
     * @version 1.0
     */
-    public void simulateFault() {
-      // Check for Coach Mode
-      if(!Constants.skibbidi_mode) {
-        System.out.println("[Endefector] Coach Controller Disabled!");
-        return; // Do not finish running method
-      }
-  
-      // Danger Zone
-      zeroGyro();
-      addFakeVisionReading();
-      System.out.println("[Drivebase] broken");
+  public void simulateFault() {
+    // Check for Coach Mode
+    if(!Constants.skibbidi_mode) {
+      System.out.println("[Endefector] Coach Controller Disabled!");
+      return; // Do not finish running method
     }
+
+    // Danger Zone
+    zeroGyro();
+    addFakeVisionReading();
+    System.out.println("[Drivebase] broken");
+  }
 }

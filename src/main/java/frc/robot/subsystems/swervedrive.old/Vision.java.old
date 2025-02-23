@@ -1,4 +1,4 @@
-package frc.robot.subsystems.swervedrive;
+package frc.robot.subsystems.swervedrive.old;
 
 import static edu.wpi.first.units.Units.Microseconds;
 import static edu.wpi.first.units.Units.Milliseconds;
@@ -58,7 +58,7 @@ public class Vision
   /**
    * Ambiguity defined as a value between (0,1). Used in {@link Vision#filterPose}.
    */
-  private static       double              maximumAmbiguity                = 0.25;
+  private static     double              maximumAmbiguity                = 0.25;
   /**
    * Photon Vision Simulation
    */
@@ -342,6 +342,7 @@ public class Vision
                       Units.inchesToMeters(0),
                       Units.inchesToMeters(12)),
     VecBuilder.fill(4, 4, 8), VecBuilder.fill(0.5, 0.5, 1));
+  
 
     /**
      * Latency alert to use when high latency is detected.
@@ -614,7 +615,6 @@ public class Vision
 
   }
 
-
     /**
     * Similates an issue with the current subsystem
     * Only works if skibbidi-mode is enabled
@@ -624,17 +624,16 @@ public class Vision
     * @return void
     * @version 1.0
     */
-    public static void simulateFault() {
-      // Check for Coach Mode
-      if(!Constants.skibbidi_mode) {
-        System.out.println("[Endefector] Coach Controller Disabled!");
-        return; // Do not finish running method
-      }
-  
-      // Danger Zone
-      maximumAmbiguity = 0.00001;
-      System.out.println("[Vision] broken");
+  public static void simulateFault() {
+    // Check for Coach Mode
+    if(!Constants.skibbidi_mode) {
+      System.out.println("[Endefector] Coach Controller Disabled!");
+      return; // Do not finish running method
     }
-  
+
+    // Danger Zone
+    maximumAmbiguity = 0.00001;
+    System.out.println("[Vision] broken");
+  }
 
 }

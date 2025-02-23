@@ -53,7 +53,7 @@ public class CoachCommands {
 
     /**
     * Breaks the drivebase Subsystem, check SwerveSubsystem.simulateFault 
-    * for details {@link frc.robot.subsystems.swervedrive.SwerveSubsystem.simulateFault}
+    * for details {@link frc.robot.subsystems.swervedrive.old.SwerveSubsystem.simulateFault}
     *
     * @requires SwerveSubsystem
     *

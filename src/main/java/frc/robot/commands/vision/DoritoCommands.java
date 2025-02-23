@@ -34,7 +34,7 @@ public class DoritoCommands {
 
     /**
      * Turns the Robot to face an April Tag
-     * @param drivebase Swerve Drivebase {@link frc.robot.subsystems.swervedrive.SwerveSubsystem} provided by YAGSL
+     * @param drivebase Swerve Drivebase {@link frc.robot.subsystems.swervedrive.old.SwerveSubsystem} provided by YAGSL
      * @return edu.wpi.first.wpilibj2.command.Command
      * 
      * @version 1.0
