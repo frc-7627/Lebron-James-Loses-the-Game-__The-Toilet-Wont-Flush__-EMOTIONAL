@@ -49,6 +49,11 @@ public class IntakeCoral extends Command {
             module.loadSlow(); 
             state = 1;
         }
+        if(state == 1 && module.CoralLeaveBack()) {
+            System.out.println("state 1");
+            module.loadSlowReverse(); 
+            state = 2;
+        }
     }
 
     @Override
@@ -61,6 +66,6 @@ public class IntakeCoral extends Command {
 
     @Override 
     public boolean isFinished() {
-        return (state == 1 && module.CoralLeaveBack());
+        return (state == 2 && module.CoralTouchBack());
     }
 }

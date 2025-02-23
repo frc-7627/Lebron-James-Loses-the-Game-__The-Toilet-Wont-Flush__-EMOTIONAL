@@ -164,7 +164,7 @@ public class RobotContainer
    */
   private void configureBindings()
   {
-    //Command driveFieldOrientedDirectAngle      = drivebase.driveFieldOriented(driveDirectAngle);
+    Command driveFieldOrientedDirectAngle      = drivebase.driveFieldOriented(driveDirectAngle);
     Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
     //Command driveRobotOrientedAngularVelocity  = drivebase.driveFieldOriented(driveRobotOriented);
     //Command driveSetpointGen = drivebase.driveWithSetpointGeneratorFieldRelative(
@@ -216,7 +216,7 @@ public class RobotContainer
 
       operatorXbox.leftTrigger().whileTrue(opCommands.AutoStow());
       operatorXbox.leftBumper().whileTrue(new IntakeCoral(BidenFactor, led));
-      operatorXbox.rightTrigger().whileTrue(Commands.none());
+      operatorXbox.rightTrigger().whileTrue(opCommands.AutoEjectL4());
       operatorXbox.rightBumper().whileTrue(new EjectCoral(BidenFactor, led));
 
       /** Coach Xbox */

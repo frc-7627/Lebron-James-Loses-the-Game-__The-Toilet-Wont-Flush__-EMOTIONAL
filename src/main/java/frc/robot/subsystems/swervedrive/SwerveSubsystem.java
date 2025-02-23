@@ -584,6 +584,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public void zeroGyroWithAlliance()
   {
+    System.out.println("Gyro Gyroing mega gyro style");
     if (isRedAlliance())
     {
       zeroGyro();

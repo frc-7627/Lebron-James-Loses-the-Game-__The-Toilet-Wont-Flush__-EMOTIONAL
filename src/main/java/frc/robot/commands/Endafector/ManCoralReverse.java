@@ -21,6 +21,8 @@ public class ManCoralReverse extends Command {
     public ManCoralReverse(EndJoeBidenFactor module, Bluetooth led) {
         this.module = module;
         this.led = led;
+        
+        addRequirements(module);
     }
     
     @Override
