@@ -25,6 +25,7 @@ public class ElevatorMove extends Command {
     private double setPoint_L2 = 21;
     private double setPoint_L3 = 35;
     private double setPoint_L4 = 60.3;
+    private double setPoint_L4_high = setPoint_L4 + 5;
 
     private final double goal; 
 
@@ -47,6 +48,9 @@ public class ElevatorMove extends Command {
                 break;
             case 4:
                 goal = setPoint_L4;
+                break;
+            case 5:
+                goal = setPoint_L4_high;
                 break;
             default:
                 System.out.print("Unknown location set");

@@ -1,6 +1,7 @@
 package frc.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Elevator.ElevatorMove;
@@ -96,6 +97,15 @@ public class OperatorCommands {
         return AutoScore(4);
     }
 
-
-
+    public Command AutoEjectL4() {
+        return new SequentialCommandGroup(
+            new EjectCoral(outake, led),
+            new ElevatorMove(elevator, 0),
+            new ParallelRaceGroup(
+                    new EjectCoral(outake, led),
+                    new WaitCommand(0.5)
+                ),
+            new ElevatorMove(elevator, 0)
+        );
+    }
 }

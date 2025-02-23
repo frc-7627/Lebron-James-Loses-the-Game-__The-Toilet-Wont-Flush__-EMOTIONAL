@@ -216,7 +216,7 @@ public class RobotContainer
 
       operatorXbox.leftTrigger().whileTrue(opCommands.AutoStow());
       operatorXbox.leftBumper().whileTrue(new IntakeCoral(BidenFactor, led));
-      operatorXbox.rightTrigger().whileTrue(Commands.none());
+      operatorXbox.rightTrigger().whileTrue(opCommands.AutoEjectL4());
       operatorXbox.rightBumper().whileTrue(new EjectCoral(BidenFactor, led));
 
       /** Coach Xbox */
