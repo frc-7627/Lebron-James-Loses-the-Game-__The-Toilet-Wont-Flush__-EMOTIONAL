@@ -18,12 +18,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import java.io.File;
 
 import frc.robot.Constants.OperatorConstants;
-
-import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.Bluetooth;
 import frc.robot.subsystems.arm.EndJoeBidenFactor;
 import frc.robot.subsystems.arm.Lebronavator;
 import frc.robot.subsystems.climber.AdultDiapers;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -87,7 +86,7 @@ public class RobotContainer
    * Clone's the angular velocity input stream and converts it to a fieldRelative input stream.
    */
   SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(driverXbox::getRightX,
-                                                                                            driverXbox::getRightY)
+                                                                                             driverXbox::getRightY)
                                                            .headingWhile(true);
 
   /**
@@ -121,6 +120,8 @@ public class RobotContainer
                                                                                                               (Math.PI *
                                                                                                                2))
                                                                                .headingWhile(true);
+
+
  
   /**
 
@@ -167,11 +168,11 @@ public class RobotContainer
     Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
     //Command driveRobotOrientedAngularVelocity  = drivebase.driveFieldOriented(driveRobotOriented);
     //Command driveSetpointGen = drivebase.driveWithSetpointGeneratorFieldRelative(
-    //    driveDirectAngle);
+     //   driveDirectAngle);
     //Command driveFieldOrientedDirectAngleKeyboard      = drivebase.driveFieldOriented(driveDirectAngleKeyboard);
     Command driveFieldOrientedAnglularVelocityKeyboard = drivebase.driveFieldOriented(driveAngularVelocityKeyboard);
     //Command driveSetpointGenKeyboard = drivebase.driveWithSetpointGeneratorFieldRelative(
-    //    driveDirectAngleKeyboard);
+     //   driveDirectAngleKeyboard);
 
     if (RobotBase.isSimulation())
     {
@@ -335,7 +336,7 @@ public class RobotContainer
 
   /**
    * Sets all motors in the drivebase to brake mode or coast mode
-   * @see frc.robot.subsystems.swervedrive.SwerveSubsystem.setMotorBrake
+   * @see frc.robot.subsystems.swervedrive.old.SwerveSubsystem.setMotorBrake
    * 
    * @param boolean turn brake mode on or off
    * @return void
