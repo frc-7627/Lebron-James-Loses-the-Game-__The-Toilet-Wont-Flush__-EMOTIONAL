@@ -36,8 +36,8 @@ import frc.robot.Constants;
  */
 public class EndJoeBidenFactor extends SubsystemBase {
 
-    private static double LoadSpeed = 0.1;
-    private static double LoadSlowSpeed = 0.05;
+    private static double LoadSpeed = 0.2;
+    private static double LoadSlowSpeed = 0.15;
     private static double EjectSpeed = 0.5;
 
     private static double CoralInValue = 60;
@@ -126,6 +126,13 @@ public class EndJoeBidenFactor extends SubsystemBase {
      */
     public boolean CoralTouchFront() {
         double range = getFrontTOFValue();
+        System.out.println("F: " + range);
+        if (range != 0.0) return (CoralInValue > range);
+        else return false;
+    }
+
+    public boolean CoralTouchBack() {
+        double range = getRearTOFValue();
         System.out.println("F: " + range);
         if (range != 0.0) return (CoralInValue > range);
         else return false;
@@ -322,5 +329,10 @@ public class EndJoeBidenFactor extends SubsystemBase {
 
     public void loadSlow() {
         m_motor.set(LoadSlowSpeed);
+    }
+
+    
+    public void loadSlowReverse() {
+        m_motor.set(-LoadSlowSpeed);
     }
 }
