@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class IntakeCoral extends Command {
     private EndJoeBidenFactor module;
     private Bluetooth led;
+    private int state;
 
     /**
     * Runs the Endafector Forward, in order to intake a gamepiece
@@ -35,18 +36,24 @@ public class IntakeCoral extends Command {
     @Override
     public void initialize() {
         led.bluetoothOFF();
+        led.blink("eggPlant");
         module.load();
+        state = 0;
     }
 
     @Override
-    public void execute(){
-        //if(module.CoralIn()) 
-        //led.color("eggPlant");
-        led.blink("eggPlant");
+    public void execute() {
+        System.out.print("run");
+        if(state == 0 && module.CoralTouchFront()) {
+            System.out.println("state 1");
+            module.loadSlow(); 
+            state = 1;
+        }
     }
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("state f");
         module.stop();
         if(!interrupted) led.color("vomitGreen");
         else led.bluetoothOFF();
@@ -54,6 +61,6 @@ public class IntakeCoral extends Command {
 
     @Override 
     public boolean isFinished() {
-        return (module.CoralOut());
+        return (state == 1 && module.CoralLeaveBack());
     }
 }

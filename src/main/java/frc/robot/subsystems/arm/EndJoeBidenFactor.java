@@ -36,13 +36,14 @@ import frc.robot.Constants;
  */
 public class EndJoeBidenFactor extends SubsystemBase {
 
-    private static double LoadSpeed = 0.3;
-    private static double EjectSpeed = 0.3;
+    private static double LoadSpeed = 0.1;
+    private static double LoadSlowSpeed = 0.05;
+    private static double EjectSpeed = 0.5;
 
-    private static double CoralInValue = 500;
-    private static double CoralOutValue = 500;
+    private static double CoralInValue = 60;
+    private static double CoralOutValue = 100;
     
-    private static final int ampLimit = 40;
+    private static final int ampLimit = 75;
 
     private static double shimSpeed = 0.8;
 
@@ -66,13 +67,13 @@ public class EndJoeBidenFactor extends SubsystemBase {
     public EndJoeBidenFactor () {
 
         SparkMaxConfig motor_config = new SparkMaxConfig();
-        motor_config.idleMode(IdleMode.kCoast);
+        motor_config.idleMode(IdleMode.kBrake);
         motor_config.smartCurrentLimit(ampLimit);
     
         m_motor.configure(motor_config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-        m_TOF_front.setRangingMode(RangingMode.Short, 50);
-        m_TOF_rear.setRangingMode(RangingMode.Short, 50);
+        m_TOF_front.setRangingMode(RangingMode.Short, 10);
+        m_TOF_rear.setRangingMode(RangingMode.Short, 10);
 
         System.out.println("Joe Biden was here");
     }
@@ -123,10 +124,17 @@ public class EndJoeBidenFactor extends SubsystemBase {
      * @see com.playingwithfusion.TimeOfFlight.getRange
      * @version 1.0
      */
-    public boolean CoralIn() {
+    public boolean CoralTouchFront() {
         double range = getFrontTOFValue();
-        System.out.println(range);
+        System.out.println("F: " + range);
         if (range != 0.0) return (CoralInValue > range);
+        else return false;
+    }
+
+    public boolean CoralLeaveBack() {
+        double range = getRearTOFValue();
+        System.out.println("R: " + range);
+        if (range != 0.0) return (CoralOutValue < range);
         else return false;
     }
 
@@ -144,7 +152,7 @@ public class EndJoeBidenFactor extends SubsystemBase {
     public boolean CoralOut() {
         double range = getFrontTOFValue();
         System.out.println(range);
-        if (range != 0.0) return (CoralOutValue > range);
+        if (range != 0.0) return (CoralOutValue < range);
         else return false;
     }
 
@@ -202,7 +210,7 @@ public class EndJoeBidenFactor extends SubsystemBase {
      * @return Range Reading as double
      */
     public double getFrontTOFValue() {
-        if(m_TOF_rear.isRangeValid()) return m_TOF_rear.getRange();
+        if(m_TOF_front.isRangeValid()) return m_TOF_front.getRange();
         else return 0.0;
     }
 
@@ -310,5 +318,9 @@ public class EndJoeBidenFactor extends SubsystemBase {
             pushData();
             pullData();
         }
+    }
+
+    public void loadSlow() {
+        m_motor.set(LoadSlowSpeed);
     }
 }

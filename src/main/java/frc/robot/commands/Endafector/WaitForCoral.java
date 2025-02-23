@@ -34,7 +34,7 @@ public class WaitForCoral extends Command {
 
     @Override
     public void execute(){
-        if (module.CoralIn()){
+        if (module.CoralTouchFront()){
         led.color("eggPlant");
     }
     }
