@@ -282,7 +282,7 @@ public class RobotContainer
     NamedCommands.registerCommand("AutoScoreL1", opCommands.AutoScoreL1()); 
     NamedCommands.registerCommand("AutoScoreL2", opCommands.AutoScoreL2()); 
     NamedCommands.registerCommand("AutoScoreL3", opCommands.AutoScoreL3()); 
-    NamedCommands.registerCommand("AutoScoreL4", opCommands.AutoScoreL4());
+    NamedCommands.registerCommand("AutoScoreL4", opCommands.AutoEjectL4());
 
     // Climber
     NamedCommands.registerCommand("ClimberDown", new ClimberDown(climber, led)); // Manual

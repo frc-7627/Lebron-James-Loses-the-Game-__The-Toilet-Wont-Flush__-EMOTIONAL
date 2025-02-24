@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.356279951065782,
-        "y": 1.3436179941300126
+        "x": 7.533199146679059,
+        "y": 0.3519527566708318
       },
       "isLocked": false,
       "linkedName": "BottomStart"
     },
     {
       "anchor": {
-        "x": 5.153809931506849,
+        "x": 3.831549657534247,
         "y": 2.8830479452054796
       },
       "prevControl": {
-        "x": 5.777960469227222,
-        "y": 2.0798332905428665
+        "x": 3.4038052447197034,
+        "y": 3.184072459629835
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ReefBottomRight"
+      "linkedName": "ReefBottomLeft"
     }
   ],
   "rotationTargets": [],
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 118.36335355549208
+    "rotation": 60.0055843217433
   },
   "reversed": false,
-  "folder": "Forbiden Brake Fluid",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": -0.11878275239665932
