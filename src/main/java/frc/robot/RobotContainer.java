@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -28,6 +29,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import frc.robot.commands.Endafector.*;
+import frc.robot.commands.Helpers.DriveBasePoseAdjust;
 import frc.robot.commands.Climber.*;
 import frc.robot.commands.Elevator.*;
 import frc.robot.helpers.vision.*;
@@ -58,7 +60,7 @@ public class RobotContainer
   private final Bluetooth led = new Bluetooth();
 
   // Command Classes
-  private final OperatorCommands opCommands = new OperatorCommands(elevator, BidenFactor, led); 
+  private final OperatorCommands opCommands = new OperatorCommands(elevator, BidenFactor, led, drivebase); 
   private final CoachCommands chCommands = new CoachCommands(drivebase, elevator, BidenFactor, climber, led);
 
 
@@ -192,9 +194,8 @@ public class RobotContainer
       driverXbox.x().whileTrue(Commands.none());
       driverXbox.y().whileTrue(Commands.none());
 
-      driverXbox.leftTrigger().whileTrue(opCommands.AutoScoreL2());
-      driverXbox.leftBumper().whileTrue(Commands.none());
-      driverXbox.rightTrigger().whileTrue(Commands.none());
+      driverXbox.leftTrigger().whileTrue(Commands.runOnce(opCommands::driveToPoseOffset));
+      driverXbox.rightTrigger().whileTrue(drivebase.driveToDistanceCommand(1.0, 2));
       driverXbox.rightBumper().whileTrue(Commands.none());
 
       /** Operator Xbox */
