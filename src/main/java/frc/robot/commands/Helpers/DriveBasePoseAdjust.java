@@ -54,10 +54,6 @@ public class DriveBasePoseAdjust extends Command {
     @Override
     public void initialize() {
         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust]] Seeking Target");
-    }
-
-    @Override
-    public void execute() {
         var result = camera.getLatestResult();
         if (result.hasTargets()) {
             System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Moving...");
@@ -72,6 +68,10 @@ public class DriveBasePoseAdjust extends Command {
             led.bluetoothOFF();
             drivebase.drive(new Translation2d(0, 0), 0, false);
         }
+    }
+
+    @Override
+    public void execute() {
     }
 
 

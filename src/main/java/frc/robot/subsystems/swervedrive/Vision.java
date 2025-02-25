@@ -337,7 +337,7 @@ public class Vision
   enum Cameras
   {
     CENTER_CAM("Camera_Front",
-    new Rotation3d(0, Units.degreesToRadians(90), 180),
+    new Rotation3d(0, Units.degreesToRadians(0), 0),
     new Translation3d(Units.inchesToMeters(0),
                       Units.inchesToMeters(0),
                       Units.inchesToMeters(12)),

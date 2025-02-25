@@ -21,6 +21,8 @@ public class ManCoralForward extends Command {
     public ManCoralForward(EndJoeBidenFactor module, Bluetooth led) {
         this.module = module;
         this.led = led;
+        
+        addRequirements(module);
     }
     
     @Override
