@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.pathfinding.LocalADStar;
+import com.pathplanner.lib.pathfinding.Pathfinding;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 
@@ -76,6 +79,9 @@ public class Robot extends TimedRobot
   @Override
   public void robotInit()
   {
+    // Configure PathFinder for driveToPose
+    Pathfinding.setPathfinder(new LocalADStar());
+
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
