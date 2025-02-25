@@ -1,6 +1,13 @@
 package frc.robot.commands.teleop;
 
+import org.photonvision.PhotonCamera;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -11,12 +18,17 @@ import frc.robot.commands.Endafector.WaitForCoral;
 import frc.robot.subsystems.Bluetooth;
 import frc.robot.subsystems.arm.EndJoeBidenFactor;
 import frc.robot.subsystems.arm.Lebronavator;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.swervedrive.Vision;
+import swervelib.SwerveDrive;
 
 /** See Constructor for details */
 public class OperatorCommands {
     private final Lebronavator elevator;
     private final EndJoeBidenFactor outake;
     private final Bluetooth led;
+    private final SwerveSubsystem drivebase;
+    PhotonCamera camera = new PhotonCamera("Camera_Front");
 
     /**
     * A collection of CommandGroups, that factor in
@@ -27,10 +39,11 @@ public class OperatorCommands {
     * gamepiece in order to score a point 
     *
     */
-    public OperatorCommands(Lebronavator module1, EndJoeBidenFactor module2, Bluetooth led) {
+    public OperatorCommands(Lebronavator module1, EndJoeBidenFactor module2, Bluetooth led, SwerveSubsystem drivebase) {
         this.elevator = module1;
         this.outake   = module2;
         this.led      = led;
+        this.drivebase = drivebase;
 
         new IntakeCoral(module2, led);
     }
@@ -99,13 +112,37 @@ public class OperatorCommands {
 
     public Command AutoEjectL4() {
         return new SequentialCommandGroup(
-            new EjectCoral(outake, led),
-            new ElevatorMove(elevator, 0),
+            new ParallelRaceGroup(
+                new EjectCoral(outake, led),
+                new ElevatorMove(elevator, 5),
+                new WaitCommand(1.0)
+            ),
+            //new ElevatorMove(elevator, 5),
             new ParallelRaceGroup(
                     new EjectCoral(outake, led),
                     new WaitCommand(0.5)
                 ),
             new ElevatorMove(elevator, 0)
         );
+    }
+
+    public boolean driveToPoseOffset() {
+        System.out.println("[LimeLightCommands/DriveBaseRotationAdjust]] Seeking Target");
+        var result = camera.getLatestResult();
+        if (result.hasTargets()) {
+            System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Moving...");
+
+            int tagID = result.getBestTarget().getFiducialId();
+            Transform2d pose = new Transform2d(drivebase.getPose().getX(), drivebase.getPose().getY(), drivebase.getPose().getRotation());
+            Pose2d new_pose = Vision.getAprilTagPose(tagID, pose); //new Transform2d(0, y_offset, new Rotation2d(0, 0)));
+            System.out.println(new_pose.toString());
+            led.color("vomitGreen");
+            drivebase.setDefaultCommand(drivebase.driveToPose(new_pose));
+            return true;
+        }
+        else {
+            led.bluetoothOFF();
+            return false;
+        }
     }
 }
