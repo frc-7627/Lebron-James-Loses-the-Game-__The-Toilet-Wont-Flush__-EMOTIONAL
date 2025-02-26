@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 7.0,
-        "y": 1.0
+        "x": 3.812090163934426,
+        "y": 2.940112704918032
       },
       "prevControl": {
-        "x": 5.9616153175064355,
-        "y": 0.2960038005400669
+        "x": 2.773705481440862,
+        "y": 2.236116505458099
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 87.96785943308801
+    "rotation": 59.743562836470765
   },
   "reversed": false,
   "folder": "Forbiden Brake Fluid",
