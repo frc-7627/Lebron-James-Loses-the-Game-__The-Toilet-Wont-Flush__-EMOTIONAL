@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import java.io.File;
@@ -296,6 +297,7 @@ public class RobotContainer
     NamedCommands.registerCommand("playSong", new playSong(elevator, "sus")); 
     NamedCommands.registerCommand("ManElevatorDown", new ManElevatorDown(elevator, led)); // Manual
     NamedCommands.registerCommand("ManElevatorUp", new ManElevatorUp(elevator, led)); // Manual
+    NamedCommands.registerCommand("Stow", new ElevatorMove(elevator, 0));
 
     /*  Endafector */
     NamedCommands.registerCommand("EjectCoral", new EjectCoral(BidenFactor, led));
@@ -318,7 +320,10 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // Pathplanner selected auto will be run in autonomous
-    return autoChooser.getSelected();
+    return new SequentialCommandGroup(
+              new ElevatorMove(elevator, 0),
+              autoChooser.getSelected()
+            );
   }
 
   /**
@@ -374,6 +379,15 @@ public class RobotContainer
   }
 
   /**
+   * Run once when Robot is enabled in teleop in driverstation
+   *
+   * @return void
+   */
+  public void teleopInit() {
+    opCommands.AutoStow().schedule(); //  Move the elevator to the Stow position, and run endefector
+  }
+
+  /**
    * Run once when Robot is disabled in driverstation
    *  
    * @return void
@@ -384,12 +398,10 @@ public class RobotContainer
 
   /**
    * Run every cycle when the robot is disabled in driverstation
-   *
-   *  - Changes Led color depending on which alliance the robot is on
    * 
    * @return void
    */
   public void disabledPeriodic() {
-    matchLedWithAlliance();
+    matchLedWithAlliance(); // Change Led color depending on which alliance the robot is on
   }
 }
