@@ -217,7 +217,8 @@ public class RobotContainer
       operatorXbox.pov(270).whileTrue(new ManCoralReverse(BidenFactor, led));
 
       operatorXbox.leftTrigger().whileTrue(opCommands.AutoStow());
-      operatorXbox.leftBumper().whileTrue(new IntakeCoral(BidenFactor, led));
+      Command intakeCoral = new IntakeCoral(BidenFactor, led);
+      operatorXbox.leftBumper().whileTrue(intakeCoral);
       operatorXbox.rightTrigger().whileTrue(opCommands.AutoEjectL4());
       operatorXbox.rightBumper().whileTrue(new EjectCoral(BidenFactor, led));
 
@@ -384,7 +385,7 @@ public class RobotContainer
    * @return void
    */
   public void teleopInit() {
-    opCommands.AutoStow().schedule(); //  Move the elevator to the Stow position, and run endefector
+    //opCommands.AutoStow().schedule(); //  Move the elevator to the Stow position, and run endefector
   }
 
   /**
