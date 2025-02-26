@@ -20,7 +20,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class ElevatorMove extends Command {
 
     // Editable Constants
-    private double setPoint_Down = 1.10;
+    private double setPoint_Down = 0;
+    private double setPoint_Stow = 1.10;
     private double setPoint_L1 = 13;
     private double setPoint_L2 = 21;
     private double setPoint_L3 = 35;
@@ -34,8 +35,11 @@ public class ElevatorMove extends Command {
     public ElevatorMove(Lebronavator module, int location) {
         this.module = module;
         switch (location) {
-            case 0:
+            case -1:
                 goal = setPoint_Down;
+                break;
+            case 0:
+                goal = setPoint_Stow;
                 break;
             case 1:
                 goal = setPoint_L1;

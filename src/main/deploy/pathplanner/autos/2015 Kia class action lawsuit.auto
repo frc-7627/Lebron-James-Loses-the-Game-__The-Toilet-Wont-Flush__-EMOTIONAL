@@ -17,15 +17,15 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "AutoStow"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "ReefTopRight - TopStation"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeCoral"
           }
         },
         {
@@ -38,12 +38,6 @@
           "type": "named",
           "data": {
             "name": "AutoScoreL4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoStow"
           }
         }
       ]
