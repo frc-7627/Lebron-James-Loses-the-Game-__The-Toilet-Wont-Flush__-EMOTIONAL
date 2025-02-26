@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.0,
-        "y": 1.0
+        "x": 3.812090163934426,
+        "y": 2.940112704918032
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.536738678172322,
-        "y": 0.002271226737184051
+        "x": 2.348828842106748,
+        "y": 1.9423839316552158
       },
       "isLocked": false,
       "linkedName": "ReefBottomLeft"
@@ -48,7 +48,7 @@
   "folder": "Cha Cha Slide",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 87.96785943308801
+    "rotation": 59.743562836470765
   },
   "useDefaultConstraints": true
 }

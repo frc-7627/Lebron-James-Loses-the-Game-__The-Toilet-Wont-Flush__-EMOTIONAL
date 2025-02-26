@@ -29,6 +29,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "IntakeCoral"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "TopStation - ReefTopLeft"
@@ -53,6 +59,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "IntakeCoral"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "TopStation - ReefTopLeft"
@@ -62,12 +74,6 @@
           "type": "named",
           "data": {
             "name": "AutoScoreL4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoStow"
           }
         },
         {
@@ -77,6 +83,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "IntakeCoral"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "TopStation - ReefTopLeft"
@@ -86,12 +98,6 @@
           "type": "named",
           "data": {
             "name": "AutoScoreL4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoStow"
           }
         }
       ]
