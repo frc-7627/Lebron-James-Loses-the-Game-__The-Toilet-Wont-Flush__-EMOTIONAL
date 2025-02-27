@@ -21,7 +21,7 @@ public class ElevatorMove extends Command {
 
     // Editable Constants
     private double setPoint_Down = 0;
-    private double setPoint_Stow = 1.10;
+    private double setPoint_Stow = 1.87;
     private double setPoint_L1 = 13;
     private double setPoint_L2 = 21;
     private double setPoint_L3 = 35;

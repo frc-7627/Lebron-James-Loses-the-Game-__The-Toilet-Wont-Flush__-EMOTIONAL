@@ -175,7 +175,7 @@ public class Lebronavator extends SubsystemBase {
         m_Orchestra.addInstrument(m_talonFX_left);
         m_Orchestra.addInstrument(m_talonFX_right);
 
-        filename = "sus"; // Bypass filename due to some unknown argument passing issue TODO: fix
+        filename = "vsauce"; // Bypass filename due to some unknown argument passing issue TODO: fix
 
         // Load song and play
         String filePath = Filesystem.getDeployDirectory() + "/midi/" + filename + ".chrp";
