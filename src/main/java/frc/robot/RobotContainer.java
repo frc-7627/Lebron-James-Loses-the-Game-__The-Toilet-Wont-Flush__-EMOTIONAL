@@ -217,12 +217,11 @@ public class RobotContainer
       operatorXbox.pov(270).whileTrue(new ManCoralReverse(BidenFactor, led));
 
       operatorXbox.leftTrigger().whileTrue(opCommands.AutoStow());
-      Command intakeCoral = new IntakeCoral(BidenFactor, led);
-      operatorXbox.leftBumper().whileTrue(intakeCoral);
+      operatorXbox.leftBumper().whileTrue( new IntakeCoral(BidenFactor, led));
       operatorXbox.rightTrigger().whileTrue(opCommands.AutoEjectL4());
       operatorXbox.rightBumper().whileTrue(new EjectCoral(BidenFactor, led));
 
-      /** Coach Xbox */
+      /** Coach Xbox 
       coachXbox.start().whileTrue(Commands.none());
       coachXbox.back().whileTrue(Commands.none());
       coachXbox.a().whileTrue(chCommands.breakDrivebase());
@@ -236,7 +235,7 @@ public class RobotContainer
       coachXbox.leftTrigger().whileTrue(chCommands.breakEndefector());
       coachXbox.leftBumper().whileTrue(Commands.none());
       coachXbox.rightTrigger().whileTrue(Commands.none());
-      coachXbox.rightBumper().whileTrue(Commands.none());
+      coachXbox.rightBumper().whileTrue(Commands.none()); */
     
     } 
     /*
