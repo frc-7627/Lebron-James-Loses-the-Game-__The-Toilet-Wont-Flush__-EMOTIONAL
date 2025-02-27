@@ -48,7 +48,7 @@
   "folder": "MFNC 3 piece fish combo",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 178.83027669305582
+    "rotation": -0.22152222966153431
   },
   "useDefaultConstraints": true
 }
