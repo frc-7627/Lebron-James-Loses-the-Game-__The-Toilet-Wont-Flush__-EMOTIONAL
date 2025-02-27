@@ -3,35 +3,42 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.812090163934426,
-        "y": 2.940112704918032
+        "x": 4.9359375,
+        "y": 2.753622159090909
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.348828842106748,
-        "y": 1.9423839316552156
+        "x": 3.988636363636364,
+        "y": 1.2578835227272722
       },
       "isLocked": false,
-      "linkedName": "ReefBottomLeft"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.1569777397260272,
-        "y": 1.0348886986301375
+        "x": 1.7350568181818182,
+        "y": 0.6895028409090912
       },
       "prevControl": {
-        "x": 2.3244286440508093,
-        "y": 1.8103013482301478
+        "x": 3.2607102272727304,
+        "y": -0.12816761363636486
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BottomStation"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "AutoScoreL2",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 3.0,
@@ -42,13 +49,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 52.50175117984347
+    "rotation": 51.009005957494445
   },
   "reversed": false,
-  "folder": "Cha Cha Slide",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 59.743562836470765
+    "rotation": 120.1413855520753
   },
   "useDefaultConstraints": true
 }

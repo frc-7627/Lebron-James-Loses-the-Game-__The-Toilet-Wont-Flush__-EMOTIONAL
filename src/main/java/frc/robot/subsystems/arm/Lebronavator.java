@@ -225,6 +225,7 @@ public class Lebronavator extends SubsystemBase {
         //final MotionMagicVoltage m_request = new MotionMagicVoltage(0);
 
         // set target position
+        System.out.print("new target: " + position);
         m_talonFX_right.setControl(m_request.withPosition(position));
     }
 

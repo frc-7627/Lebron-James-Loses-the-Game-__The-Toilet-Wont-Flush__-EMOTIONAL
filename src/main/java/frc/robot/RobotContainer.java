@@ -146,9 +146,9 @@ public class RobotContainer
     //photon_camera.
 
     // Build an Pathplanner auto chooser. This will use Commands.none() as the default option.
+    configureNamedCommands(); // Setup Pathplanner Commands
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
-    configureNamedCommands(); // Setup Pathplanner Commands
 
     // Configure the trigger bindings
     configureBindings();
@@ -217,12 +217,11 @@ public class RobotContainer
       operatorXbox.pov(270).whileTrue(new ManCoralReverse(BidenFactor, led));
 
       operatorXbox.leftTrigger().whileTrue(opCommands.AutoStow());
-      Command intakeCoral = new IntakeCoral(BidenFactor, led);
-      operatorXbox.leftBumper().whileTrue(intakeCoral);
+      operatorXbox.leftBumper().whileTrue( new IntakeCoral(BidenFactor, led));
       operatorXbox.rightTrigger().whileTrue(opCommands.AutoEjectL4());
       operatorXbox.rightBumper().whileTrue(new EjectCoral(BidenFactor, led));
 
-      /** Coach Xbox */
+      /** Coach Xbox 
       coachXbox.start().whileTrue(Commands.none());
       coachXbox.back().whileTrue(Commands.none());
       coachXbox.a().whileTrue(chCommands.breakDrivebase());
@@ -236,7 +235,7 @@ public class RobotContainer
       coachXbox.leftTrigger().whileTrue(chCommands.breakEndefector());
       coachXbox.leftBumper().whileTrue(Commands.none());
       coachXbox.rightTrigger().whileTrue(Commands.none());
-      coachXbox.rightBumper().whileTrue(Commands.none());
+      coachXbox.rightBumper().whileTrue(Commands.none()); */
     
     } 
     /*
@@ -280,11 +279,13 @@ public class RobotContainer
     /* Rare Use Case - There is no thinkable reason to use these */
 
     // AutoOperator
-     NamedCommands.registerCommand("AutoStow", opCommands.AutoStow());
+    NamedCommands.registerCommand("AutoStow", opCommands.AutoStow());
     NamedCommands.registerCommand("AutoScoreL1", opCommands.AutoScoreL1()); 
     NamedCommands.registerCommand("AutoScoreL2", opCommands.AutoScoreL2()); 
     NamedCommands.registerCommand("AutoScoreL3", opCommands.AutoScoreL3()); 
-    NamedCommands.registerCommand("AutoScoreL4", opCommands.AutoEjectL4());
+    NamedCommands.registerCommand("AutoScoreL4", opCommands.AutoScoreL4());
+    NamedCommands.registerCommand("AutoEjectL4", opCommands.AutoEjectL4());
+
 
     // Climber
     NamedCommands.registerCommand("ClimberDown", new ClimberDown(climber, led)); // Manual
@@ -321,10 +322,10 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // Pathplanner selected auto will be run in autonomous
-    return new SequentialCommandGroup(
+    return autoChooser.getSelected();/* new SequentialCommandGroup(
               new ElevatorMove(elevator, 0),
               autoChooser.getSelected()
-            );
+            ); */
   }
 
   /**
@@ -386,6 +387,12 @@ public class RobotContainer
    */
   public void teleopInit() {
     //opCommands.AutoStow().schedule(); //  Move the elevator to the Stow position, and run endefector
+  }
+
+  public void autoInit() {
+    led.blink("default");
+    elevator.StopMotor();
+    elevator.resetControlMode();
   }
 
   /**

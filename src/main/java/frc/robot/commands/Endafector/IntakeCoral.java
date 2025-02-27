@@ -1,9 +1,9 @@
 package frc.robot.commands.Endafector;
 
+import edu.wpi.first.wpilibj2.command.Command;
+
 import frc.robot.subsystems.Bluetooth;
 import frc.robot.subsystems.arm.EndJoeBidenFactor;
-
-import edu.wpi.first.wpilibj2.command.Command;
 
 /** See Constructor for details */
 public class IntakeCoral extends Command {
@@ -12,12 +12,12 @@ public class IntakeCoral extends Command {
     private int state;
 
     /**
-    * Runs the Endafector Forward, in order to intake a gamepiece
-    * Automatticlly ends when a gamepiece crosses the Rear TOF sensor,
-    * inside the Endafector, indicating it is now securely inside the
-    * robot. 
+    * Runs the Endafector Forwards, in order to push the gampiece
+    * out the back for scoring. Automatticlly ends when a gamepiece crosses 
+    * the Front TOF sensor inside the Endafector, indicating it has 
+    * left contact with the robot. 
     *
-    * Uses leds to indicate the status of the gamepiece,
+    * Uses leds to indicate the status of the gamepiece, 
     * the statuses are as follows:
     *   blinking eggPlant: Endafector Running: No gamepiece detected
     *   vomitGreen: Endafector Stopped: Gamepiece is secure
@@ -31,35 +31,38 @@ public class IntakeCoral extends Command {
         this.module = module;
         this.led = led;
         addRequirements(module);
+        addRequirements(led);
      }
 
     @Override
     public void initialize() {
-        led.bluetoothOFF();
-        led.blink("eggPlant");
-        module.load();
         System.out.println("init");
+        module.load();
+
         state = 0;
     }
 
     @Override
     public void execute() {
-       /*  System.out.print("run");
+        System.out.print("run");
         if(state == 0 && module.CoralTouchFront()) {
             System.out.println("state 1");
             module.loadSlow(); 
             state = 1;
         }
-        if(state == 1 && module.CoralLeaveBack()) {
+        else if(state == 1 && module.CoralLeaveBack()) {
             System.out.println("state 2");
             module.loadSlowReverse(); 
             state = 2;
-        } */
+        }
+        else if(state == 2 && module.CoralTouchBack()) {
+            state = 3;
+        }
     }
 
     @Override
     public void end(boolean interrupted) {
-        System.out.println("state f");
+        System.out.println("state f: " + interrupted);
         module.stop();
         if(!interrupted) led.color("vomitGreen");
         else led.bluetoothOFF();
@@ -67,6 +70,6 @@ public class IntakeCoral extends Command {
 
     @Override 
     public boolean isFinished() {
-        return (state == 2 && module.CoralTouchBack());
+        return (state == 3);
     }
 }
