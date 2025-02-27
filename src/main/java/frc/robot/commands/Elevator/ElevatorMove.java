@@ -27,6 +27,7 @@ public class ElevatorMove extends Command {
     private double setPoint_L3 = 35;
     private double setPoint_L4 = 56.3;
     private double setPoint_L4_high = 61.8; // Max height extension
+    private double setPointRange = 0.25; // Range
 
     private final double goal; 
 
@@ -71,6 +72,6 @@ public class ElevatorMove extends Command {
 
     @Override 
     public boolean isFinished() {
-        return (goal == module.getPosition()); 
+        return (goal - setPointRange < module.getPosition() && goal + setPointRange > module.getPosition()); 
     }
 }
