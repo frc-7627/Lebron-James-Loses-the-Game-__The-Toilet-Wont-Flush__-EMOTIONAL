@@ -132,7 +132,7 @@ public class OperatorCommands {
             System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Moving...");
 
             int tagID = result.getBestTarget().getFiducialId();
-            Transform2d pose = new Transform2d(drivebase.getPose().getX(), drivebase.getPose().getY(), drivebase.getPose().getRotation());
+            Transform2d pose = new Transform2d(drivebase.getPose().getX() + 3.25, drivebase.getPose().getY() - 12, drivebase.getPose().getRotation());
             Pose2d new_pose = Vision.getAprilTagPose(tagID, pose); //new Transform2d(0, y_offset, new Rotation2d(0, 0)));
             System.out.println(new_pose.toString());
             led.color("vomitGreen");
