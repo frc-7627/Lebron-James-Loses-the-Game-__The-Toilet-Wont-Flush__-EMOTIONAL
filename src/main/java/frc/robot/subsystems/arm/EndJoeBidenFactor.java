@@ -36,12 +36,12 @@ import frc.robot.Constants;
  */
 public class EndJoeBidenFactor extends SubsystemBase {
 
-    private static double LoadSpeed = 0.2;
-    private static double LoadSlowSpeed = 0.15;
+    private static double LoadSpeed = 0.8;//0.2;
+    private static double LoadSlowSpeed = 0.8;//0.15;
     private static double EjectSpeed = 0.5;
 
-    private static double CoralInValue = 60;
-    private static double CoralOutValue = 100;
+    private static double CoralInValue = 100;
+    private static double CoralOutValue = 150;
     
     private static final int ampLimit = 75;
 
@@ -67,7 +67,7 @@ public class EndJoeBidenFactor extends SubsystemBase {
     public EndJoeBidenFactor () {
 
         SparkMaxConfig motor_config = new SparkMaxConfig();
-        motor_config.idleMode(IdleMode.kBrake);
+        motor_config.idleMode(IdleMode.kCoast);
         motor_config.smartCurrentLimit(ampLimit);
     
         m_motor.configure(motor_config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);

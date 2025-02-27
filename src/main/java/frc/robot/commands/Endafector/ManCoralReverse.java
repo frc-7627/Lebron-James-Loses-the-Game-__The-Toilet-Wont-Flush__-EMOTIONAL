@@ -28,12 +28,14 @@ public class ManCoralReverse extends Command {
     @Override
     public void initialize() {
         led.color("eggPlant");
+        System.out.println("init");
         module.shimReverse();
     }
 
     @Override
     public void end(boolean interrupted) {
         module.stop();
+        System.out.println("end");
         led.bluetoothOFF();
     }
 

@@ -38,22 +38,23 @@ public class IntakeCoral extends Command {
         led.bluetoothOFF();
         led.blink("eggPlant");
         module.load();
+        System.out.println("init");
         state = 0;
     }
 
     @Override
     public void execute() {
-        System.out.print("run");
+       /*  System.out.print("run");
         if(state == 0 && module.CoralTouchFront()) {
             System.out.println("state 1");
             module.loadSlow(); 
             state = 1;
         }
         if(state == 1 && module.CoralLeaveBack()) {
-            System.out.println("state 1");
+            System.out.println("state 2");
             module.loadSlowReverse(); 
             state = 2;
-        }
+        } */
     }
 
     @Override
