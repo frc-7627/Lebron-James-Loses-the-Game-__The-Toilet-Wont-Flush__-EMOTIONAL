@@ -1,5 +1,7 @@
 package frc.robot.commands.teleop;
 
+import java.sql.Driver;
+
 import org.photonvision.PhotonCamera;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -125,23 +127,22 @@ public class OperatorCommands {
         );
     }
 
-    public boolean driveToPoseOffset() {
+    public Command driveToPoseOffset() {
         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust]] Seeking Target");
         var result = camera.getLatestResult();
         if (result.hasTargets()) {
             System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Moving...");
 
             int tagID = result.getBestTarget().getFiducialId();
-            Transform2d pose = new Transform2d(drivebase.getPose().getX() + 3.25, drivebase.getPose().getY() - 12, drivebase.getPose().getRotation());
-            Pose2d new_pose = Vision.getAprilTagPose(tagID, pose); //new Transform2d(0, y_offset, new Rotation2d(0, 0)));
+            //Transform2d pose = new Transform2d(drivebase.getPose().getX(), drivebase.getPose().getY(), drivebase.getPose().getRotation());
+            Pose2d new_pose = Vision.getAprilTagPose(tagID, new Transform2d(0.40, 0.2, new Rotation2d(Math.toRadians(180))));
             System.out.println(new_pose.toString());
             led.color("vomitGreen");
-            drivebase.setDefaultCommand(drivebase.driveToPose(new_pose));
-            return true;
+            return(drivebase.driveToPose(new_pose));
         }
         else {
             led.bluetoothOFF();
-            return false;
+            return Commands.none();
         }
     }
 }

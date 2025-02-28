@@ -195,8 +195,8 @@ public class RobotContainer
       driverXbox.x().whileTrue(Commands.none());
       driverXbox.y().whileTrue(Commands.none());
 
-      driverXbox.leftTrigger().whileTrue(Commands.runOnce(opCommands::driveToPoseOffset));
-      driverXbox.rightTrigger().whileTrue(drivebase.driveToDistanceCommand(1.0, 2));
+      driverXbox.leftTrigger().whileTrue(new DriveBasePoseAdjust(drivebase, led, 0));
+      driverXbox.rightTrigger().whileTrue(drivebase.driveToDistanceCommand(0.0, 2));
       driverXbox.rightBumper().whileTrue(Commands.none());
 
       /** Operator Xbox */

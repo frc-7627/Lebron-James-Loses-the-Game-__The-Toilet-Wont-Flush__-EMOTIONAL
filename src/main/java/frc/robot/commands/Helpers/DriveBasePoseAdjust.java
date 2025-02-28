@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.Bluetooth;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
@@ -24,6 +25,7 @@ public class DriveBasePoseAdjust extends Command {
 
     private double tx;
     private double y_offset;
+    private Command driveCommand;
 
     /**
      * Turns the Robot to face an April Tag, using PhotonVison detections
@@ -59,15 +61,18 @@ public class DriveBasePoseAdjust extends Command {
             System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Moving...");
 
             int tagID = result.getBestTarget().getFiducialId();
-            Pose2d new_pose = Vision.getAprilTagPose(tagID, new Transform2d(0, y_offset, new Rotation2d(0, 0)));
+            //Transform2d pose = new Transform2d(drivebase.getPose().getX(), drivebase.getPose().getY(), drivebase.getPose().getRotation());
+            Pose2d new_pose = Vision.getAprilTagPose(tagID, new Transform2d(0.40, 0.2, new Rotation2d(Math.toRadians(180))));
             System.out.println(new_pose.toString());
-            drivebase.driveToPose(new_pose);
             led.color("vomitGreen");
+            driveCommand = drivebase.driveToPose(new_pose);
         }
         else {
             led.bluetoothOFF();
-            drivebase.drive(new Translation2d(0, 0), 0, false);
+            driveCommand = Commands.none();
         }
+
+        driveCommand.schedule();
     }
 
     @Override
@@ -78,6 +83,9 @@ public class DriveBasePoseAdjust extends Command {
     @Override
     public void end(boolean interrupted) {
         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Interupted");
+        driveCommand.cancel();
+        driveCommand.end(true);
+        driveCommand.end(false);
     }
 
     @Override 
