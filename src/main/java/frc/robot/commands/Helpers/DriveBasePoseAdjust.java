@@ -62,7 +62,7 @@ public class DriveBasePoseAdjust extends Command {
 
             int tagID = result.getBestTarget().getFiducialId();
             //Transform2d pose = new Transform2d(drivebase.getPose().getX(), drivebase.getPose().getY(), drivebase.getPose().getRotation());
-            Pose2d new_pose = Vision.getAprilTagPose(tagID, new Transform2d(0.40, 0.2, new Rotation2d(Math.toRadians(180))));
+            Pose2d new_pose = Vision.getAprilTagPose(tagID, new Transform2d(0.40, 0.3 + y_offset, new Rotation2d(Math.toRadians(180))));
             System.out.println(new_pose.toString());
             led.color("vomitGreen");
             driveCommand = drivebase.driveToPose(new_pose);
@@ -85,7 +85,7 @@ public class DriveBasePoseAdjust extends Command {
         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Interupted");
         driveCommand.cancel();
         driveCommand.end(true);
-        driveCommand.end(false);
+        drivebase.driveToDistanceCommand(0.0, 0.0).schedule();
     }
 
     @Override 

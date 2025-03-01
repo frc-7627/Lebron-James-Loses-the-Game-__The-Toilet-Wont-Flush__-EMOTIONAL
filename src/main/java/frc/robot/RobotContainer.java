@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -196,7 +197,7 @@ public class RobotContainer
       driverXbox.y().whileTrue(Commands.none());
 
       driverXbox.leftTrigger().whileTrue(new DriveBasePoseAdjust(drivebase, led, 0));
-      driverXbox.rightTrigger().whileTrue(drivebase.driveToDistanceCommand(0.0, 2));
+      driverXbox.rightTrigger().whileTrue(new DriveBasePoseAdjust(drivebase, led, 0));
       driverXbox.rightBumper().whileTrue(Commands.none());
 
       /** Operator Xbox */
@@ -208,8 +209,8 @@ public class RobotContainer
       operatorXbox.x().whileTrue(opCommands.AutoScoreL2());
       operatorXbox.y().whileTrue(opCommands.AutoScoreL4());
 
-      operatorXbox.leftStick().whileTrue(Commands.none());
-      operatorXbox.rightStick().whileTrue(Commands.none());
+      operatorXbox.leftStick().whileTrue(Commands.runOnce(EndJoeBidenFactor::boostSpeed, BidenFactor));
+      operatorXbox.rightStick().whileTrue(Commands.runOnce(EndJoeBidenFactor::slowSpeed, BidenFactor));
 
       operatorXbox.pov(0).whileTrue(new ManElevatorUp(elevator, led));
       operatorXbox.pov(90).whileTrue(new ManCoralForward(BidenFactor, led));
