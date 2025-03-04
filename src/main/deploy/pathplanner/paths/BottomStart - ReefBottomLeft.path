@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 4.955880681818181,
-        "y": 2.77356534090909
+        "x": 4.975823863636363,
+        "y": 2.9729971590909092
       },
       "prevControl": {
-        "x": 5.440827221507348,
-        "y": 1.7277011894481007
+        "x": 5.46077040332553,
+        "y": 1.92713300762992
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,7 @@
     "rotation": 118.36335355549208
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Bobby Wanted This",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -0.11878275239665932

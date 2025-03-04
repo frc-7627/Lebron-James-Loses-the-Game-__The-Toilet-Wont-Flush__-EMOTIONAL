@@ -4,6 +4,8 @@ import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonUtils;
 
+import com.google.flatbuffers.Constants;
+
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -11,8 +13,10 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.subsystems.Bluetooth;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
@@ -24,7 +28,8 @@ public class DriveBasePoseAdjust extends Command {
     Bluetooth led;
 
     private double tx;
-    private double y_offset;
+    private double user_offset;
+    
     private Command driveCommand;
 
     /**
@@ -37,12 +42,16 @@ public class DriveBasePoseAdjust extends Command {
     public DriveBasePoseAdjust(SwerveSubsystem module, Bluetooth led, double offset) {
         this.drivebase = module;
         this.led = led;
-        this.y_offset = offset;
         addRequirements(drivebase);
         addRequirements(led);
 
+        user_offset = offset;
+
         // Shuffleboard!
-        //SmartDashboard.putNumber("Limelight/ArmAdjust/Mutiplyer", OperatorConstants.IntakeNoteAmps);
+        DrivebaseConstants.x_offset = SmartDashboard.getNumber("Vision/x_offset", DrivebaseConstants.x_offset);
+        DrivebaseConstants.y_offset = SmartDashboard.getNumber("Vision/y_offset", DrivebaseConstants.y_offset);
+        SmartDashboard.putNumber("Vision/x_offset", DrivebaseConstants.x_offset);
+        SmartDashboard.putNumber("Vision/y_offset", DrivebaseConstants.y_offset);
     }
 
     /** Updates Motor Speeds and limits from shuffleboard */
@@ -55,6 +64,9 @@ public class DriveBasePoseAdjust extends Command {
 
     @Override
     public void initialize() {
+        DrivebaseConstants.x_offset = SmartDashboard.getNumber("Vision/x_offset", DrivebaseConstants.x_offset);
+        DrivebaseConstants.y_offset = SmartDashboard.getNumber("Vision/y_offset", DrivebaseConstants.y_offset);
+        System.out.println("x_offset: " + DrivebaseConstants.x_offset + " y_offset: " + DrivebaseConstants.y_offset);
         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust]] Seeking Target");
         var result = camera.getLatestResult();
         if (result.hasTargets()) {
@@ -62,7 +74,7 @@ public class DriveBasePoseAdjust extends Command {
 
             int tagID = result.getBestTarget().getFiducialId();
             //Transform2d pose = new Transform2d(drivebase.getPose().getX(), drivebase.getPose().getY(), drivebase.getPose().getRotation());
-            Pose2d new_pose = Vision.getAprilTagPose(tagID, new Transform2d(0.40, 0.3 + y_offset, new Rotation2d(Math.toRadians(180))));
+            Pose2d new_pose = Vision.getAprilTagPose(tagID, new Transform2d(DrivebaseConstants.x_offset, DrivebaseConstants.y_offset + user_offset, new Rotation2d(Math.toRadians(180))));
             System.out.println(new_pose.toString());
             led.color("vomitGreen");
             driveCommand = drivebase.driveToPose(new_pose);

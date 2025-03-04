@@ -36,10 +36,10 @@ import frc.robot.Constants;
  */
 public class EndJoeBidenFactor extends SubsystemBase {
 
-    private static double LoadSpeed = 0.4;
-    private static double LoadSlowSpeed = 0.2;
-    private static double EjectSpeed = 0.5;
-
+    private static double LoadSpeed = 0.25;
+    private static double LoadSlowSpeed = 0.15;
+    private static double EjectSpeed = 0.6;
+    private static double idleSpeed = -0.13;
     private static double CoralInValue =  60;
     private static double CoralOutValue = 100;
     
@@ -345,5 +345,9 @@ public class EndJoeBidenFactor extends SubsystemBase {
     public static void slowSpeed() {
         LoadSpeed -= 0.2;
         LoadSlowSpeed -= 0.2;
+    }
+
+    public void idle() {
+        m_motor.set(idleSpeed);
     }
 }

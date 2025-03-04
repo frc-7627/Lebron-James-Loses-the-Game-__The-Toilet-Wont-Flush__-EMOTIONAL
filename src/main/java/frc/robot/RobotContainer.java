@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import java.io.File;
 
+import javax.swing.UIClientPropertyKey;
+
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.Bluetooth;
 import frc.robot.subsystems.arm.EndJoeBidenFactor;
@@ -65,6 +67,9 @@ public class RobotContainer
   private final OperatorCommands opCommands = new OperatorCommands(elevator, BidenFactor, led, drivebase); 
   private final CoachCommands chCommands = new CoachCommands(drivebase, elevator, BidenFactor, climber, led);
 
+  private double slowModeSpeed = 0.5;
+  private Double slowMode = 1.0;
+
 
   //private final PhotonCamera photon_camera = new PhotonCamera("Camera_Front");
 
@@ -79,11 +84,11 @@ public class RobotContainer
    * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
    */
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
-                                                                () -> driverXbox.getLeftY() * -1,
-                                                                () -> driverXbox.getLeftX() * -1)
+                                                                () -> driverXbox.getLeftY() * -1 * slowMode,
+                                                                () -> driverXbox.getLeftX() * -1 * slowMode)
                                                             .withControllerRotationAxis(driverXbox::getRightX)
                                                             .deadband(OperatorConstants.DEADBAND)
-                                                            .scaleTranslation(0.8)
+                                                            //.scaleTranslation(0.8)
                                                             .allianceRelativeControl(true);
 
   /**
@@ -105,7 +110,7 @@ public class RobotContainer
                                                                     .withControllerRotationAxis(() -> driverXbox.getRawAxis(
                                                                         2))
                                                                     .deadband(OperatorConstants.DEADBAND)
-                                                                    .scaleTranslation(0.8)
+                                                                    //.scaleTranslation(0.8)
                                                                     .allianceRelativeControl(true);
   // Derive the heading axis with math!
   SwerveInputStream driveDirectAngleKeyboard     = driveAngularVelocityKeyboard.copy()
@@ -152,6 +157,7 @@ public class RobotContainer
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
     // Configure the trigger bindings
+    driveNormal();
     configureBindings();
     DriverStation.silenceJoystickConnectionWarning(true);
   }
@@ -196,18 +202,19 @@ public class RobotContainer
       driverXbox.x().whileTrue(Commands.none());
       driverXbox.y().whileTrue(Commands.none());
 
-      driverXbox.leftTrigger().whileTrue(new DriveBasePoseAdjust(drivebase, led, 0));
-      driverXbox.rightTrigger().whileTrue(new DriveBasePoseAdjust(drivebase, led, 0));
-      driverXbox.rightBumper().whileTrue(Commands.none());
+      driverXbox.leftTrigger().whileTrue(new DriveBasePoseAdjust(drivebase, led, 0.2));
+      driverXbox.rightTrigger().whileTrue(new DriveBasePoseAdjust(drivebase, led, 0.6));
+      driverXbox.rightBumper().whileTrue(Commands.runEnd(this::driveSlow, this::driveNormal));
 
       /** Operator Xbox */
+      BidenFactor.setDefaultCommand(new BobbyCoral(BidenFactor));
       operatorXbox.start().whileTrue(Commands.none());
       operatorXbox.back().whileTrue(Commands.runOnce(elevator::resetControlMode));
  
-      operatorXbox.a().whileTrue(opCommands.AutoScoreL1());
-      operatorXbox.b().whileTrue(opCommands.AutoScoreL3());
-      operatorXbox.x().whileTrue(opCommands.AutoScoreL2());
-      operatorXbox.y().whileTrue(opCommands.AutoScoreL4());
+      operatorXbox.a().whileTrue(new ElevatorMove(elevator, 1));
+      operatorXbox.b().whileTrue(new ElevatorMove(elevator, 3));
+      operatorXbox.x().whileTrue(new ElevatorMove(elevator, 2));
+      operatorXbox.y().whileTrue(new ElevatorMove(elevator, 4));
 
       operatorXbox.leftStick().whileTrue(Commands.runOnce(EndJoeBidenFactor::boostSpeed, BidenFactor));
       operatorXbox.rightStick().whileTrue(Commands.runOnce(EndJoeBidenFactor::slowSpeed, BidenFactor));
@@ -312,6 +319,8 @@ public class RobotContainer
 
     // Drivebase
     NamedCommands.registerCommand("DriveBaseRotationAdjust", new DriveBaseRotationAdjust(drivebase)); // Vision
+    NamedCommands.registerCommand("DriveBasePoseAdjustL", new DriveBasePoseAdjust(drivebase, led, Constants.DrivebaseConstants.y_offset_left));
+    NamedCommands.registerCommand("DriveBasePoseAdjustR", new DriveBasePoseAdjust(drivebase, led,  Constants.DrivebaseConstants.y_offset_right));
   } // TODO: Create a lateral adjustment cmd and replace this ^ with that in pathplanner
 
   /**
@@ -412,5 +421,15 @@ public class RobotContainer
    */
   public void disabledPeriodic() {
     matchLedWithAlliance(); // Change Led color depending on which alliance the robot is on
+  }
+
+  public void driveNormal() {
+    System.out.println("Slow mode: disabled");
+    slowMode = 1.0;
+  }
+
+  public void driveSlow() {
+    System.out.println("Slow mode: true");
+    slowMode = slowModeSpeed;
   }
 }

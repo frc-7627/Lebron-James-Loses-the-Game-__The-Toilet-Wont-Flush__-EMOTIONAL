@@ -5,21 +5,15 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "She took the kids path"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "DriveBasePoseAdjustR"
+            "name": "DriveBasePoseAdjustL"
           }
         }
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": null,
   "choreoAuto": false
 }

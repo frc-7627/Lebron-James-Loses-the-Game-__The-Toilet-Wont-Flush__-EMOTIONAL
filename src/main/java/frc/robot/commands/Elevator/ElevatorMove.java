@@ -23,9 +23,9 @@ public class ElevatorMove extends Command {
     private double setPoint_Down = 0;
     private double setPoint_Stow = 1.87;
     private double setPoint_L1 = 13;
-    private double setPoint_L2 = 21;
-    private double setPoint_L3 = 35;
-    private double setPoint_L4 = 56.3;
+    private double setPoint_L2 = 21.86;
+    private double setPoint_L3 = 36.46;
+    private double setPoint_L4 = 57.63;
     private double setPoint_L4_high = 61.8; // Max height extension
     private double setPointRange = 0.25; // Range
 

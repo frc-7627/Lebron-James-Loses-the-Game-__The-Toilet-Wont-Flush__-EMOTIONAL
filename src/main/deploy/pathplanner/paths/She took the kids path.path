@@ -3,43 +3,38 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.0,
-        "y": 6.0
+        "x": 2.5759943181818183,
+        "y": 6.933380681818181
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.0,
-        "y": 5.142895767785951
+        "x": 2.627496938444278,
+        "y": 6.6887432355714935
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.0,
-        "y": 1.0
+        "x": 3.091193181818182,
+        "y": 6.060866477272728
       },
       "prevControl": {
-        "x": 7.0,
-        "y": 1.953484932807783
+        "x": 3.2381338408598457,
+        "y": 5.7733739756286635
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1.0,
-      "rotationDegrees": 90.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 14.0,
+    "maxAcceleration": 8.0,
     "maxAngularVelocity": 250.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -47,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 89.93453316623156
+    "rotation": -59.53445508054016
   },
   "reversed": false,
   "folder": "She took the kids auto",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -58.945728883647234
   },
   "useDefaultConstraints": true
 }
