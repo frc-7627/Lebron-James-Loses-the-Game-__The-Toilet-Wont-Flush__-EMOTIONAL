@@ -21,18 +21,32 @@ public class ManElevatorUp extends Command {
         this.led = led;
     }
     
+      /** Run once at Command Start */
     @Override
-    public void initialize() {
+    public void initialize()  {
         led.color("eggPlant");
         module.shimUp();
     }
 
+     /** 
+      * Run once at Command End 
+      * 
+      * @param interupted - False if Command ended by isFinished() 
+      *                     True if by something else like 
+      *                              letting go of a button
+      */
     @Override
     public void end(boolean interrupted) {
         module.StopMotor();
         led.bluetoothOFF();
     }
 
+    /** 
+      * Checks if it's time to end the Command 
+      * 
+      * @return True - End the Command
+      *         False - Keep running Periodic
+      */
     @Override 
     public boolean isFinished() {
         return false; 

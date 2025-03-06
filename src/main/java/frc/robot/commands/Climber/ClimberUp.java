@@ -19,16 +19,30 @@ public class ClimberUp extends Command {
         addRequirements(module);
      }
 
+    /** Run once at Command Start */
     @Override
-    public void initialize() {
+    public void initialize()  {
         module.moveUp();
     }
 
+     /** 
+      * Run once at Command End 
+      * 
+      * @param interupted - False if Command ended by isFinished() 
+      *                     True if by something else like 
+      *                              letting go of a button
+      */
     @Override
     public void end(boolean interrupted) {
         module.stop();
     }
 
+    /** 
+      * Checks if it's time to end the Command 
+      * 
+      * @return True - End the Command
+      *         False - Keep running Periodic
+      */
     @Override 
     public boolean isFinished() {
         return false; 

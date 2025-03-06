@@ -65,11 +65,18 @@ public class ElevatorMove extends Command {
         addRequirements(module);
      }
 
+    /** Run once at Command Start */
     @Override
-    public void initialize() {
+    public void initialize()  {
         module.move(goal);
     }
 
+    /** 
+      * Checks if it's time to end the Command 
+      * 
+      * @return True - End the Command
+      *         False - Keep running Periodic
+      */
     @Override 
     public boolean isFinished() {
         return (goal - setPointRange < module.getPosition() && goal + setPointRange > module.getPosition()); 

@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class ClimberDown extends Command {
     private AdultDiapers module;
 
-
     /**
     * Moves the Climber Down until interrupted
     *
@@ -20,16 +19,30 @@ public class ClimberDown extends Command {
         addRequirements(module);
      }
 
+    /** Run once at Command Start */
     @Override
-    public void initialize() {
+    public void initialize()   {
         module.moveDown();
     }
 
+     /** 
+      * Run once at Command End 
+      * 
+      * @param interupted - False if Command ended by isFinished() 
+      *                     True if by something else like 
+      *                              letting go of a button
+      */
     @Override
     public void end(boolean interrupted) {
         module.stop();
     }
 
+     /** 
+      * Checks if it's time to end the Command 
+      * 
+      * @return True - End the Command
+      *         False - Keep running Periodic
+      */
     @Override 
     public boolean isFinished() {
         return false; 

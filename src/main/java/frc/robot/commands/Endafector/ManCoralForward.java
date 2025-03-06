@@ -25,18 +25,32 @@ public class ManCoralForward extends Command {
         addRequirements(module);
     }
     
+    /** Run once at Command Start */
     @Override
-    public void initialize() {
+    public void initialize()  {
         led.color("eggPlant");
         module.shimForward();
     }
 
+     /** 
+      * Run once at Command End 
+      * 
+      * @param interupted - False if Command ended by isFinished() 
+      *                     True if by something else like 
+      *                              letting go of a button
+      */
     @Override
     public void end(boolean interrupted) {
         module.stop();
         led.bluetoothOFF();
     }
 
+    /** 
+      * Checks if it's time to end the Command 
+      * 
+      * @return True - End the Command
+      *         False - Keep running Periodic
+      */
     @Override 
     public boolean isFinished() {
         return false; 

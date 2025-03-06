@@ -51,13 +51,14 @@ public class DriveBasePoseAdjust extends Command {
         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Shuffleboard Updated");
     } 
     
-
+    /** Run once at Command Start */
     @Override
     public void initialize() {
         DrivebaseConstants.x_offset = SmartDashboard.getNumber("Vision/x_offset", DrivebaseConstants.x_offset);
         DrivebaseConstants.y_offset = SmartDashboard.getNumber("Vision/y_offset", DrivebaseConstants.y_offset);
         System.out.println("x_offset: " + DrivebaseConstants.x_offset + " y_offset: " + DrivebaseConstants.y_offset);
         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust]] Seeking Target");
+        @SuppressWarnings("removal")
         var result = camera.getLatestResult();
         if (result.hasTargets()) {
             System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Moving...");
@@ -82,6 +83,13 @@ public class DriveBasePoseAdjust extends Command {
     }
 
 
+     /** 
+      * Run once at Command End 
+      * 
+      * @param interupted - False if Command ended by isFinished() 
+      *                     True if by something else like 
+      *                              letting go of a button
+      */
     @Override
     public void end(boolean interrupted) {
         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Interupted");
@@ -90,6 +98,12 @@ public class DriveBasePoseAdjust extends Command {
         drivebase.driveToDistanceCommand(0.0, 0.0).schedule();
     }
 
+    /** 
+      * Checks if it's time to end the Command 
+      * 
+      * @return True - End the Command
+      *         False - Keep running Periodic
+      */
     @Override 
     public boolean isFinished() {
         return false;

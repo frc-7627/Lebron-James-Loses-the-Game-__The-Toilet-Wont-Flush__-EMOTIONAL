@@ -29,6 +29,7 @@ public class AutoAlignment extends Command {
                 addRequirements(led);
         }
     
+        /** Run once at Command Start */
         @Override
         public void initialize() {
                 DrivebaseConstants.x_offset = SmartDashboard.getNumber("Vision/x_offset", DrivebaseConstants.x_offset);
@@ -61,11 +62,24 @@ public class AutoAlignment extends Command {
     
         }
     
+        /**
+         * Moves the Climber Up, but at a lower speed until interrupted
+         *
+         * @requires AdultDiapers
+         * @requires led - For visual manual control in use notification
+         * @version 1.0
+         */
         @Override
         public void end(boolean interrupted) {
             driveCommand.end(interrupted);
         }
         
+        /** 
+          * Checks if it's time to end the Command 
+          * 
+          * @return True - End the Command
+          *         False - Keep running Periodic
+          */
         @Override
         public boolean isFinished() {
             return driveCommand.isFinished();

@@ -318,6 +318,10 @@ public class NotSwerveSubsystem extends SubsystemBase {
     }
 
     /** Run once every periodic call */
+    /** 
+     *  Run once every periodic call as
+     *  long as the Command is running 
+     */
     @Override
     public void periodic() {
         if(Constants.verbose_shuffleboard_logging) {
