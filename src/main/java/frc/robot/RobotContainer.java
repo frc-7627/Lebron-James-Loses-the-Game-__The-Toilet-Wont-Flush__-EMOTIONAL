@@ -28,11 +28,13 @@ import frc.robot.subsystems.arm.EndJoeBidenFactor;
 import frc.robot.subsystems.arm.Lebronavator;
 import frc.robot.subsystems.climber.AdultDiapers;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.swervedrive.Vision;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import frc.robot.commands.Endafector.*;
+import frc.robot.commands.Helpers.AutoAlignment;
 import frc.robot.commands.Helpers.DriveBasePoseAdjust;
 import frc.robot.commands.Climber.*;
 import frc.robot.commands.Elevator.*;
@@ -194,7 +196,7 @@ public class RobotContainer
       /**  driver Xbox */
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
 
-      driverXbox.start().whileTrue(new playSong(elevator, "sus"));
+      driverXbox.start().whileTrue(Commands.runOnce(Vision::updateShuffleboard));
       driverXbox.back().whileTrue(Commands.runOnce(elevator::resetControlMode));
 
       driverXbox.a().whileTrue(Commands.runOnce(drivebase::zeroGyroWithAlliance));
@@ -202,8 +204,8 @@ public class RobotContainer
       driverXbox.x().whileTrue(Commands.none());
       driverXbox.y().whileTrue(Commands.none());
 
-      driverXbox.leftTrigger().whileTrue(new DriveBasePoseAdjust(drivebase, led, 0.2));
-      driverXbox.rightTrigger().whileTrue(new DriveBasePoseAdjust(drivebase, led, 0.6));
+      driverXbox.leftTrigger().whileTrue(new AutoAlignment(drivebase, led, 0.2));
+      driverXbox.rightTrigger().whileTrue(new AutoAlignment(drivebase, led, 0.6));
       driverXbox.rightBumper().whileTrue(Commands.runEnd(this::driveSlow, this::driveNormal));
 
       /** Operator Xbox */
