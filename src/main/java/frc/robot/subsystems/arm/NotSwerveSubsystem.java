@@ -34,7 +34,7 @@ import frc.robot.Constants;
  * 
  * @version 1.0
  */
-public class EndJoeBidenFactor extends SubsystemBase {
+public class NotSwerveSubsystem extends SubsystemBase {
 
     private static double LoadSpeed = 0.25;
     private static double LoadSlowSpeed = 0.15;
@@ -64,7 +64,7 @@ public class EndJoeBidenFactor extends SubsystemBase {
      * 
      * @version 1.0
      */
-    public EndJoeBidenFactor () {
+    public NotSwerveSubsystem () {
 
         SparkMaxConfig motor_config = new SparkMaxConfig();
         motor_config.idleMode(IdleMode.kCoast);

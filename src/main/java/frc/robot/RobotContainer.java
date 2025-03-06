@@ -24,7 +24,7 @@ import javax.swing.UIClientPropertyKey;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.Bluetooth;
-import frc.robot.subsystems.arm.EndJoeBidenFactor;
+import frc.robot.subsystems.arm.NotSwerveSubsystem;
 import frc.robot.subsystems.arm.Lebronavator;
 import frc.robot.subsystems.climber.AdultDiapers;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -60,7 +60,7 @@ public class RobotContainer
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve/"));
   //private final CaprisonCommands visionCommands = new CaprisonCommands();
-    private final EndJoeBidenFactor BidenFactor = new EndJoeBidenFactor();
+    private final NotSwerveSubsystem BidenFactor = new NotSwerveSubsystem();
   private final Lebronavator elevator = new Lebronavator();
   private final AdultDiapers climber = new AdultDiapers();
   private final Bluetooth led = new Bluetooth();
@@ -218,8 +218,8 @@ public class RobotContainer
       operatorXbox.x().whileTrue(new ElevatorMove(elevator, 2));
       operatorXbox.y().whileTrue(new ElevatorMove(elevator, 4));
 
-      operatorXbox.leftStick().whileTrue(Commands.runOnce(EndJoeBidenFactor::boostSpeed, BidenFactor));
-      operatorXbox.rightStick().whileTrue(Commands.runOnce(EndJoeBidenFactor::slowSpeed, BidenFactor));
+      operatorXbox.leftStick().whileTrue(Commands.runOnce(NotSwerveSubsystem::boostSpeed, BidenFactor));
+      operatorXbox.rightStick().whileTrue(Commands.runOnce(NotSwerveSubsystem::slowSpeed, BidenFactor));
 
       operatorXbox.pov(0).whileTrue(new ManElevatorUp(elevator, led));
       operatorXbox.pov(90).whileTrue(new ManCoralForward(BidenFactor, led));

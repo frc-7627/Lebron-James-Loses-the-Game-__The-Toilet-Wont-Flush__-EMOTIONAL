@@ -3,11 +3,11 @@ package frc.robot.commands.Endafector;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.subsystems.Bluetooth;
-import frc.robot.subsystems.arm.EndJoeBidenFactor;
+import frc.robot.subsystems.arm.NotSwerveSubsystem;
 
 /** See Constructor for details */
 public class EjectCoral extends Command {
-    private EndJoeBidenFactor module;
+    private NotSwerveSubsystem module;
     private Bluetooth led;
 
     /**
@@ -26,7 +26,7 @@ public class EjectCoral extends Command {
     * @requires led - For Visual notifications
     * @version 1.0
     */
-    public EjectCoral(EndJoeBidenFactor module, Bluetooth led) {
+    public EjectCoral(NotSwerveSubsystem module, Bluetooth led) {
         this.module = module;
         this.led = led;
         addRequirements(module);

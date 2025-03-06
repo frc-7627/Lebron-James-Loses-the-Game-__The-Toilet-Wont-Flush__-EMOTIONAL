@@ -2,11 +2,11 @@ package frc.robot.commands.Endafector;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Bluetooth;
-import frc.robot.subsystems.arm.EndJoeBidenFactor;
+import frc.robot.subsystems.arm.NotSwerveSubsystem;
 
 /** See Constructor for details */
 public class ManCoralForward extends Command {
-    private final EndJoeBidenFactor module;
+    private final NotSwerveSubsystem module;
     private final Bluetooth led;
 
     /**
@@ -18,7 +18,7 @@ public class ManCoralForward extends Command {
     * @requires led - For visual manual control in use notification
     * @version 1.0
     */
-    public ManCoralForward(EndJoeBidenFactor module, Bluetooth led) {
+    public ManCoralForward(NotSwerveSubsystem module, Bluetooth led) {
         this.module = module;
         this.led = led;
         

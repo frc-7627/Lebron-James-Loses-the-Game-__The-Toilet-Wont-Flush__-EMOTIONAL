@@ -18,7 +18,7 @@ import frc.robot.commands.Endafector.EjectCoral;
 import frc.robot.commands.Endafector.IntakeCoral;
 import frc.robot.commands.Endafector.WaitForCoral;
 import frc.robot.subsystems.Bluetooth;
-import frc.robot.subsystems.arm.EndJoeBidenFactor;
+import frc.robot.subsystems.arm.NotSwerveSubsystem;
 import frc.robot.subsystems.arm.Lebronavator;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
@@ -27,7 +27,7 @@ import swervelib.SwerveDrive;
 /** See Constructor for details */
 public class OperatorCommands {
     private final Lebronavator elevator;
-    private final EndJoeBidenFactor outake;
+    private final NotSwerveSubsystem outake;
     private final Bluetooth led;
     private final SwerveSubsystem drivebase;
     PhotonCamera camera = new PhotonCamera("Camera_Front");
@@ -41,7 +41,7 @@ public class OperatorCommands {
     * gamepiece in order to score a point 
     *
     */
-    public OperatorCommands(Lebronavator module1, EndJoeBidenFactor module2, Bluetooth led, SwerveSubsystem drivebase) {
+    public OperatorCommands(Lebronavator module1, NotSwerveSubsystem module2, Bluetooth led, SwerveSubsystem drivebase) {
         this.elevator = module1;
         this.outake   = module2;
         this.led      = led;

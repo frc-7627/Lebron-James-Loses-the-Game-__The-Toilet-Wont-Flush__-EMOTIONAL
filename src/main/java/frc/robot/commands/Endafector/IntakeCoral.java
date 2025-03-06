@@ -3,11 +3,11 @@ package frc.robot.commands.Endafector;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.subsystems.Bluetooth;
-import frc.robot.subsystems.arm.EndJoeBidenFactor;
+import frc.robot.subsystems.arm.NotSwerveSubsystem;
 
 /** See Constructor for details */
 public class IntakeCoral extends Command {
-    private EndJoeBidenFactor module;
+    private NotSwerveSubsystem module;
     private Bluetooth led;
     private int state;
 
@@ -27,7 +27,7 @@ public class IntakeCoral extends Command {
     * @requires led - For Visual notifications
     * @version 1.0
     */
-    public IntakeCoral(EndJoeBidenFactor module, Bluetooth led) {
+    public IntakeCoral(NotSwerveSubsystem module, Bluetooth led) {
         this.module = module;
         this.led = led;
         addRequirements(module);

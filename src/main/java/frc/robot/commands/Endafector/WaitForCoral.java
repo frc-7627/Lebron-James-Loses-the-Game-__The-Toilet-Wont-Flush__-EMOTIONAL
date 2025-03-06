@@ -1,13 +1,13 @@
 package frc.robot.commands.Endafector;
 
-import frc.robot.subsystems.arm.EndJoeBidenFactor;
+import frc.robot.subsystems.arm.NotSwerveSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Bluetooth;
 
 /** See Constructor for details */
 public class WaitForCoral extends Command {
-    private final EndJoeBidenFactor module;
+    private final NotSwerveSubsystem module;
     private final Bluetooth led;
 
     /**
@@ -21,7 +21,7 @@ public class WaitForCoral extends Command {
     * @requires led - Indicates when robot is in possession of gamepiece
     * @version 1.0
     */
-    public WaitForCoral(EndJoeBidenFactor module, Bluetooth led) {
+    public WaitForCoral(NotSwerveSubsystem module, Bluetooth led) {
         this.module = module;
         this.led = led;
         addRequirements(module);
