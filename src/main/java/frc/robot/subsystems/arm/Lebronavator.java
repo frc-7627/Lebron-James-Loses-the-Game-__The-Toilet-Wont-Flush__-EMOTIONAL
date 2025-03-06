@@ -46,8 +46,6 @@ public class Lebronavator extends SubsystemBase {
     private static double MotionMagicJerk = 1600; // Target jerk of 1600 rps/s/s (0.1 seconds)
     
     private static double maxSpeed = 0.6;
-    private static double shimSpeed = 0.2;
-    private static double shimAmount = 15;
 
     private static double currentLimit = 40;
 
