@@ -2,14 +2,11 @@ package frc.robot.commands.Helpers;
 
 import org.photonvision.PhotonCamera;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.subsystems.Bluetooth;
@@ -38,6 +35,8 @@ public class AutoAlignment extends Command {
                 DrivebaseConstants.y_offset = SmartDashboard.getNumber("Vision/y_offset", DrivebaseConstants.y_offset);
                 System.out.println("x_offset: " + DrivebaseConstants.x_offset + " y_offset: " + DrivebaseConstants.y_offset);
                 System.out.println("[LimeLightCommands/DriveBaseRotationAdjust]] Seeking Target");
+                
+                @SuppressWarnings("removal")
                 var result = camera.getLatestResult();
                 if (result.hasTargets()) {
                         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Moving...");

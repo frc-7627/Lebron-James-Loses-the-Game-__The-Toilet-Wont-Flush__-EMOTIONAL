@@ -1,18 +1,9 @@
 package frc.robot.commands.Helpers;
 
 import org.photonvision.PhotonCamera;
-import org.photonvision.PhotonPoseEstimator;
-import org.photonvision.PhotonUtils;
-
-import com.google.flatbuffers.Constants;
-
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -27,7 +18,6 @@ public class DriveBasePoseAdjust extends Command {
     PhotonCamera camera = new PhotonCamera("Camera_Front");
     Bluetooth led;
 
-    private double tx;
     private double user_offset;
     
     private Command driveCommand;
