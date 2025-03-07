@@ -354,9 +354,15 @@ public class Vision
        */
       enum Cameras
       {
-        CENTER_CAM("Camera_Front",
+        RIGHT_CAM("Camera_Right",
         new Rotation3d(0, Units.degreesToRadians(0), 0),
         new Translation3d(Units.inchesToMeters(-11.141),
+                          Units.inchesToMeters(-5.410),
+                          Units.inchesToMeters(-10.499)),
+        VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev)),
+        LEFT_CAM("Camera_Left",
+        new Rotation3d(0, Units.degreesToRadians(0), 0),
+        new Translation3d(Units.inchesToMeters(11.141),
                           Units.inchesToMeters(-5.410),
                           Units.inchesToMeters(-10.499)),
         VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev));
