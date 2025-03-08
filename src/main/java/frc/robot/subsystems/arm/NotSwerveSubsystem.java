@@ -125,21 +125,18 @@ public class NotSwerveSubsystem extends SubsystemBase {
      */
     public boolean CoralTouchFront() {
         double range = getFrontTOFValue();
-        System.out.println("F: " + range);
         if (range != 0.0) return (CoralInValue > range);
         else return false;
     }
 
     public boolean CoralTouchBack() {
         double range = getRearTOFValue();
-        System.out.println("F: " + range);
         if (range != 0.0) return (CoralInValue > range);
         else return false;
     }
 
     public boolean CoralLeaveBack() {
         double range = getRearTOFValue();
-        System.out.println("R: " + range);
         if (range != 0.0) return (CoralOutValue < range);
         else return false;
     }
@@ -157,7 +154,6 @@ public class NotSwerveSubsystem extends SubsystemBase {
      */
     public boolean CoralOut() {
         double range = getFrontTOFValue();
-        System.out.println(range);
         if (range != 0.0) return (CoralOutValue < range);
         else return false;
     }
