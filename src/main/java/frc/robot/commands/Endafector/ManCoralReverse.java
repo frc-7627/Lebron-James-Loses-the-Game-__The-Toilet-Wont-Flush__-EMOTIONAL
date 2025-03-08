@@ -44,7 +44,7 @@ public class ManCoralReverse extends Command {
     @Override
     public void end(boolean interrupted) {
         module.stop();
-        System.out.println("MAN BCKWRD INTERRUPTED");
+        System.out.println("MAN BCKWRD INTERRUPTED: " + interrupted);
         led.bluetoothOFF();
     }
 
