@@ -216,8 +216,8 @@ public class RobotContainer
       operatorXbox.x().whileTrue(new ElevatorMove(elevator, 2));
       operatorXbox.y().whileTrue(new ElevatorMove(elevator, 4));
 
-      operatorXbox.leftStick().whileTrue(Commands.runOnce(EndJoeBidenFactor::boostSpeed, BidenFactor));
-      operatorXbox.rightStick().whileTrue(Commands.runOnce(EndJoeBidenFactor::slowSpeed, BidenFactor));
+      operatorXbox.leftStick().whileTrue(new ManCoralForward(BidenFactor, led));
+      operatorXbox.rightStick().whileTrue(new ManCoralReverse(BidenFactor, led));
 
       operatorXbox.pov(0).whileTrue(new ManElevatorUp(elevator, led));
       operatorXbox.pov(90).whileTrue(new ManCoralForward(BidenFactor, led));
