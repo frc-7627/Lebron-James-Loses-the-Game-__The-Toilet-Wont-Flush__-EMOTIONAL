@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.subsystems.Bluetooth;
-import frc.robot.subsystems.arm.EndJoeBidenFactor;
+import frc.robot.subsystems.arm.NotSwerveSubsystem;
 import frc.robot.subsystems.arm.Lebronavator;
 import frc.robot.subsystems.climber.AdultDiapers;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -14,7 +14,7 @@ import frc.robot.subsystems.swervedrive.Vision;
 public class CoachCommands {
     private final SwerveSubsystem   drivebase;
     private final Lebronavator      elevator;
-    private final EndJoeBidenFactor endefector;
+    private final NotSwerveSubsystem endefector;
     private final AdultDiapers      climber;
     private final Bluetooth         led;
     
@@ -28,7 +28,7 @@ public class CoachCommands {
      * @param climber - The robot's AdultDiapers Subsystem
      * @param led - The robot's Bluetooth subsystem
      */
-    public CoachCommands(SwerveSubsystem drivebase, Lebronavator elevator, EndJoeBidenFactor endefector, AdultDiapers climber, Bluetooth led) {
+    public CoachCommands(SwerveSubsystem drivebase, Lebronavator elevator, NotSwerveSubsystem endefector, AdultDiapers climber, Bluetooth led) {
         this.drivebase = drivebase;
         this.elevator = elevator;
         this.endefector = endefector;
@@ -101,7 +101,7 @@ public class CoachCommands {
 
     /**
     * Breaks the Endefector Subsystem, check EndJoeBidenFactor.simulateFault 
-    * for details {@link frc.robot.subsystems.arm.EndJoeBidenFactor.simulateFault}
+    * for details {@link frc.robot.subsystems.arm.NotSwerveSubsystem.simulateFault}
     *
     * @requires EndJoeBidenFactor
     *

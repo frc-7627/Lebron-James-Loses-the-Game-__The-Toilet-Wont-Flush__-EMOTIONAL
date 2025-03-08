@@ -3,11 +3,11 @@ package frc.robot.commands.Endafector;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.subsystems.Bluetooth;
-import frc.robot.subsystems.arm.EndJoeBidenFactor;
+import frc.robot.subsystems.arm.NotSwerveSubsystem;
 
 /** See Constructor for details */
 public class IntakeCoral extends Command {
-    private EndJoeBidenFactor module;
+    private NotSwerveSubsystem module;
     private Bluetooth led;
     private int state;
 
@@ -27,15 +27,16 @@ public class IntakeCoral extends Command {
     * @requires led - For Visual notifications
     * @version 1.0
     */
-    public IntakeCoral(EndJoeBidenFactor module, Bluetooth led) {
+    public IntakeCoral(NotSwerveSubsystem module, Bluetooth led) {
         this.module = module;
         this.led = led;
         addRequirements(module);
         addRequirements(led);
      }
 
+    /** Run once at Command Start */
     @Override
-    public void initialize() {
+    public void initialize()  {
         System.out.println("init");
         module.load();
 
@@ -60,6 +61,14 @@ public class IntakeCoral extends Command {
         }
     }
 
+
+     /** 
+      * Run once at Command End 
+      * 
+      * @param interupted - False if Command ended by isFinished() 
+      *                     True if by something else like 
+      *                              letting go of a button
+      */
     @Override
     public void end(boolean interrupted) {
         System.out.println("state f: " + interrupted);
@@ -68,6 +77,12 @@ public class IntakeCoral extends Command {
         else led.bluetoothOFF();
     }
 
+    /** 
+      * Checks if it's time to end the Command 
+      * 
+      * @return True - End the Command
+      *         False - Keep running Periodic
+      */
     @Override 
     public boolean isFinished() {
         return (state == 3);

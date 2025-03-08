@@ -1,18 +1,9 @@
 package frc.robot.commands.Helpers;
 
 import org.photonvision.PhotonCamera;
-import org.photonvision.PhotonPoseEstimator;
-import org.photonvision.PhotonUtils;
-
-import com.google.flatbuffers.Constants;
-
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -27,7 +18,6 @@ public class DriveBasePoseAdjust extends Command {
     PhotonCamera camera = new PhotonCamera("Camera_Front");
     Bluetooth led;
 
-    private double tx;
     private double user_offset;
     
     private Command driveCommand;
@@ -61,13 +51,14 @@ public class DriveBasePoseAdjust extends Command {
         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Shuffleboard Updated");
     } 
     
-
+    /** Run once at Command Start */
     @Override
     public void initialize() {
         DrivebaseConstants.x_offset = SmartDashboard.getNumber("Vision/x_offset", DrivebaseConstants.x_offset);
         DrivebaseConstants.y_offset = SmartDashboard.getNumber("Vision/y_offset", DrivebaseConstants.y_offset);
         System.out.println("x_offset: " + DrivebaseConstants.x_offset + " y_offset: " + DrivebaseConstants.y_offset);
         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust]] Seeking Target");
+        @SuppressWarnings("removal")
         var result = camera.getLatestResult();
         if (result.hasTargets()) {
             System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Moving...");
@@ -92,6 +83,13 @@ public class DriveBasePoseAdjust extends Command {
     }
 
 
+     /** 
+      * Run once at Command End 
+      * 
+      * @param interupted - False if Command ended by isFinished() 
+      *                     True if by something else like 
+      *                              letting go of a button
+      */
     @Override
     public void end(boolean interrupted) {
         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Interupted");
@@ -100,6 +98,12 @@ public class DriveBasePoseAdjust extends Command {
         drivebase.driveToDistanceCommand(0.0, 0.0).schedule();
     }
 
+    /** 
+      * Checks if it's time to end the Command 
+      * 
+      * @return True - End the Command
+      *         False - Keep running Periodic
+      */
     @Override 
     public boolean isFinished() {
         return false;

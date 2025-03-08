@@ -8,7 +8,6 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-import java.lang.constant.Constable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.InvocationTargetException;
@@ -34,7 +33,7 @@ import frc.robot.Constants;
  * 
  * @version 1.0
  */
-public class EndJoeBidenFactor extends SubsystemBase {
+public class NotSwerveSubsystem extends SubsystemBase {
 
     private static double LoadSpeed = 0.25;
     private static double LoadSlowSpeed = 0.15;
@@ -64,7 +63,7 @@ public class EndJoeBidenFactor extends SubsystemBase {
      * 
      * @version 1.0
      */
-    public EndJoeBidenFactor () {
+    public NotSwerveSubsystem () {
 
         SparkMaxConfig motor_config = new SparkMaxConfig();
         motor_config.idleMode(IdleMode.kCoast);
@@ -315,6 +314,10 @@ public class EndJoeBidenFactor extends SubsystemBase {
     }
 
     /** Run once every periodic call */
+    /** 
+     *  Run once every periodic call as
+     *  long as the Command is running 
+     */
     @Override
     public void periodic() {
         if(Constants.verbose_shuffleboard_logging) {

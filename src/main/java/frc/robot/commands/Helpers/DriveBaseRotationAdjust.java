@@ -1,11 +1,6 @@
 package frc.robot.commands.Helpers;
 
 import org.photonvision.PhotonCamera;
-import org.photonvision.PhotonPoseEstimator;
-import org.photonvision.PhotonUtils;
-
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Bluetooth;
@@ -44,13 +39,15 @@ public class DriveBaseRotationAdjust extends Command {
     } 
     
 
+    /** Run once at Command Start */
     @Override
-    public void initialize() {
+    public void initialize()  {
         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust]] Seeking Target");
     }
 
     @Override
     public void execute() {
+        @SuppressWarnings("removal")
         var result = camera.getLatestResult();
         if (result.hasTargets()) {
             System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Rotating...");
@@ -67,11 +64,24 @@ public class DriveBaseRotationAdjust extends Command {
     }
 
 
+     /** 
+     * Run once at Command End 
+     * 
+     * @param interupted - False if Command ended by isFinished() 
+     *                     True if by something else like 
+     *                              letting go of a button
+     */
     @Override
     public void end(boolean interrupted) {
         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Interupted");
     }
 
+    /** 
+      * Checks if it's time to end the Command 
+      * 
+      * @return True - End the Command
+      *         False - Keep running Periodic
+      */
     @Override 
     public boolean isFinished() {
         return false;

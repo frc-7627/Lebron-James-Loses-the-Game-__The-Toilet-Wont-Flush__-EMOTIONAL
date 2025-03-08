@@ -6,7 +6,6 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -14,29 +13,27 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import java.io.File;
 
-import javax.swing.UIClientPropertyKey;
-
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.Bluetooth;
-import frc.robot.subsystems.arm.EndJoeBidenFactor;
+import frc.robot.subsystems.arm.NotSwerveSubsystem;
 import frc.robot.subsystems.arm.Lebronavator;
 import frc.robot.subsystems.climber.AdultDiapers;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.swervedrive.Vision;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import frc.robot.commands.Endafector.*;
+import frc.robot.commands.Helpers.AutoAlignment;
 import frc.robot.commands.Helpers.DriveBasePoseAdjust;
+import frc.robot.commands.Helpers.DriveBaseRotationAdjust;
 import frc.robot.commands.Climber.*;
 import frc.robot.commands.Elevator.*;
-import frc.robot.helpers.vision.*;
 import frc.robot.commands.teleop.*;
 import swervelib.SwerveInputStream;
 
@@ -58,7 +55,7 @@ public class RobotContainer
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve/"));
   //private final CaprisonCommands visionCommands = new CaprisonCommands();
-    private final EndJoeBidenFactor BidenFactor = new EndJoeBidenFactor();
+    private final NotSwerveSubsystem BidenFactor = new NotSwerveSubsystem();
   private final Lebronavator elevator = new Lebronavator();
   private final AdultDiapers climber = new AdultDiapers();
   private final Bluetooth led = new Bluetooth();
@@ -174,7 +171,7 @@ public class RobotContainer
    */
   private void configureBindings()
   {
-    Command driveFieldOrientedDirectAngle      = drivebase.driveFieldOriented(driveDirectAngle);
+    //Command driveFieldOrientedDirectAngle      = drivebase.driveFieldOriented(driveDirectAngle);
     Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
     //Command driveRobotOrientedAngularVelocity  = drivebase.driveFieldOriented(driveRobotOriented);
     //Command driveSetpointGen = drivebase.driveWithSetpointGeneratorFieldRelative(
@@ -186,7 +183,7 @@ public class RobotContainer
 
     if (RobotBase.isSimulation())
     {
-      drivebase.setDefaultCommand(driveFieldOrientedDirectAngle);
+      drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocityKeyboard);
       driverXbox.start().onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
       driverXbox.button(1).whileTrue(drivebase.sysIdDriveMotorCommand());
     } else
@@ -194,7 +191,7 @@ public class RobotContainer
       /**  driver Xbox */
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
 
-      driverXbox.start().whileTrue(new playSong(elevator, "sus"));
+      driverXbox.start().whileTrue(Commands.runOnce(Vision::updateShuffleboard));
       driverXbox.back().whileTrue(Commands.runOnce(elevator::resetControlMode));
 
       driverXbox.a().whileTrue(Commands.runOnce(drivebase::zeroGyroWithAlliance));
@@ -202,8 +199,8 @@ public class RobotContainer
       driverXbox.x().whileTrue(Commands.none());
       driverXbox.y().whileTrue(Commands.none());
 
-      driverXbox.leftTrigger().whileTrue(new DriveBasePoseAdjust(drivebase, led, 0.2));
-      driverXbox.rightTrigger().whileTrue(new DriveBasePoseAdjust(drivebase, led, 0.6));
+      driverXbox.leftTrigger().whileTrue(new AutoAlignment(drivebase, led, 0.2));
+      driverXbox.rightTrigger().whileTrue(new AutoAlignment(drivebase, led, 0.6));
       driverXbox.rightBumper().whileTrue(Commands.runEnd(this::driveSlow, this::driveNormal));
 
       /** Operator Xbox */
@@ -229,7 +226,7 @@ public class RobotContainer
       operatorXbox.rightTrigger().whileTrue(opCommands.AutoEjectL4());
       operatorXbox.rightBumper().whileTrue(new EjectCoral(BidenFactor, led));
 
-      /** Coach Xbox 
+      /** Coach Xbox */
       coachXbox.start().whileTrue(Commands.none());
       coachXbox.back().whileTrue(Commands.none());
       coachXbox.a().whileTrue(chCommands.breakDrivebase());
@@ -243,7 +240,7 @@ public class RobotContainer
       coachXbox.leftTrigger().whileTrue(chCommands.breakEndefector());
       coachXbox.leftBumper().whileTrue(Commands.none());
       coachXbox.rightTrigger().whileTrue(Commands.none());
-      coachXbox.rightBumper().whileTrue(Commands.none()); */
+      coachXbox.rightBumper().whileTrue(Commands.none()); 
     
     } 
     /*
@@ -314,14 +311,13 @@ public class RobotContainer
     NamedCommands.registerCommand("IntakeCoral", new IntakeCoral(BidenFactor, led));
     NamedCommands.registerCommand("ManCoralForward", new ManCoralForward(BidenFactor, led)); // Manual
     NamedCommands.registerCommand("ManCoralReverse", new ManCoralReverse(BidenFactor, led)); // Manual
-    NamedCommands.registerCommand("WaitForCoral", new WaitForCoral(BidenFactor, led));
     
 
     // Drivebase
-    NamedCommands.registerCommand("DriveBaseRotationAdjust", new DriveBaseRotationAdjust(drivebase)); // Vision
+    NamedCommands.registerCommand("DriveBaseRotationAdjust", new DriveBaseRotationAdjust(drivebase, led)); // Vision
     NamedCommands.registerCommand("DriveBasePoseAdjustL", new DriveBasePoseAdjust(drivebase, led, Constants.DrivebaseConstants.y_offset_left));
     NamedCommands.registerCommand("DriveBasePoseAdjustR", new DriveBasePoseAdjust(drivebase, led,  Constants.DrivebaseConstants.y_offset_right));
-  } // TODO: Create a lateral adjustment cmd and replace this ^ with that in pathplanner
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

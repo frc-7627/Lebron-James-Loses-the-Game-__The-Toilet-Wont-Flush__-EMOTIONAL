@@ -46,8 +46,6 @@ public class Lebronavator extends SubsystemBase {
     private static double MotionMagicJerk = 1600; // Target jerk of 1600 rps/s/s (0.1 seconds)
     
     private static double maxSpeed = 0.6;
-    private static double shimSpeed = 0.2;
-    private static double shimAmount = 15;
 
     private static double currentLimit = 40;
 
@@ -175,7 +173,7 @@ public class Lebronavator extends SubsystemBase {
         m_Orchestra.addInstrument(m_talonFX_left);
         m_Orchestra.addInstrument(m_talonFX_right);
 
-        filename = "vsauce"; // Bypass filename due to some unknown argument passing issue TODO: fix
+        //filename = "vsauce"; // Bypass filename due to some unknown argument passing issue 
 
         // Load song and play
         String filePath = Filesystem.getDeployDirectory() + "/midi/" + filename + ".chrp";
@@ -390,6 +388,10 @@ public class Lebronavator extends SubsystemBase {
     }
 
     /** Run once every periodic call */
+    /** 
+     *  Run once every periodic call as
+     *  long as the Command is running 
+     */
     @Override
     public void periodic() {
         if(Constants.verbose_shuffleboard_logging) {

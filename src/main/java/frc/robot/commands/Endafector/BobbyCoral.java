@@ -2,11 +2,11 @@ package frc.robot.commands.Endafector;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
-import frc.robot.subsystems.arm.EndJoeBidenFactor;
+import frc.robot.subsystems.arm.NotSwerveSubsystem;
 
 /** See Constructor for details */
 public class BobbyCoral extends Command {
-    private EndJoeBidenFactor module;
+    private NotSwerveSubsystem module;
 
     /**
     * Runs the Endafector Forwards, in order to push the gampiece
@@ -24,22 +24,36 @@ public class BobbyCoral extends Command {
     * @requires led - For Visual notifications
     * @version 1.0
     */
-    public BobbyCoral(EndJoeBidenFactor module) {
+    public BobbyCoral(NotSwerveSubsystem module) {
         this.module = module;
         addRequirements(module);
      }
 
+    /** Run once at Command Start */
     @Override
-    public void initialize() {
+    public void initialize()  {
         System.out.println("Coral Eject");
         module.idle();
     }
 
+     /** 
+      * Run once at Command End 
+      * 
+      * @param interupted - False if Command ended by isFinished() 
+      *                     True if by something else like 
+      *                              letting go of a button
+      */
     @Override
     public void end(boolean interrupted) {
         module.stop();
     }
 
+    /** 
+      * Checks if it's time to end the Command 
+      * 
+      * @return True - End the Command
+      *         False - Keep running Periodic
+      */
     @Override 
     public boolean isFinished() {
         return (module.CoralTouchBack()); 

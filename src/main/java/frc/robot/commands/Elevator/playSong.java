@@ -24,11 +24,20 @@ public class playSong extends Command{
      }
 
     
+    /** Run once at Command Start */
     @Override
-    public void initialize() {
+    public void initialize()  {
         module.playSong(songName);
     }
 
+
+     /** 
+      * Run once at Command End 
+      * 
+      * @param interupted - False if Command ended by isFinished() 
+      *                     True if by something else like 
+      *                              letting go of a button
+      */
     @Override
     public void end(boolean interrupted) {
         module.resetControlMode();

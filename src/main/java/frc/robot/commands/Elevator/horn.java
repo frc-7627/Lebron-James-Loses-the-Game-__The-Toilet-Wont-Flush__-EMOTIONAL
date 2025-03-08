@@ -20,12 +20,19 @@ public class horn extends Command{
         addRequirements(module);
      }
 
-    
+    /** Run once at Command Start */
     @Override
     public void initialize() {
         module.playNote(440);
     }
 
+     /** 
+      * Run once at Command End 
+      * 
+      * @param interupted - False if Command ended by isFinished() 
+      *                     True if by something else like 
+      *                              letting go of a button
+      */
     @Override
     public void end(boolean interrupted) {
         module.resetControlMode();
