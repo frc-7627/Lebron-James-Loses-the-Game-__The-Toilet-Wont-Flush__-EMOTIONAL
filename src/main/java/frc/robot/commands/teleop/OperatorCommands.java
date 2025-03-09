@@ -13,9 +13,11 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants;
 import frc.robot.commands.Elevator.ElevatorMove;
 import frc.robot.commands.Endafector.EjectCoral;
 import frc.robot.commands.Endafector.IntakeCoral;
+import frc.robot.commands.Helpers.AutoAlignment;
 import frc.robot.subsystems.Bluetooth;
 import frc.robot.subsystems.arm.NotSwerveSubsystem;
 import frc.robot.subsystems.arm.Lebronavator;
@@ -143,5 +145,21 @@ public class OperatorCommands {
             led.bluetoothOFF();
             return Commands.none();
         }
+    }
+
+    public Command RIPOperatorLeft() {
+        return new SequentialCommandGroup(
+            new AutoAlignment(drivebase, led, Constants.DrivebaseConstants.y_offset_left, true),
+            new ElevatorMove(elevator, 4),
+            AutoEjectL4()
+        );
+    }
+
+    public Command RIPOperatorRight() {
+        return new SequentialCommandGroup(
+            new AutoAlignment(drivebase, led, Constants.DrivebaseConstants.y_offset_right, false),
+            new ElevatorMove(elevator, 4),
+            AutoEjectL4()
+        );
     }
 }

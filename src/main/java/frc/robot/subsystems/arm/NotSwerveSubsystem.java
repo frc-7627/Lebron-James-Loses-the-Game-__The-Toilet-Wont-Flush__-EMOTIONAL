@@ -35,16 +35,16 @@ import frc.robot.Constants;
  */
 public class NotSwerveSubsystem extends SubsystemBase {
 
-    private static double LoadSpeed = 0.25;
-    private static double LoadSlowSpeed = 0.15;
+    private static double LoadSpeed = 0.10;
+    private static double LoadSlowSpeed = 0.1;
     private static double EjectSpeed = 0.6;
-    private static double idleSpeed = -0.13;
+    private static double idleSpeed = 0.0;
     private static double CoralInValue =  60;
     private static double CoralOutValue = 100;
     
     private static final int ampLimit = 150;
 
-    private static double shimSpeed = 0.8;
+    private static double shimSpeed = 0.05;
 
     private final SparkMax m_motor = new SparkMax(45, MotorType.kBrushless);
     private final RelativeEncoder m_motor_enc = m_motor.getEncoder();

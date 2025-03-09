@@ -87,7 +87,7 @@ public class SwerveSubsystem extends SubsystemBase
       //  In this case the wheel diameter is 4 inches, which must be converted to meters to get meters/second.
       //  The gear ratio is 6.75 motor revolutions per wheel rotation.
       //  The encoder resolution per motor revolution is 1 per motor revolution.
-      double driveConversionFactor = Math.PI * 4 / (6.12 * 42);
+      double driveConversionFactor = Math.PI * /* Units.inchesToMeters( */ 3.75 / (6.12 * 42);
 
       swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.MAX_SPEED, angleConversionFactor, 			driveConversionFactor);
       // ^ Alternative method if you don't want to supply the conversion factor via JSON files.
@@ -102,6 +102,7 @@ public class SwerveSubsystem extends SubsystemBase
                                                0.1); //Correct for skew that gets worse as angular velocity increases. Start with a coefficient of 0.1.
     swerveDrive.setModuleEncoderAutoSynchronize(false,
                                                 1); // Enable if you want to resynchronize your absolute encoders and motor encoders periodically when they are not moving.
+
 //    swerveDrive.pushOffsetsToEncoders(); // Set the absolute encoder to be used over the internal encoder and push the offsets onto it. Throws warning if not possible
     if (visionDriveTest)
     {
@@ -190,7 +191,7 @@ public class SwerveSubsystem extends SubsystemBase
               // PPHolonomicController is the built in path following controller for holonomic drive trains
               new PIDConstants(5.0, 0.0, 0.0),
               // Translation PID constants
-              new PIDConstants(5.0, 0.0, 0.0)
+              new PIDConstants(6.0, 0.0, 0.0)
               // Rotation PID constants
           ),
           config,
@@ -268,8 +269,8 @@ public class SwerveSubsystem extends SubsystemBase
   {
 // Create the constraints to use while pathfinding
     PathConstraints constraints = new PathConstraints(
-        swerveDrive.getMaximumChassisVelocity(), 4.0,
-        swerveDrive.getMaximumChassisAngularVelocity(), Units.degreesToRadians(720));
+        4.0/*swerveDrive.getMaximumChassisVelocity()*/, 2.0,
+        swerveDrive.getMaximumChassisAngularVelocity(), Units.degreesToRadians(1020));
 
 // Since AutoBuilder is configured, we can use it to build pathfinding commands
     return AutoBuilder.pathfindToPose(

@@ -35,7 +35,7 @@ public class EjectCoral extends Command {
     /** Run once at Command Start */
     @Override
     public void initialize()  {
-        System.out.println("Coral Eject");
+        //System.out.println("Coral Eject");
         module.eject();
     }
 

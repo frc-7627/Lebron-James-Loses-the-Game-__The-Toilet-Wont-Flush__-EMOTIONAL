@@ -32,6 +32,11 @@ public class ManCoralForward extends Command {
         module.shimForward();
     }
 
+    @Override
+    public void execute() {
+        module.shimForward();
+    }
+
      /** 
       * Run once at Command End 
       * 
