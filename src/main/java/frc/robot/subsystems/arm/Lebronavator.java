@@ -47,7 +47,7 @@ public class Lebronavator extends SubsystemBase {
     
     private static double maxSpeed = 0.75;
 
-    private static double currentLimit = 40;
+    private static double currentLimit = 50;
 
     // Define Motor IDs
     final TalonFX m_talonFX_left = new TalonFX(40);

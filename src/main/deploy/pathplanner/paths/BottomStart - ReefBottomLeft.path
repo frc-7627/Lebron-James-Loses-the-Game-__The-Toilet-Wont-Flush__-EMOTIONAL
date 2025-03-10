@@ -8,27 +8,32 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.355985599966122,
-        "y": 1.7983485444347866
+        "x": 7.071131962145979,
+        "y": 0.7335598970821591
       },
       "isLocked": false,
       "linkedName": "BottomStart"
     },
     {
       "anchor": {
-        "x": 4.965852272727273,
-        "y": 2.8034801136363625
+        "x": 5.29,
+        "y": 3.05
       },
       "prevControl": {
-        "x": 5.45079881241644,
-        "y": 1.7576159621753733
+        "x": 6.6862015188857775,
+        "y": 1.1609852350378371
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "ReefBottomRight"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.8009448818897681,
+      "rotationDegrees": 121.50275255966103
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 118.36335355549208
+    "rotation": 119.99999999999999
   },
   "reversed": false,
   "folder": "Bobby Wanted This",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -0.11878275239665932
+    "rotation": 179.97660181394386
   },
   "useDefaultConstraints": false
 }

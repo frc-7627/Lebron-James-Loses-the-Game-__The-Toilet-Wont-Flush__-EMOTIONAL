@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.168835616438356,
-        "y": 5.136900684931507
+        "x": 12.31,
+        "y": 3.02
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.151533774894368,
-        "y": 5.673217811478652
+        "x": 13.186521683404303,
+        "y": 2.4146042993377868
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.1569777397260272,
-        "y": 7.0151113013698625
+        "x": 16.33125,
+        "y": 1.0025
       },
       "prevControl": {
-        "x": 1.9798843171485734,
-        "y": 6.595007354692078
+        "x": 14.81851007261782,
+        "y": 1.6947433769150002
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "TopStation"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 8.0,
+    "maxVelocity": 3.95,
     "maxAcceleration": 2.0,
-    "maxAngularVelocity": 480.0,
-    "maxAngularAcceleration": 1020.0,
+    "maxAngularVelocity": 280.0,
+    "maxAngularAcceleration": 120.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -53.4679422761472
+    "rotation": 128.65980825409036
   },
   "reversed": false,
   "folder": "2015 Kia class action lawsuit",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -117.72428352871634
+    "rotation": 61.0056460296649
   },
   "useDefaultConstraints": true
 }

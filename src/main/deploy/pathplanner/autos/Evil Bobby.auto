@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "TopStart - ReefTopRight"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "AutoScoreL4"
@@ -19,13 +25,25 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoEjectL4"
+            "name": "EjectCoral"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoStow"
           }
         }
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": null,
   "choreoAuto": false
 }

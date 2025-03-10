@@ -80,7 +80,7 @@ public class OperatorCommands {
         return new SequentialCommandGroup(
             new ElevatorMove(elevator, pos),
             new WaitCommand(0.0), // Reduce Jitter
-            new EjectCoral(outake, led)
+            new EjectCoral(outake, led) 
         );
     }
 
@@ -122,9 +122,21 @@ public class OperatorCommands {
             //new ElevatorMove(elevator, 5),
             new ParallelRaceGroup(
                     new EjectCoral(outake, led),
-                    new WaitCommand(0.5)
+                    new WaitCommand(0.75)
                 ),
             new ElevatorMove(elevator, 0)
+        );
+    }
+
+    public Command AutoFullEjectL4(){
+        return new SequentialCommandGroup(
+            new ElevatorMove(elevator, 4),
+            new ParallelRaceGroup(
+                
+                new EjectCoral(outake, led),
+                new WaitCommand(.25)
+            ),
+            AutoEjectL4()
         );
     }
 

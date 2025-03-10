@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.965852272727273,
-        "y": 2.8034801136363625
+        "x": 5.29,
+        "y": 3.05
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.018551136363637,
-        "y": 1.3077414772727258
+        "x": 4.342698863636365,
+        "y": 1.5542613636363631
       },
       "isLocked": false,
       "linkedName": "ReefBottomRight"
     },
     {
       "anchor": {
-        "x": 1.1569777397260272,
-        "y": 1.0348886986301375
+        "x": 1.64,
+        "y": 0.45
       },
       "prevControl": {
-        "x": 2.682631148816939,
-        "y": 0.2172182440846815
+        "x": 3.1656534090909116,
+        "y": -0.367670454545456
       },
       "nextControl": null,
       "isLocked": false,
@@ -55,7 +55,7 @@
   "folder": "Bobby Wanted This",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 118.36335355549208
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": false
 }

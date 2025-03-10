@@ -82,14 +82,14 @@ public class SwerveSubsystem extends SubsystemBase
       // Angle conversion factor is 360 / (GEAR RATIO * ENCODER RESOLUTION)
       //  In this case the gear ratio is 12.8 motor revolutions per wheel rotation.
       //  The encoder resolution per motor revolution is 1 per motor revolution.
-      double angleConversionFactor =  16.8;
+     // double angleConversionFactor =  0.4; // TODO: put back to 16.8 if it breaks, PUT BACK
       // Motor conversion factor is (PI * WHEEL DIAMETER IN METERS) / (GEAR RATIO * ENCODER RESOLUTION).
       //  In this case the wheel diameter is 4 inches, which must be converted to meters to get meters/second.
       //  The gear ratio is 6.75 motor revolutions per wheel rotation.
       //  The encoder resolution per motor revolution is 1 per motor revolution.
-      double driveConversionFactor = Math.PI * /* Units.inchesToMeters( */ 3.75 / (6.12 * 42);
+      //double driveConversionFactor = Math.PI * Units.inchesToMeters(3.98) / (6.12 * 42); // TODO: put 3.98 to 3.75 if broken, PUT THIS BACK
 
-      swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.MAX_SPEED, angleConversionFactor, 			driveConversionFactor);
+      swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.MAX_SPEED);
       // ^ Alternative method if you don't want to supply the conversion factor via JSON files.
     } catch (Exception e)
     {

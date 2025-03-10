@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.1569777397260272,
-        "y": 1.0348886986301375
+        "x": 1.64,
+        "y": 0.45
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.792981835049855,
-        "y": 2.0781898557133855
+        "x": 2.893410557956603,
+        "y": 2.076874221535581
       },
       "isLocked": false,
       "linkedName": "BottomStation"
     },
     {
       "anchor": {
-        "x": 3.9986079545454545,
-        "y": 2.8134517045454537
+        "x": 3.7342500000000003,
+        "y": 3.0402500000000003
       },
       "prevControl": {
-        "x": 2.960223272051891,
-        "y": 2.1094555050855206
+        "x": 3.070513099175923,
+        "y": 1.8906239649143926
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.743562836470765
+    "rotation": 59.99999999999999
   },
   "reversed": false,
   "folder": "Forbiden Brake Fluid",
