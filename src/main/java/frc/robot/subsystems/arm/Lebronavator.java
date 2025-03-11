@@ -45,7 +45,8 @@ public class Lebronavator extends SubsystemBase {
     private static double MotionMagicAcceleration = 160; // Target acceleration of 160 rps/s (0.5 seconds)
     private static double MotionMagicJerk = 1600; // Target jerk of 1600 rps/s/s (0.1 seconds)
     
-    private static double maxSpeed = 0.75;
+    private static double maxUpSpeed = 0.85;
+    private static double maxDownSpeed = 0.75;
 
     private static double currentLimit = 50;
 
@@ -79,8 +80,8 @@ public class Lebronavator extends SubsystemBase {
         talonFXConfig_right.CurrentLimits.withStatorCurrentLimitEnable(true);
         talonFXConfig_right.CurrentLimits.withStatorCurrentLimit(currentLimit);
 
-        talonFXConfig_right.MotorOutput.withPeakForwardDutyCycle(maxSpeed);
-        talonFXConfig_right.MotorOutput.withPeakReverseDutyCycle(-maxSpeed);
+        talonFXConfig_right.MotorOutput.withPeakForwardDutyCycle(maxUpSpeed);
+        talonFXConfig_right.MotorOutput.withPeakReverseDutyCycle(-maxDownSpeed);
 
         talonFXConfig_right.MotorOutput.withNeutralMode(NeutralModeValue.Coast); // Set to coast
         talonFXConfig_right.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
@@ -110,8 +111,8 @@ public class Lebronavator extends SubsystemBase {
         talonFXConfig_left.CurrentLimits.withStatorCurrentLimitEnable(true);
         talonFXConfig_left.CurrentLimits.withStatorCurrentLimit(currentLimit);
 
-        talonFXConfig_left.MotorOutput.withPeakForwardDutyCycle(maxSpeed);
-        talonFXConfig_left.MotorOutput.withPeakReverseDutyCycle(-maxSpeed);
+        talonFXConfig_left.MotorOutput.withPeakForwardDutyCycle(maxUpSpeed);
+        talonFXConfig_left.MotorOutput.withPeakReverseDutyCycle(-maxDownSpeed);
 
         talonFXConfig_left.MotorOutput.withNeutralMode(NeutralModeValue.Coast); // Set to coast
         talonFXConfig_left.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
@@ -304,6 +305,10 @@ public class Lebronavator extends SubsystemBase {
         return m_talonFX_right.getSupplyCurrent().getValueAsDouble();
     }
 
+    public void resetEncoder() {
+        m_talonFX_right.setPosition(0.0);
+    }
+
     /**
     * Similates an issue with the current subsystem
     * Only works if skibbidi-mode is enabled
@@ -321,7 +326,7 @@ public class Lebronavator extends SubsystemBase {
         }
 
         // Danger Zone
-        m_talonFX_right.setPosition(getPosition() + (Math.random() * 15));
+       // m_talonFX_right.setPosition(getPosition() + (Math.random() * 15));
         System.out.println("[Elevator] broken");
 
     }
