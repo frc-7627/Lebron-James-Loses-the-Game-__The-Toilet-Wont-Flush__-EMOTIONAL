@@ -1,13 +1,10 @@
 package frc.robot.commands.teleop;
 
-import java.sql.Driver;
-
 import org.photonvision.PhotonCamera;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
@@ -21,7 +18,6 @@ import frc.robot.subsystems.arm.NotSwerveSubsystem;
 import frc.robot.subsystems.arm.Lebronavator;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
-import swervelib.SwerveDrive;
 
 /** See Constructor for details */
 public class OperatorCommands {
@@ -128,6 +124,7 @@ public class OperatorCommands {
 
     public Command driveToPoseOffset() {
         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust]] Seeking Target");
+        @SuppressWarnings("removal")
         var result = camera.getLatestResult();
         if (result.hasTargets()) {
             System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Moving...");

@@ -407,7 +407,7 @@ public class RobotContainer
    * @return void
    */
   public void disabledInit() {
-    elevator.playSong("amoungus"); // Play Amoung us theme to pass the time
+    elevator.playSong("vsauce"); // Play Amoung us theme to pass the time
   }
 
   /**
