@@ -30,7 +30,7 @@ public class swingUp extends Command {
     @Override
     public void initialize()  {
         module.moveUp();
-        led.color("orange");
+        led.color("eggPlant");
     }
 
      /** 
