@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 12.31,
-        "y": 3.02
+        "x": 5.28,
+        "y": 5.03
       },
       "prevControl": null,
       "nextControl": {
-        "x": 13.186521683404303,
-        "y": 2.4146042993377868
+        "x": 4.42303525659314,
+        "y": 5.601538959485012
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "ReefTopRight"
     },
     {
       "anchor": {
-        "x": 16.33125,
-        "y": 1.0025
+        "x": 1.41,
+        "y": 7.55
       },
       "prevControl": {
-        "x": 14.81851007261782,
-        "y": 1.6947433769150002
+        "x": 2.307607245186162,
+        "y": 6.990649058145295
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "TopStation"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 128.65980825409036
+    "rotation": -53.4679422761472
   },
   "reversed": false,
   "folder": "2015 Kia class action lawsuit",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 61.0056460296649
+    "rotation": -120.247
   },
   "useDefaultConstraints": true
 }

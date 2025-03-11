@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 3.831549657534247,
-        "y": 5.16695205479452
+        "x": 3.94,
+        "y": 5.2
       },
       "prevControl": {
-        "x": 3.4908123839631853,
-        "y": 4.904779943198936
+        "x": 3.5992627264289383,
+        "y": 4.937827888404416
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.66473820707253
+    "rotation": -59.99999999999999
   },
   "reversed": false,
   "folder": "Quitting Softball",

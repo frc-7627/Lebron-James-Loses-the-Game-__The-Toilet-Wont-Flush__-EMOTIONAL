@@ -29,7 +29,7 @@ public final class Constants
   //public static final double ROBOT_MASS = (148 - 20.3) * 0.453592; // 32lbs * kg per pound
   //public static final Matter CHASSIS    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(28)), ROBOT_MASS);
   //public static final double LOOP_TIME  = 0.13; //s, 20ms + 110ms sprk max velocity lag
-  public static final double MAX_SPEED  = Units.feetToMeters(13); //TODO: Make it crazy high if it slow again
+  public static final double MAX_SPEED  = Units.feetToMeters(13);
   // Maximum speed of the robot in meters per second, used to limit acceleration.
 
 //  public static final class AutonConstants
@@ -42,10 +42,10 @@ public final class Constants
   public static final class DrivebaseConstants
   {
 
-    public static double x_offset = 0.6;
+    public static double x_offset = Units.inchesToMeters(16.6220472441);
     public static double y_offset = 0.0; // L = 0.2 R = 0.6
-    public static double y_offset_left =  -0.21;//-0.21;
-    public static double y_offset_right = 0.21;
+    public static double y_offset_left = Units.inchesToMeters(-6.268); // add inches to center //TODO: When we get to an actual field add about 1.5 inches
+    public static double y_offset_right = Units.inchesToMeters(6.268); // add inches away from center
 
     //public static final PIDConstants TRANSLATION_PID = new PIDConstants(0.7, 0, 0);
     //public static final PIDConstants ANGLE_PID       = new PIDConstants(0.4, 0, 0.01);

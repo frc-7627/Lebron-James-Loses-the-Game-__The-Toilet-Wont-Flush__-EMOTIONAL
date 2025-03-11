@@ -13,31 +13,31 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoScoreL4"
+            "name": "AutoL4Full"
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "EjectCoral"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
+            "pathName": "ReefTopRight - TopStation"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "AutoStow"
+            "name": "IntakeCoral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TopStation - ReefTopLeft"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoL4Full"
           }
         }
       ]

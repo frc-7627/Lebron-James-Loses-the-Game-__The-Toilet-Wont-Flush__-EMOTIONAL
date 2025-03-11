@@ -41,6 +41,8 @@ public class AutoAlignment extends Command {
         public void initialize() {
                 DrivebaseConstants.x_offset = SmartDashboard.getNumber("Vision/x_offset", DrivebaseConstants.x_offset);
                 DrivebaseConstants.y_offset = SmartDashboard.getNumber("Vision/y_offset", DrivebaseConstants.y_offset);
+                DrivebaseConstants.y_offset_left = SmartDashboard.getNumber("Y_Offset_Left", DrivebaseConstants.y_offset_left);
+                DrivebaseConstants.y_offset_right = SmartDashboard.getNumber("Y_Offset_Right", DrivebaseConstants.y_offset_right);
                 System.out.println("x_offset: " + DrivebaseConstants.x_offset + " y_offset: " + DrivebaseConstants.y_offset);
                 System.out.println("[LimeLightCommands/DriveBaseRotationAdjust]] Seeking Target");
                 
@@ -71,7 +73,7 @@ public class AutoAlignment extends Command {
                         //Transform2d pose = new Transform2d(drivebase.getPose().getX(), drivebase.getPose().getY(), drivebase.getPose().getRotation());
                         Pose2d newPose = Vision.getAprilTagPose(tagID, new Transform2d(DrivebaseConstants.x_offset, DrivebaseConstants.y_offset + user_offset, new Rotation2d(Math.toRadians(180))));
                         System.out.println(newPose.toString());
-                        led.color("vomitGreen");
+                        led.color("orange");
                         System.out.println("Goal Pose: " + newPose);
                         driveCommand = drivebase.driveToPose(newPose); //, drivebase.getPose());
                 }
