@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.831549657534247,
-        "y": 5.16695205479452
+        "x": 3.94,
+        "y": 5.2
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.054697263081841,
-        "y": 5.279669161474808
+        "x": 4.163147605547595,
+        "y": 5.312717106680288
       },
       "isLocked": false,
       "linkedName": "ReefTopLeft"
     },
     {
       "anchor": {
-        "x": 1.1569777397260272,
-        "y": 7.0151113013698625
+        "x": 1.6063524590163931,
+        "y": 7.36357581967213
       },
       "prevControl": {
-        "x": 2.113051716183213,
-        "y": 6.18673691619365
+        "x": 2.5624264354735775,
+        "y": 6.535201434495917
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,10 +33,10 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 14.0,
-    "maxAcceleration": 8.0,
-    "maxAngularVelocity": 250.0,
-    "maxAngularAcceleration": 720.0,
+    "maxVelocity": 3.95,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 280.0,
+    "maxAngularAcceleration": 120.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
@@ -48,7 +48,7 @@
   "folder": "3 Day Weather Forecast",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -59.66473820707253
+    "rotation": -59.99999999999999
   },
   "useDefaultConstraints": true
 }

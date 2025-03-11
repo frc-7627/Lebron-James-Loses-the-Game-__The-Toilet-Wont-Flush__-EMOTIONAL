@@ -1,7 +1,6 @@
 package frc.robot.commands.Helpers;
 
 import org.photonvision.PhotonCamera;
-import org.photonvision.targeting.PhotonPipelineResult;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -18,20 +17,18 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
 
 public class AutoAlignment extends Command {
-        PhotonCamera camera_right = new PhotonCamera("Camera_Right");
-        PhotonCamera camera_left = new PhotonCamera("Camera_Right");
+        PhotonCamera camera = new PhotonCamera("Camera_Right");
         private final SwerveSubsystem drivebase;
         private final Bluetooth led;
-        private boolean leftcam;
         private double user_offset;
+        private boolean found;
     
         private Command driveCommand;
     
-        public AutoAlignment(SwerveSubsystem module, Bluetooth led, double offset, boolean leftcam) {
+        public AutoAlignment(SwerveSubsystem module, Bluetooth led, double offset) {
                 this.drivebase = module;
                 this.led = led;
                 user_offset = offset;
-                this.leftcam = leftcam;
                 addRequirements(drivebase);
                 addRequirements(led);
         }
@@ -39,33 +36,19 @@ public class AutoAlignment extends Command {
         /** Run once at Command Start */
         @Override
         public void initialize() {
+            driveCommand = Commands.none();//new PathPlannerAuto(Commands.none(), drivebase.getPose());
+        }
+    
+        @Override
+        public void execute() {
+            if(!found) {
                 DrivebaseConstants.x_offset = SmartDashboard.getNumber("Vision/x_offset", DrivebaseConstants.x_offset);
                 DrivebaseConstants.y_offset = SmartDashboard.getNumber("Vision/y_offset", DrivebaseConstants.y_offset);
-                DrivebaseConstants.y_offset_left = SmartDashboard.getNumber("Y_Offset_Left", DrivebaseConstants.y_offset_left);
-                DrivebaseConstants.y_offset_right = SmartDashboard.getNumber("Y_Offset_Right", DrivebaseConstants.y_offset_right);
                 System.out.println("x_offset: " + DrivebaseConstants.x_offset + " y_offset: " + DrivebaseConstants.y_offset);
                 System.out.println("[LimeLightCommands/DriveBaseRotationAdjust]] Seeking Target");
                 
                 @SuppressWarnings("removal")
-                var resultL = camera_left.getLatestResult();
-                var resultR = camera_right.getLatestResult();
-
-                /* PhotonPipelineResult result = resultR;
-                // default to R if something happens
-                if (resultL.hasTargets() && resultR.hasTargets()) {
-                    if(resultL.getBestTarget().getPoseAmbiguity() > resultR.getBestTarget().getPoseAmbiguity()) {
-                        result = resultR;
-                    }
-                    else if(resultL.getBestTarget().getPoseAmbiguity() <= resultR.getBestTarget().getPoseAmbiguity()) {
-                        result = resultL;
-                    }
-                }
-                else if(resultL.hasTargets() && !resultR.hasTargets()) {
-                    result = resultL;
-                } */
-                PhotonPipelineResult result = resultL;
-                if(leftcam) result = resultR; 
-
+                var result = camera.getLatestResult();
                 if (result.hasTargets()) {
                         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Moving...");
 
@@ -73,21 +56,14 @@ public class AutoAlignment extends Command {
                         //Transform2d pose = new Transform2d(drivebase.getPose().getX(), drivebase.getPose().getY(), drivebase.getPose().getRotation());
                         Pose2d newPose = Vision.getAprilTagPose(tagID, new Transform2d(DrivebaseConstants.x_offset, DrivebaseConstants.y_offset + user_offset, new Rotation2d(Math.toRadians(180))));
                         System.out.println(newPose.toString());
-                        led.color("orange");
-                        System.out.println("Goal Pose: " + newPose);
+                        led.color("vomitGreen");
                         driveCommand = drivebase.driveToPose(newPose); //, drivebase.getPose());
+                        driveCommand.initialize();
                 }
-                else {
-                        led.bluetoothOFF();
-                        driveCommand = Commands.none();//new PathPlannerAuto(Commands.none(), drivebase.getPose());
-                }    
-            driveCommand.initialize();
-        }
-    
-        @Override
-        public void execute() {
-            driveCommand.execute();
-    
+            }
+            if(found) {
+                driveCommand.execute();
+            }
         }
     
         /**
@@ -99,7 +75,7 @@ public class AutoAlignment extends Command {
          */
         @Override
         public void end(boolean interrupted) {
-            System.out.println("interupted!: " + interrupted + " Robot Pose: " + drivebase.getPose());
+            System.out.println("interupted!: " + interrupted);
             led.bluetoothOFF();
             driveCommand.end(interrupted);
         }
@@ -112,6 +88,6 @@ public class AutoAlignment extends Command {
           */
         @Override
         public boolean isFinished() {
-            return driveCommand.isFinished();
+            return found && driveCommand.isFinished();
         }
     }

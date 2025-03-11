@@ -17,7 +17,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoScoreL4"
+                  "name": "AutoScoreL2"
                 }
               },
               {
@@ -42,7 +42,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoEjectL4"
+                  "name": "EjectCoral"
                 }
               }
             ]

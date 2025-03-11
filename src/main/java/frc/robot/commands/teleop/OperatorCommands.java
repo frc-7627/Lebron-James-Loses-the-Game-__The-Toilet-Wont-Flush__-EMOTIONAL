@@ -10,9 +10,11 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants;
 import frc.robot.commands.Elevator.ElevatorMove;
 import frc.robot.commands.Endafector.EjectCoral;
 import frc.robot.commands.Endafector.IntakeCoral;
+import frc.robot.commands.Helpers.AutoAlignment;
 import frc.robot.subsystems.Bluetooth;
 import frc.robot.subsystems.arm.NotSwerveSubsystem;
 import frc.robot.subsystems.arm.Lebronavator;
@@ -74,7 +76,7 @@ public class OperatorCommands {
         return new SequentialCommandGroup(
             new ElevatorMove(elevator, pos),
             new WaitCommand(0.0), // Reduce Jitter
-            new EjectCoral(outake, led)
+            new EjectCoral(outake, led) 
         );
     }
 
@@ -116,9 +118,21 @@ public class OperatorCommands {
             //new ElevatorMove(elevator, 5),
             new ParallelRaceGroup(
                     new EjectCoral(outake, led),
-                    new WaitCommand(0.5)
+                    new WaitCommand(0.75)
                 ),
             new ElevatorMove(elevator, 0)
+        );
+    }
+
+    public Command AutoFullEjectL4(){
+        return new SequentialCommandGroup(
+            new ElevatorMove(elevator, 4),
+            new ParallelRaceGroup(
+                
+                new EjectCoral(outake, led),
+                new WaitCommand(.25)
+            ),
+            AutoEjectL4()
         );
     }
 
@@ -140,5 +154,21 @@ public class OperatorCommands {
             led.bluetoothOFF();
             return Commands.none();
         }
+    }
+
+    public Command RIPOperatorLeft() {
+        return new SequentialCommandGroup(
+            new AutoAlignment(drivebase, led, Constants.DrivebaseConstants.y_offset_left, true),
+            new ElevatorMove(elevator, 4),
+            AutoEjectL4()
+        );
+    }
+
+    public Command RIPOperatorRight() {
+        return new SequentialCommandGroup(
+            new AutoAlignment(drivebase, led, Constants.DrivebaseConstants.y_offset_right, false),
+            new ElevatorMove(elevator, 4),
+            AutoEjectL4()
+        );
     }
 }

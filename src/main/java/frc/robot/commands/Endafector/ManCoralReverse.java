@@ -29,7 +29,12 @@ public class ManCoralReverse extends Command {
     @Override
     public void initialize() {
         led.color("eggPlant");
-        System.out.println("init");
+        //System.out.println("init");
+        module.shimReverse();
+    }
+
+    @Override
+    public void execute() {
         module.shimReverse();
     }
 
@@ -44,7 +49,7 @@ public class ManCoralReverse extends Command {
     @Override
     public void end(boolean interrupted) {
         module.stop();
-        System.out.println("end");
+        System.out.println("MAN BCKWRD INTERRUPTED: " + interrupted);
         led.bluetoothOFF();
     }
 

@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 4.975823863636363,
-        "y": 2.9729971590909092
+        "x": 5.29,
+        "y": 3.05
       },
       "prevControl": {
-        "x": 5.599974401356736,
-        "y": 2.169782504428296
+        "x": 5.9141505377203725,
+        "y": 2.2467853453373867
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 14.0,
-    "maxAcceleration": 8.0,
-    "maxAngularVelocity": 250.0,
-    "maxAngularAcceleration": 720.0,
+    "maxVelocity": 3.95,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 280.0,
+    "maxAngularAcceleration": 120.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 118.36335355549208
+    "rotation": 119.99999999999999
   },
   "reversed": false,
   "folder": "Forbiden Brake Fluid",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -0.11878275239665932
+    "rotation": 179.97660181394386
   },
   "useDefaultConstraints": true
 }

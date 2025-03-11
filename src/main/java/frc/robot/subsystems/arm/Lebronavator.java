@@ -15,6 +15,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -45,13 +46,18 @@ public class Lebronavator extends SubsystemBase {
     private static double MotionMagicAcceleration = 160; // Target acceleration of 160 rps/s (0.5 seconds)
     private static double MotionMagicJerk = 1600; // Target jerk of 1600 rps/s/s (0.1 seconds)
     
-    private static double maxSpeed = 0.6;
+    private static double maxUpSpeed = 0.85;
+    private static double maxDownSpeed = 0.75;
 
-    private static double currentLimit = 40;
+    private static double currentLimit = 30;
+    private static double avgCurrentLimit = 20;
 
     // Define Motor IDs
     final TalonFX m_talonFX_left = new TalonFX(40);
     final TalonFX m_talonFX_right = new TalonFX(41);
+
+    // Safety stuff
+    LinearFilter currentFilter = LinearFilter.movingAverage(5);
 
     // Make an orchestra
     Orchestra m_Orchestra = new Orchestra();
@@ -79,8 +85,8 @@ public class Lebronavator extends SubsystemBase {
         talonFXConfig_right.CurrentLimits.withStatorCurrentLimitEnable(true);
         talonFXConfig_right.CurrentLimits.withStatorCurrentLimit(currentLimit);
 
-        talonFXConfig_right.MotorOutput.withPeakForwardDutyCycle(maxSpeed);
-        talonFXConfig_right.MotorOutput.withPeakReverseDutyCycle(-maxSpeed);
+        talonFXConfig_right.MotorOutput.withPeakForwardDutyCycle(maxUpSpeed);
+        talonFXConfig_right.MotorOutput.withPeakReverseDutyCycle(-maxDownSpeed);
 
         talonFXConfig_right.MotorOutput.withNeutralMode(NeutralModeValue.Coast); // Set to coast
         talonFXConfig_right.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
@@ -110,8 +116,8 @@ public class Lebronavator extends SubsystemBase {
         talonFXConfig_left.CurrentLimits.withStatorCurrentLimitEnable(true);
         talonFXConfig_left.CurrentLimits.withStatorCurrentLimit(currentLimit);
 
-        talonFXConfig_left.MotorOutput.withPeakForwardDutyCycle(maxSpeed);
-        talonFXConfig_left.MotorOutput.withPeakReverseDutyCycle(-maxSpeed);
+        talonFXConfig_left.MotorOutput.withPeakForwardDutyCycle(maxUpSpeed);
+        talonFXConfig_left.MotorOutput.withPeakReverseDutyCycle(-maxDownSpeed);
 
         talonFXConfig_left.MotorOutput.withNeutralMode(NeutralModeValue.Coast); // Set to coast
         talonFXConfig_left.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
@@ -304,6 +310,10 @@ public class Lebronavator extends SubsystemBase {
         return m_talonFX_right.getSupplyCurrent().getValueAsDouble();
     }
 
+    public void resetEncoder() {
+        m_talonFX_right.setPosition(0.0);
+    }
+
     /**
     * Similates an issue with the current subsystem
     * Only works if skibbidi-mode is enabled
@@ -321,7 +331,7 @@ public class Lebronavator extends SubsystemBase {
         }
 
         // Danger Zone
-        m_talonFX_right.setPosition(getPosition() + (Math.random() * 15));
+       // m_talonFX_right.setPosition(getPosition() + (Math.random() * 15));
         System.out.println("[Elevator] broken");
 
     }
@@ -387,6 +397,12 @@ public class Lebronavator extends SubsystemBase {
         }   
     }
 
+    public void kaboom() {
+        if(currentFilter.calculate(getRightCurrent()) > avgCurrentLimit) {
+            m_talonFX_right.setPosition(getPosition() + 5);
+        }
+    }
+
     /** Run once every periodic call */
     /** 
      *  Run once every periodic call as
@@ -394,6 +410,7 @@ public class Lebronavator extends SubsystemBase {
      */
     @Override
     public void periodic() {
+        kaboom();
         if(Constants.verbose_shuffleboard_logging) {
             pushData();
             pullData();

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.152226027397259,
-        "y": 7.541010273972603
+        "x": 7.16625,
+        "y": 7.535
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.401982512178896,
-        "y": 7.529978578295153
+        "x": 7.4160064847816365,
+        "y": 7.523968304322551
       },
       "isLocked": false,
       "linkedName": "TopStart"
@@ -33,10 +33,10 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 14.0,
-    "maxAcceleration": 8.0,
-    "maxAngularVelocity": 250.0,
-    "maxAngularAcceleration": 720.0,
+    "maxVelocity": 3.95,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 280.0,
+    "maxAngularAcceleration": 120.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
@@ -48,7 +48,7 @@
   "folder": "MFNC 3 piece fish combo",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -0.22152222966153431
+    "rotation": 179.56263613247924
   },
   "useDefaultConstraints": true
 }

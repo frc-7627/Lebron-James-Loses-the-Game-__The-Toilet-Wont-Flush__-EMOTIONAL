@@ -32,6 +32,11 @@ public class ManCoralForward extends Command {
         module.shimForward();
     }
 
+    @Override
+    public void execute() {
+        module.shimForward();
+    }
+
      /** 
       * Run once at Command End 
       * 
@@ -41,6 +46,7 @@ public class ManCoralForward extends Command {
       */
     @Override
     public void end(boolean interrupted) {
+        System.out.println("MAN FWRD INTERRUPTED: " + interrupted);
         module.stop();
         led.bluetoothOFF();
     }
@@ -53,6 +59,7 @@ public class ManCoralForward extends Command {
       */
     @Override 
     public boolean isFinished() {
+        System.out.println("MAN FWRD FINISHED");
         return false; 
     }
 }

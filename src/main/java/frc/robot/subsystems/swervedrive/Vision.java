@@ -77,8 +77,8 @@ public class Vision
    */
   private             Field2d             field2d;
 
-  private static double singleStDev = 0.5;
-  private static double multiStDev = 0.5;
+  private static double singleStDev = 1;
+  private static double multiStDev = 1;
 
       /**
      * Standard Deviation for single tag readings for pose estimation.
@@ -354,13 +354,19 @@ public class Vision
        */
       enum Cameras
       {
-        CENTER_CAM("Camera_Front",
+        RIGHT_CAM("Camera_Right",
         new Rotation3d(0, Units.degreesToRadians(0), 0),
-        new Translation3d(Units.inchesToMeters(-11.141),
-                          Units.inchesToMeters(-5.410),
-                          Units.inchesToMeters(-10.499)),
+        new Translation3d(Units.inchesToMeters(4.840),
+                          Units.inchesToMeters(-10.776), // This is forward
+                          Units.inchesToMeters(6.776)),
         VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev));
-    
+        /*LEFT_CAM("Camera_Left",
+        new Rotation3d(0, Units.degreesToRadians(0), 0),
+        new Translation3d(Units.inchesToMeters(4.840),
+                          Units.inchesToMeters(10.776),
+                          Units.inchesToMeters(6.775)),
+        VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev));
+    */
         /**
          * Latency alert to use when high latency is detected.
          */

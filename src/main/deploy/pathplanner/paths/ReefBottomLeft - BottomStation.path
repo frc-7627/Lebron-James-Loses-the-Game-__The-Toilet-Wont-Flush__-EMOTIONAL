@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.038494318181818,
-        "y": 2.886576704545455
+        "x": 3.7342500000000003,
+        "y": 3.0402500000000003
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.57523299635414,
-        "y": 1.8888479312826387
+        "x": 2.2709886781723223,
+        "y": 2.042521226737184
       },
       "isLocked": false,
       "linkedName": "ReefBottomLeft"
     },
     {
       "anchor": {
-        "x": 1.1569777397260272,
-        "y": 1.0348886986301375
+        "x": 1.64,
+        "y": 0.45
       },
       "prevControl": {
-        "x": 2.3244286440508093,
-        "y": 1.8103013482301478
+        "x": 2.807450904324782,
+        "y": 1.2254126496000102
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,10 +33,10 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 14.0,
-    "maxAcceleration": 8.0,
-    "maxAngularVelocity": 250.0,
-    "maxAngularAcceleration": 720.0,
+    "maxVelocity": 3.95,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 280.0,
+    "maxAngularAcceleration": 120.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
@@ -48,7 +48,7 @@
   "folder": "Cha Cha Slide",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 59.743562836470765
+    "rotation": 59.99999999999999
   },
   "useDefaultConstraints": true
 }

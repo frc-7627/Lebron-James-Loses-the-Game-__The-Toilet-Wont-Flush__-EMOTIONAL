@@ -35,16 +35,16 @@ import frc.robot.Constants;
  */
 public class NotSwerveSubsystem extends SubsystemBase {
 
-    private static double LoadSpeed = 0.25;
+    private static double LoadSpeed = 0.2;
     private static double LoadSlowSpeed = 0.15;
-    private static double EjectSpeed = 0.6;
-    private static double idleSpeed = -0.13;
+    private static double EjectSpeed = 0.5;
+    private static double idleSpeed = -0.05;
     private static double CoralInValue =  60;
     private static double CoralOutValue = 100;
     
     private static final int ampLimit = 150;
 
-    private static double shimSpeed = 0.8;
+    private static double shimSpeed = 0.05;
 
     private final SparkMax m_motor = new SparkMax(45, MotorType.kBrushless);
     private final RelativeEncoder m_motor_enc = m_motor.getEncoder();
@@ -125,21 +125,18 @@ public class NotSwerveSubsystem extends SubsystemBase {
      */
     public boolean CoralTouchFront() {
         double range = getFrontTOFValue();
-        System.out.println("F: " + range);
         if (range != 0.0) return (CoralInValue > range);
         else return false;
     }
 
     public boolean CoralTouchBack() {
         double range = getRearTOFValue();
-        System.out.println("F: " + range);
         if (range != 0.0) return (CoralInValue > range);
         else return false;
     }
 
     public boolean CoralLeaveBack() {
         double range = getRearTOFValue();
-        System.out.println("R: " + range);
         if (range != 0.0) return (CoralOutValue < range);
         else return false;
     }
@@ -157,7 +154,6 @@ public class NotSwerveSubsystem extends SubsystemBase {
      */
     public boolean CoralOut() {
         double range = getFrontTOFValue();
-        System.out.println(range);
         if (range != 0.0) return (CoralOutValue < range);
         else return false;
     }

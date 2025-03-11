@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import java.io.File;
@@ -196,11 +197,13 @@ public class RobotContainer
 
       driverXbox.a().whileTrue(Commands.runOnce(drivebase::zeroGyroWithAlliance));
       driverXbox.b().whileTrue(new horn(elevator)); //rainbow
-      driverXbox.x().whileTrue(Commands.none());
+      driverXbox.x().whileTrue(new InstantCommand( () -> {
+          System.out.println("Robot Pose: " +drivebase.getPose());
+      }));
       driverXbox.y().whileTrue(Commands.none());
 
-      driverXbox.leftTrigger().whileTrue(new AutoAlignment(drivebase, led, 0.2));
-      driverXbox.rightTrigger().whileTrue(new AutoAlignment(drivebase, led, 0.6));
+      driverXbox.leftTrigger().whileTrue(new AutoAlignment(drivebase, led, Constants.DrivebaseConstants.y_offset_left, true));
+      driverXbox.rightTrigger().whileTrue(new AutoAlignment(drivebase, led, Constants.DrivebaseConstants.y_offset_right, false));
       driverXbox.rightBumper().whileTrue(Commands.runEnd(this::driveSlow, this::driveNormal));
 
       /** Operator Xbox */
@@ -213,8 +216,8 @@ public class RobotContainer
       operatorXbox.x().whileTrue(new ElevatorMove(elevator, 2));
       operatorXbox.y().whileTrue(new ElevatorMove(elevator, 4));
 
-      operatorXbox.leftStick().whileTrue(Commands.runOnce(NotSwerveSubsystem::boostSpeed, BidenFactor));
-      operatorXbox.rightStick().whileTrue(Commands.runOnce(NotSwerveSubsystem::slowSpeed, BidenFactor));
+      operatorXbox.leftStick().whileTrue(new ManCoralForward(BidenFactor, led));
+      operatorXbox.rightStick().whileTrue(new ManCoralReverse(BidenFactor, led));
 
       operatorXbox.pov(0).whileTrue(new ManElevatorUp(elevator, led));
       operatorXbox.pov(90).whileTrue(new ManCoralForward(BidenFactor, led));
@@ -290,6 +293,7 @@ public class RobotContainer
     NamedCommands.registerCommand("AutoScoreL3", opCommands.AutoScoreL3()); 
     NamedCommands.registerCommand("AutoScoreL4", opCommands.AutoScoreL4());
     NamedCommands.registerCommand("AutoEjectL4", opCommands.AutoEjectL4());
+    NamedCommands.registerCommand("AutoL4Full", opCommands.AutoFullEjectL4());
 
 
     // Climber
@@ -407,7 +411,7 @@ public class RobotContainer
    * @return void
    */
   public void disabledInit() {
-    elevator.playSong("vsauce"); // Play Amoung us theme to pass the time
+    elevator.playSong("BlueLobster"); // Play Amoung us theme to pass the time
   }
 
   /**

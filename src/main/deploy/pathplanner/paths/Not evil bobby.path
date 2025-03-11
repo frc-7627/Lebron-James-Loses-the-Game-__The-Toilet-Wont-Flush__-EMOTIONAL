@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.223565573770491,
-        "y": 6.50046106557377
+        "x": 7.144672131147541,
+        "y": 0.49462090163934364
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.488393367580949,
-        "y": 6.502140249103199
+        "x": 6.590528474503161,
+        "y": 1.3139615867263215
       },
       "isLocked": false,
-      "linkedName": "parkend"
+      "linkedName": "BottomStart"
     },
     {
       "anchor": {
-        "x": 7.732069672131147,
-        "y": 6.50046106557377
+        "x": 5.29,
+        "y": 3.05
       },
       "prevControl": {
-        "x": 7.451920335645543,
-        "y": 6.513486712702027
+        "x": 5.761460245290751,
+        "y": 2.2334069014075335
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "unparked"
+      "linkedName": "ReefBottomRight"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "YOU CANT PARK THERE",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 179.58482045885518
+    "rotation": 179.97660181394386
   },
   "useDefaultConstraints": true
 }
