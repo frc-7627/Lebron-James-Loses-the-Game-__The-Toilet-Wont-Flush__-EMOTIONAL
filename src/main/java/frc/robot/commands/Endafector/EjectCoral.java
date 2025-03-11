@@ -1,7 +1,7 @@
 package frc.robot.commands.Endafector;
 
 import edu.wpi.first.wpilibj2.command.Command;
-
+import frc.robot.commands.Led.Rainbow;
 import frc.robot.subsystems.Bluetooth;
 import frc.robot.subsystems.arm.NotSwerveSubsystem;
 
@@ -50,6 +50,9 @@ public class EjectCoral extends Command {
     public void end(boolean interrupted) {
         led.bluetoothOFF();
         module.stop();
+
+        // Do the Rainbow Animation
+        new Rainbow(led, 2.0).schedule();
     }
 
     /** 
