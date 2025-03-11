@@ -32,6 +32,10 @@ public class BobbyCoral extends Command {
     /** Run once at Command Start */
     @Override
     public void initialize()  {
+    }
+
+    @Override
+    public void execute() {
         module.idle();
     }
 

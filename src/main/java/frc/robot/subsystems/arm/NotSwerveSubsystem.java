@@ -38,8 +38,7 @@ public class NotSwerveSubsystem extends SubsystemBase {
     private static double LoadSpeed = 0.2;
     private static double LoadSlowSpeed = 0.15;
     private static double EjectSpeed = 0.5;
-    private static double idleSpeed = 0.0
-;
+    private static double idleSpeed = -0.05;
     private static double CoralInValue =  60;
     private static double CoralOutValue = 100;
     
@@ -348,6 +347,6 @@ public class NotSwerveSubsystem extends SubsystemBase {
     }
 
     public void idle() {
-        m_motor.set(-idleSpeed);
+        m_motor.set(idleSpeed);
     }
 }

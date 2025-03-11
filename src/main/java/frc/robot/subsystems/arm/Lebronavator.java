@@ -15,6 +15,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -48,11 +49,15 @@ public class Lebronavator extends SubsystemBase {
     private static double maxUpSpeed = 0.85;
     private static double maxDownSpeed = 0.75;
 
-    private static double currentLimit = 50;
+    private static double currentLimit = 30;
+    private static double avgCurrentLimit = 20;
 
     // Define Motor IDs
     final TalonFX m_talonFX_left = new TalonFX(40);
     final TalonFX m_talonFX_right = new TalonFX(41);
+
+    // Safety stuff
+    LinearFilter currentFilter = LinearFilter.movingAverage(5);
 
     // Make an orchestra
     Orchestra m_Orchestra = new Orchestra();
@@ -392,6 +397,12 @@ public class Lebronavator extends SubsystemBase {
         }   
     }
 
+    public void kaboom() {
+        if(currentFilter.calculate(getRightCurrent()) > avgCurrentLimit) {
+            m_talonFX_right.setPosition(getPosition() + 5);
+        }
+    }
+
     /** Run once every periodic call */
     /** 
      *  Run once every periodic call as
@@ -399,6 +410,7 @@ public class Lebronavator extends SubsystemBase {
      */
     @Override
     public void periodic() {
+        kaboom();
         if(Constants.verbose_shuffleboard_logging) {
             pushData();
             pullData();
