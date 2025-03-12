@@ -124,6 +124,22 @@ public class OperatorCommands {
         );
     }
 
+    public Command AutoEjectL4ForAuto() {
+        return new SequentialCommandGroup(
+            new ElevatorMove(elevator, 4),
+            new ParallelRaceGroup(
+                new EjectCoral(outake, led),
+                new ElevatorMove(elevator, 5),
+                new WaitCommand(.75)
+            ),
+            //new ElevatorMove(elevator, 5),
+            new ParallelRaceGroup(
+                    new EjectCoral(outake, led),
+                    new WaitCommand(0.75)
+                )
+        );
+    }
+
     public Command AutoFullEjectL4(){
         return new SequentialCommandGroup(
             new ElevatorMove(elevator, 4),

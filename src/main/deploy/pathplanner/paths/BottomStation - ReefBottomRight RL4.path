@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0571827517085604,
-        "y": 1.3067323841027405
+        "x": 2.0517071304333485,
+        "y": 1.3041355802545407
       },
       "isLocked": false,
       "linkedName": "BottomStation"
     },
     {
       "anchor": {
-        "x": 3.2007172131147543,
-        "y": 3.8272028688524586
+        "x": 3.1887295081967215,
+        "y": 3.887141393442622
       },
       "prevControl": {
-        "x": 2.957589005475443,
-        "y": 3.0358397790231786
+        "x": 2.9924246682945275,
+        "y": 3.1182683510862637
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.7957235527393051
+    "rotation": -0.9548412538721899
   },
   "reversed": false,
   "folder": "Malace",

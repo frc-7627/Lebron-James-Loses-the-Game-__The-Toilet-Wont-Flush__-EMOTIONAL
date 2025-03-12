@@ -48,7 +48,7 @@
   "folder": "Malace",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 122.18510589189077
+    "rotation": 150.0
   },
   "useDefaultConstraints": true
 }

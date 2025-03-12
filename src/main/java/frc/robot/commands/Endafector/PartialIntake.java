@@ -36,7 +36,7 @@ public class PartialIntake extends Command {
     /** Run once at Command Start */
     @Override
     public void initialize()  {
-
+        led.color("orange");
         module.load();
     }
 
@@ -62,6 +62,6 @@ public class PartialIntake extends Command {
       */
     @Override 
     public boolean isFinished() {
-        return module.CoralTouchFront();
+        return module.CoralTouchBack() || module.CoralTouchFront();
     }
 }

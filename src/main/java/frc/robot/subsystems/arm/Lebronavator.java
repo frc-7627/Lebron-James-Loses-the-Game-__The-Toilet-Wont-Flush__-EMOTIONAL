@@ -15,6 +15,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -418,7 +419,7 @@ public class Lebronavator extends SubsystemBase {
     }
 
     public void checkBounds() {
-        goalPosition = Math.clamp(goalPosition, 0, 62);
+        goalPosition = MathUtil.clamp(goalPosition, 0, 62);
     }
 
     /** Run once every periodic call */
@@ -429,7 +430,7 @@ public class Lebronavator extends SubsystemBase {
     @Override
     public void periodic() {
         checkBounds();
-        kaboom();
+      //  kaboom(); TODO: FIX AND PUT BACK, CHECK SINS
         if(Constants.verbose_shuffleboard_logging) {
             pushData();
             pullData();

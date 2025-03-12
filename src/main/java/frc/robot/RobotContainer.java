@@ -209,7 +209,7 @@ public class RobotContainer
 
       /** Operator Xbox */
       BidenFactor.setDefaultCommand(new BobbyCoral(BidenFactor));
-      operatorXbox.start().whileTrue(Commands.none());
+      operatorXbox.start().whileTrue(new PartialIntake(BidenFactor, led));
       operatorXbox.back().whileTrue(Commands.runOnce(elevator::resetControlMode));
  
       operatorXbox.a().whileTrue(new ElevatorMove(elevator, 1));
@@ -317,8 +317,8 @@ public class RobotContainer
 
     /*  Endafector */
     NamedCommands.registerCommand("EjectCoral", new EjectCoral(BidenFactor, led));
-    NamedCommands.registerCommand("IntakeCoral", new PartialIntake(BidenFactor, led));
-    NamedCommands.registerCommand("PartialIntakeCoral", new IntakeCoral(BidenFactor, led));
+    NamedCommands.registerCommand("PartialIntakeCoral", new PartialIntake(BidenFactor, led));
+    NamedCommands.registerCommand("IntakeCoral", new IntakeCoral(BidenFactor, led));
     NamedCommands.registerCommand("ManCoralForward", new ManCoralForward(BidenFactor, led)); // Manual
     NamedCommands.registerCommand("ManCoralReverse", new ManCoralReverse(BidenFactor, led)); // Manual
     

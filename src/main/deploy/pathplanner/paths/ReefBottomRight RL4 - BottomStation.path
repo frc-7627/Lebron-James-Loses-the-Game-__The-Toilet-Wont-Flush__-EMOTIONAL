@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.2007172131147543,
-        "y": 3.8272028688524586
+        "x": 3.1887295081967215,
+        "y": 3.887141393442622
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.0279846148137914,
-        "y": 3.148412709080639
+        "x": 3.0159969098957586,
+        "y": 3.2083512336708027
       },
       "isLocked": false,
       "linkedName": "ReefBottomRight RL4"
@@ -48,7 +48,7 @@
   "folder": "Malace",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.7957235527393051
+    "rotation": -0.9548412538721899
   },
   "useDefaultConstraints": true
 }
