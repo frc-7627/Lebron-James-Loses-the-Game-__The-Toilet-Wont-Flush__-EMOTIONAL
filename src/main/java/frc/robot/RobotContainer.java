@@ -33,6 +33,7 @@ import frc.robot.commands.Endafector.*;
 import frc.robot.commands.Helpers.AutoAlignment;
 import frc.robot.commands.Helpers.DriveBasePoseAdjust;
 import frc.robot.commands.Helpers.DriveBaseRotationAdjust;
+import frc.robot.commands.Led.Rainbow;
 import frc.robot.commands.Climber.*;
 import frc.robot.commands.Elevator.*;
 import frc.robot.commands.teleop.*;
@@ -296,6 +297,9 @@ public class RobotContainer
     NamedCommands.registerCommand("AutoL4Full", opCommands.AutoFullEjectL4());
     NamedCommands.registerCommand("AutoL4ForAuto", opCommands.AutoEjectL4ForAuto());
 
+    // Led
+    NamedCommands.registerCommand("Rainbow", new Rainbow(led, 5.0));
+
 
     // Climber
     NamedCommands.registerCommand("ClimberDown", new ClimberDown(climber, led)); // Manual
@@ -313,15 +317,16 @@ public class RobotContainer
 
     /*  Endafector */
     NamedCommands.registerCommand("EjectCoral", new EjectCoral(BidenFactor, led));
-    NamedCommands.registerCommand("IntakeCoral", new IntakeCoral(BidenFactor, led));
+    NamedCommands.registerCommand("IntakeCoral", new PartialIntake(BidenFactor, led));
+    NamedCommands.registerCommand("PartialIntakeCoral", new IntakeCoral(BidenFactor, led));
     NamedCommands.registerCommand("ManCoralForward", new ManCoralForward(BidenFactor, led)); // Manual
     NamedCommands.registerCommand("ManCoralReverse", new ManCoralReverse(BidenFactor, led)); // Manual
     
 
     // Drivebase
     NamedCommands.registerCommand("DriveBaseRotationAdjust", new DriveBaseRotationAdjust(drivebase, led)); // Vision
-    NamedCommands.registerCommand("DriveBasePoseAdjustL", new DriveBasePoseAdjust(drivebase, led, Constants.DrivebaseConstants.y_offset_left));
-    NamedCommands.registerCommand("DriveBasePoseAdjustR", new DriveBasePoseAdjust(drivebase, led,  Constants.DrivebaseConstants.y_offset_right));
+    NamedCommands.registerCommand("DriveBasePoseAdjustL", new AutoAlignment(drivebase, led, Constants.DrivebaseConstants.y_offset_left, true));
+    NamedCommands.registerCommand("DriveBasePoseAdjustR", new AutoAlignment(drivebase, led,  Constants.DrivebaseConstants.y_offset_right, false));
   }
 
   /**

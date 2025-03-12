@@ -34,6 +34,8 @@ import frc.robot.Constants;
  */
 public class Lebronavator extends SubsystemBase {
 
+    private static double goalPosition;
+
     // Define Constants
     private static double kS = 0.25; // Add 0.25 V output to overcome static friction
     private static double kV = 0.12; // A velocity target of 1 rps results in 0.12 V output
@@ -230,7 +232,8 @@ public class Lebronavator extends SubsystemBase {
 
         // set target position
         System.out.print("new target: " + position);
-        m_talonFX_right.setControl(m_request.withPosition(position));
+        goalPosition = position;
+        m_talonFX_right.setControl(m_request.withPosition(goalPosition));
     }
 
     /**
@@ -242,7 +245,8 @@ public class Lebronavator extends SubsystemBase {
      * @version 1.0
      */
     public void shimUp() {
-        m_talonFX_right.setControl(m_request.withPosition(getPosition() + 1));
+        goalPosition = getPosition() + 1;
+        m_talonFX_right.setControl(m_request.withPosition(goalPosition));
     }
 
     /**
@@ -254,7 +258,8 @@ public class Lebronavator extends SubsystemBase {
      * @version 1.0
      */
     public void shimDown() { 
-       m_talonFX_right.setControl(m_request.withPosition(getPosition() - 1));
+        goalPosition = getPosition() - 1;
+        m_talonFX_right.setControl(m_request.withPosition(goalPosition));
     }
 
     /**
@@ -278,6 +283,10 @@ public class Lebronavator extends SubsystemBase {
      */
     public double getPosition() {
         return m_talonFX_right.getPosition().getValueAsDouble();
+    }
+
+    public boolean atPosition() {
+        return (goalPosition - 0.25 < getPosition() && goalPosition + 0.25 > getPosition());
     }
 
     /**
@@ -398,9 +407,18 @@ public class Lebronavator extends SubsystemBase {
     }
 
     public void kaboom() {
-        if(currentFilter.calculate(getRightCurrent()) > avgCurrentLimit) {
-            m_talonFX_right.setPosition(getPosition() + 5);
+        if(currentFilter.calculate(getRightCurrent()) > avgCurrentLimit && goalPosition > getPosition()) {
+            goalPosition = getPosition() + 5;
+            m_talonFX_right.setControl(m_request.withPosition(goalPosition));
         }
+        else if(currentFilter.calculate(getRightCurrent()) > avgCurrentLimit && goalPosition < getPosition()) {
+            goalPosition = getPosition() - 5;
+            m_talonFX_right.setControl(m_request.withPosition(goalPosition));
+        }
+    }
+
+    public void checkBounds() {
+        goalPosition = Math.clamp(goalPosition, 0, 62);
     }
 
     /** Run once every periodic call */
@@ -410,6 +428,7 @@ public class Lebronavator extends SubsystemBase {
      */
     @Override
     public void periodic() {
+        checkBounds();
         kaboom();
         if(Constants.verbose_shuffleboard_logging) {
             pushData();

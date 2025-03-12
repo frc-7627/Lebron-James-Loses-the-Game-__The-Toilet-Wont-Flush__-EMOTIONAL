@@ -50,7 +50,7 @@ public class PartialIntake extends Command {
     @Override
     public void end(boolean interrupted) {
         module.stop();
-        if(!interrupted) led.color("orange");
+        if(!interrupted) led.color("eggPlant");
         else led.bluetoothOFF();
     }
 
