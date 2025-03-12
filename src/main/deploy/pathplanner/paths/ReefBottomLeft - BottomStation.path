@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2709886781723223,
-        "y": 2.042521226737184
+        "x": 2.511360206779351,
+        "y": 1.5446370195761727
       },
       "isLocked": false,
       "linkedName": "ReefBottomLeft"
@@ -20,8 +20,8 @@
         "y": 0.45
       },
       "prevControl": {
-        "x": 2.807450904324782,
-        "y": 1.2254126496000102
+        "x": 2.6342704242174726,
+        "y": 1.7052115974308943
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 52.50175117984347
+    "rotation": 59.99999999999999
   },
   "reversed": false,
   "folder": "Cha Cha Slide",

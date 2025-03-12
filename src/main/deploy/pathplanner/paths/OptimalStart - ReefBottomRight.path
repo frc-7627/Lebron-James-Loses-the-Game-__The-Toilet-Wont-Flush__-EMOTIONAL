@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.64,
-        "y": 0.45
+        "x": 7.1686475409836055,
+        "y": 3.05
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.410380214819427,
-        "y": 2.3980800513698624
+        "x": 6.851519443295709,
+        "y": 3.0528610449120195
       },
       "isLocked": false,
-      "linkedName": "BottomStation"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.1704195205479455,
-        "y": 4.009974315068493
+        "x": 5.29,
+        "y": 3.05
       },
       "prevControl": {
-        "x": -0.35897727272727975,
-        "y": 4.319161931818182
+        "x": 6.24008623623479,
+        "y": 3.042170425855309
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ReefLeft"
+      "linkedName": "ReefBottomRight"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -0.6028010355924953
+    "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "Cha Cha Slide",
+  "folder": "Malace",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 122.18510589189077
   },
   "useDefaultConstraints": true
 }

@@ -1,7 +1,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import frc.robot.Constants;
 
 import java.lang.reflect.Field;
@@ -130,8 +133,9 @@ public class Bluetooth extends SubsystemBase{
    * @see com.ctre.phoenix.led.RainbowAnimation
    * 
    * @version 1.0
-   */
-  public void rainbow(){
+      * @throws InterruptedException 
+      */
+     public void rainbow() {
     //hackerman works
     candle.clearAnimation(0);
     candle.animate(rainbowAnim, 0);
@@ -193,6 +197,7 @@ public class Bluetooth extends SubsystemBase{
     candle.clearAnimation(0);
     candle.setLEDs(defaultColor[0], defaultColor[1], defaultColor[2]);
   }
+
 
     /**
     * Similates an issue with the current subsystem

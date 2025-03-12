@@ -21,7 +21,7 @@
       },
       "prevControl": {
         "x": 3.1656534090909116,
-        "y": -0.367670454545456
+        "y": -0.36767045454545605
       },
       "nextControl": null,
       "isLocked": false,
@@ -49,7 +49,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 52.50175117984347
+    "rotation": 59.99999999999999
   },
   "reversed": false,
   "folder": "Bobby Wanted This",

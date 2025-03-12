@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.410380214819427,
-        "y": 2.3980800513698624
+        "x": 2.0571827517085604,
+        "y": 1.3067323841027405
       },
       "isLocked": false,
       "linkedName": "BottomStation"
     },
     {
       "anchor": {
-        "x": 3.1704195205479455,
-        "y": 4.009974315068493
+        "x": 3.2007172131147543,
+        "y": 3.8272028688524586
       },
       "prevControl": {
-        "x": -0.35897727272727975,
-        "y": 4.319161931818182
+        "x": 2.957589005475443,
+        "y": 3.0358397790231786
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ReefLeft"
+      "linkedName": "ReefBottomRight RL4"
     }
   ],
   "rotationTargets": [],
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -0.6028010355924953
+    "rotation": 0.7957235527393051
   },
   "reversed": false,
-  "folder": "Cha Cha Slide",
+  "folder": "Malace",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 59.99999999999999

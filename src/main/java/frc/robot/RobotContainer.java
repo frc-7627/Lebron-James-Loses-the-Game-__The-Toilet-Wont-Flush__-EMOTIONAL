@@ -294,6 +294,7 @@ public class RobotContainer
     NamedCommands.registerCommand("AutoScoreL4", opCommands.AutoScoreL4());
     NamedCommands.registerCommand("AutoEjectL4", opCommands.AutoEjectL4());
     NamedCommands.registerCommand("AutoL4Full", opCommands.AutoFullEjectL4());
+    NamedCommands.registerCommand("AutoL4ForAuto", opCommands.AutoEjectL4ForAuto());
 
 
     // Climber
