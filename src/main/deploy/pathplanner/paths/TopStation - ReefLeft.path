@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.6288633556540024,
-        "y": 3.4909787228477223
+        "x": 2.122683118953636,
+        "y": 6.595278913893479
       },
       "isLocked": false,
       "linkedName": "TopStation"
@@ -20,20 +20,15 @@
         "y": 4.009974315068493
       },
       "prevControl": {
-        "x": 2.9636327890345364,
-        "y": 4.15047074801254
+        "x": 3.095616350926709,
+        "y": 4.248520926477283
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "ReefLeft"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": -1.8142423081228072
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
