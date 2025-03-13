@@ -13,7 +13,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoL4ForAuto"
+            "name": "AutoEjectL4"
           }
         },
         {
@@ -31,14 +31,14 @@
                 "data": {
                   "pathName": "ReefBottomRight - BottomStation"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PartialIntakeCoral"
+                }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PartialIntakeCoral"
           }
         },
         {
@@ -63,7 +63,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoL4ForAuto"
+            "name": "AutoEjectL4"
           }
         },
         {
@@ -81,14 +81,14 @@
                 "data": {
                   "pathName": "ReefBottomLeft RL4 - BottomStation"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PartialIntakeCoral"
+                }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PartialIntakeCoral"
           }
         },
         {
@@ -131,14 +131,14 @@
                 "data": {
                   "pathName": "ReefBottomLeft - BottomStation"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PartialIntakeCoral"
+                }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PartialIntakeCoral"
           }
         },
         {

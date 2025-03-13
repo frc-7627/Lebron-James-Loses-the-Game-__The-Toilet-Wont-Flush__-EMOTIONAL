@@ -197,10 +197,8 @@ public class RobotContainer
       driverXbox.back().whileTrue(Commands.runOnce(elevator::resetControlMode));
 
       driverXbox.a().whileTrue(Commands.runOnce(drivebase::zeroGyroWithAlliance));
-      driverXbox.b().whileTrue(new horn(elevator)); //rainbow
-      driverXbox.x().whileTrue(new InstantCommand( () -> {
-          System.out.println("Robot Pose: " +drivebase.getPose());
-      }));
+      driverXbox.b().whileTrue(new playSong(elevator, "BlueLobster"));
+      driverXbox.x().whileTrue(new Rainbow(led, 10));
       driverXbox.y().whileTrue(Commands.none());
 
       driverXbox.leftTrigger().whileTrue(new AutoAlignment(drivebase, led, Constants.DrivebaseConstants.y_offset_left, true));
@@ -210,7 +208,7 @@ public class RobotContainer
       /** Operator Xbox */
       BidenFactor.setDefaultCommand(new BobbyCoral(BidenFactor));
       operatorXbox.start().whileTrue(new PartialIntake(BidenFactor, led));
-      operatorXbox.back().whileTrue(Commands.runOnce(elevator::resetControlMode));
+      operatorXbox.back().whileTrue(Commands.runOnce(elevator::resetEncoder));
  
       operatorXbox.a().whileTrue(new ElevatorMove(elevator, 1));
       operatorXbox.b().whileTrue(new ElevatorMove(elevator, 3));
@@ -297,6 +295,12 @@ public class RobotContainer
     NamedCommands.registerCommand("AutoL4Full", opCommands.AutoFullEjectL4());
     NamedCommands.registerCommand("AutoL4ForAuto", opCommands.AutoEjectL4ForAuto());
 
+    // Elevevator
+    NamedCommands.registerCommand("ElevatorMoveL1", new ElevatorMove(elevator, 1));
+    NamedCommands.registerCommand("ElevatorMoveL2", new ElevatorMove(elevator, 2)); 
+    NamedCommands.registerCommand("ElevatorMoveL3", new ElevatorMove(elevator, 3)); 
+    NamedCommands.registerCommand("ElevatorMoveL4", new ElevatorMove(elevator, 4));
+
     // Led
     NamedCommands.registerCommand("Rainbow", new Rainbow(led, 5.0));
 
@@ -338,10 +342,7 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // Pathplanner selected auto will be run in autonomous
-    return autoChooser.getSelected();/* new SequentialCommandGroup(
-              new ElevatorMove(elevator, 0),
-              autoChooser.getSelected()
-            ); */
+    return autoChooser.getSelected();
   }
 
   /**

@@ -27,7 +27,7 @@ import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 public class Bluetooth extends SubsystemBase{
 
   private CANdle candle = new CANdle(3);
-  private int[] defaultColor = new int[]{255, 121, 0};
+  private String defaultColor = "orange";
 
 
   // Animations
@@ -58,7 +58,6 @@ public class Bluetooth extends SubsystemBase{
     candle.clearAnimation(0);
     int rGBvalue[] = findColorValues(color);
     setColor(rGBvalue[0], rGBvalue[1], rGBvalue[2]);
-
   }
 
   /**
@@ -95,7 +94,7 @@ public class Bluetooth extends SubsystemBase{
       case "white":
         return new int[]{255, 255, 255};
       case "default":
-        return defaultColor;
+        return findColorValues(defaultColor);
       default:
         System.out.print("[Bluetooth] Unkown argument passed!");
         return new int[]{0, 0, 0};
@@ -120,7 +119,7 @@ public class Bluetooth extends SubsystemBase{
   }
 
   public void setDefaultColor(String color) {
-    defaultColor = findColorValues(color);
+    defaultColor = color;
   }
 
 
@@ -180,7 +179,7 @@ public class Bluetooth extends SubsystemBase{
     int rGBvalue[] = findColorValues(color1);
     //int rGBvalue2[] = getColorValues(color2);
     ColorFlowAnimation Anim =  new ColorFlowAnimation(
-      rGBvalue[0], rGBvalue[1], rGBvalue[2], 0, 0.1, 100, Direction.Forward, 0);
+      rGBvalue[0], rGBvalue[1], rGBvalue[2], 0, 0.1, 20, Direction.Forward, 0);
     //Anim.setSpeed(0.000000009);
     candle.animate(Anim, 0);
   }
@@ -195,7 +194,7 @@ public class Bluetooth extends SubsystemBase{
    */
   public void bluetoothOFF(){
     candle.clearAnimation(0);
-    candle.setLEDs(defaultColor[0], defaultColor[1], defaultColor[2]);
+    scroll(defaultColor);
   }
 
 

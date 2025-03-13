@@ -20,6 +20,7 @@ public class playSong extends Command{
     */
      public playSong(Lebronavator module, String songName) {
         this.module = module;
+        this.songName = songName;
         addRequirements(module);
      }
 

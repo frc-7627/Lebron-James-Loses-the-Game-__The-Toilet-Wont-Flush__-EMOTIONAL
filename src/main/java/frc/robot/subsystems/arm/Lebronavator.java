@@ -52,8 +52,8 @@ public class Lebronavator extends SubsystemBase {
     private static double maxUpSpeed = 0.85;
     private static double maxDownSpeed = 0.75;
 
-    private static double currentLimit = 30;
-    private static double avgCurrentLimit = 20;
+    private static double currentLimit = 40;
+    private static double avgCurrentLimit = 30;
 
     // Define Motor IDs
     final TalonFX m_talonFX_left = new TalonFX(40);
@@ -408,11 +408,11 @@ public class Lebronavator extends SubsystemBase {
     }
 
     public void kaboom() {
-        if(currentFilter.calculate(getRightCurrent()) > avgCurrentLimit && goalPosition > getPosition()) {
+        if(currentFilter.calculate(getRightCurrent()) > avgCurrentLimit && goalPosition < getPosition()) {
             goalPosition = getPosition() + 5;
             m_talonFX_right.setControl(m_request.withPosition(goalPosition));
         }
-        else if(currentFilter.calculate(getRightCurrent()) > avgCurrentLimit && goalPosition < getPosition()) {
+        else if(currentFilter.calculate(getRightCurrent()) > avgCurrentLimit && goalPosition > getPosition()) {
             goalPosition = getPosition() - 5;
             m_talonFX_right.setControl(m_request.withPosition(goalPosition));
         }

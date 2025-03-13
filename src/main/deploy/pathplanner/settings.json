@@ -16,9 +16,11 @@
     "She took the kids auto",
     "YOU CANT PARK THERE"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "Test Autos"
+  ],
   "defaultMaxVel": 3.95,
-  "defaultMaxAccel": 2.0,
+  "defaultMaxAccel": 2.5,
   "defaultMaxAngVel": 280.0,
   "defaultMaxAngAccel": 120.0,
   "defaultNominalVoltage": 12.0,
