@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.6063524590163931,
-        "y": 7.36357581967213
+        "x": 7.156500000000001,
+        "y": 5.039
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.122683118953636,
-        "y": 6.595278913893479
+        "x": 6.856684476738495,
+        "y": 5.0933566539278115
       },
       "isLocked": false,
-      "linkedName": "TopStation"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.1704195205479455,
-        "y": 4.009974315068493
+        "x": 5.28,
+        "y": 5.03
       },
       "prevControl": {
-        "x": 3.095616350926709,
-        "y": 4.248520926477283
+        "x": 5.523662520709525,
+        "y": 4.974066324977879
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ReefLeft"
+      "linkedName": "ReefTopRight"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -0.6028010355924953
+    "rotation": -120.247
   },
   "reversed": false,
-  "folder": "3 Day Weather Forecast",
+  "folder": "Pure",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -53.4679422761472
+    "rotation": -125.09581678702635
   },
   "useDefaultConstraints": true
 }

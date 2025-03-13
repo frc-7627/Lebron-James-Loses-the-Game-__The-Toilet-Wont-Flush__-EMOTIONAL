@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.122683118953636,
-        "y": 6.595278913893479
+        "x": 2.6822797410792645,
+        "y": 6.179739605871905
       },
       "isLocked": false,
       "linkedName": "TopStation"
     },
     {
       "anchor": {
-        "x": 3.1704195205479455,
-        "y": 4.009974315068493
+        "x": 3.6757500000000003,
+        "y": 5.039
       },
       "prevControl": {
-        "x": 3.095616350926709,
-        "y": 4.248520926477283
+        "x": 3.1428754959744025,
+        "y": 5.635908478885764
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ReefLeft"
+      "linkedName": "ReefTopRight Rl4"
     }
   ],
   "rotationTargets": [],
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -0.6028010355924953
+    "rotation": -59.99999999999999
   },
   "reversed": false,
-  "folder": "3 Day Weather Forecast",
+  "folder": "Pure",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -53.4679422761472
