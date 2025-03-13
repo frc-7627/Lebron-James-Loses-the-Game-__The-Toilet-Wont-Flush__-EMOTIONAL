@@ -2,6 +2,7 @@ package frc.robot.commands.Helpers;
 
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
+import org.photonvision.targeting.PhotonTrackedTarget;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -21,6 +22,7 @@ public class AutoAlignment extends Command {
         PhotonCamera camera_right = new PhotonCamera("Camera_Right");
         PhotonCamera camera_left = new PhotonCamera("Camera_Right");
         private final SwerveSubsystem drivebase;
+        private final Vision vision;
         private final Bluetooth led;
         private boolean leftcam;
         private double user_offset;
@@ -29,6 +31,7 @@ public class AutoAlignment extends Command {
     
         public AutoAlignment(SwerveSubsystem module, Bluetooth led, double offset, boolean leftcam) {
                 this.drivebase = module;
+                this.vision = drivebase.getVision();
                 this.led = led;
                 user_offset = offset;
                 this.leftcam = leftcam;
@@ -47,7 +50,7 @@ public class AutoAlignment extends Command {
                 System.out.println("[LimeLightCommands/DriveBaseRotationAdjust]] Seeking Target");
                 
                 @SuppressWarnings("removal")
-                var resultL = camera_left.getLatestResult();
+                //var resultL = camera_left.getLatestResult();
                 var resultR = camera_right.getLatestResult();
 
                 /* PhotonPipelineResult result = resultR;
@@ -63,13 +66,21 @@ public class AutoAlignment extends Command {
                 else if(resultL.hasTargets() && !resultR.hasTargets()) {
                     result = resultL;
                 } */
-                PhotonPipelineResult result = resultL;
+                PhotonPipelineResult result = resultR;
                 if(leftcam) result = resultR; 
 
                 if (result.hasTargets()) {
                         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Moving...");
 
-                        int tagID = result.getBestTarget().getFiducialId();
+                        PhotonTrackedTarget bestTarget = result.getBestTarget();
+                        for(PhotonTrackedTarget r : result.getTargets()) {
+                            if(vision.getDistanceFromAprilTag(r.getFiducialId()) < 
+                                    vision.getDistanceFromAprilTag(bestTarget.getFiducialId())) {
+                                System.out.println("tag:" + r.getFiducialId());
+                                bestTarget = r;
+                            }
+                        }
+                        int tagID = bestTarget.getFiducialId();
                         //Transform2d pose = new Transform2d(drivebase.getPose().getX(), drivebase.getPose().getY(), drivebase.getPose().getRotation());
                         Pose2d newPose = Vision.getAprilTagPose(tagID, new Transform2d(DrivebaseConstants.x_offset, DrivebaseConstants.y_offset + user_offset, new Rotation2d(Math.toRadians(180))));
                         System.out.println(newPose.toString());
