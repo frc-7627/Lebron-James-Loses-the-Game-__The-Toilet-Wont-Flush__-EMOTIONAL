@@ -109,6 +109,7 @@ public class OperatorCommands {
 
     public Command AutoEjectL4() {
         return new SequentialCommandGroup(
+            new ElevatorMove(elevator, 4),
             new ParallelRaceGroup(
                 new EjectCoral(outake, led),
                 new ElevatorMove(elevator, 5),

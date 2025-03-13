@@ -13,7 +13,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoEjectL4"
+            "name": "AutoL4ForAuto"
           }
         },
         {
@@ -63,7 +63,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoEjectL4"
+            "name": "AutoL4ForAuto"
           }
         },
         {

@@ -31,7 +31,19 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Elevator UP",
+      "waypointRelativePos": 0.282363977485929,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "ElevatorMoveL4"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.95,
     "maxAcceleration": 2.5,
