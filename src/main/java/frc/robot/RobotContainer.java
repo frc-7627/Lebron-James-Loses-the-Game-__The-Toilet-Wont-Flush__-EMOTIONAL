@@ -418,6 +418,8 @@ public class RobotContainer
    * @return void
    */
   public void disabledInit() {
+    SmartDashboard.putData("Restart Photonvision", Commands.runOnce(Vision::restartPhotonvision));
+    SmartDashboard.putData("Reboot Camera", Commands.runOnce(Vision::rebootPhotonvision));
     elevator.playSong("BlueLobster"); // Play Amoung us theme to pass the time
   }
 

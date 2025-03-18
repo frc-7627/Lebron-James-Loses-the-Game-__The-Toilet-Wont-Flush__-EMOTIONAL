@@ -26,6 +26,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import java.awt.Desktop;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -76,6 +80,8 @@ public class Vision
    * Field from {@link swervelib.SwerveDrive#field}
    */
   private             Field2d             field2d;
+
+  private static double tagsSeen = 0;
 
   private static double singleStDev = 1;
   private static double multiStDev = 1;
@@ -601,6 +607,9 @@ public class Vision
                   .getDistance(estimatedPose.get().estimatedPose.toPose2d().getTranslation());
         }
 
+        // Debug
+        SmartDashboard.putNumber("Vision/Tags Seen", numTags);
+
         if (numTags == 0)
         {
           // No tags visible. Default to single-tag std devs
@@ -650,6 +659,28 @@ public class Vision
       // Danger Zone
       //maximumAmbiguity = 0.00001;
       System.out.println("[Vision] broken");
+    }
+
+    public static void restartPhotonvision() {
+      sendPhotonVisionCommand("10.76.27.10", "restartProgram");
+      sendPhotonVisionCommand("10.76.27.11", "restartProgram");
+    }
+
+    public static void rebootPhotonvision() {
+      sendPhotonVisionCommand("10.76.27.10", "restartDevice");
+      sendPhotonVisionCommand("10.76.27.11", "restartDevice");
+    }
+
+    public static void sendPhotonVisionCommand(String ipString, String command) {
+        try {
+          HttpClient httpClient = HttpClient.newHttpClient();
+          HttpRequest request = HttpRequest.newBuilder().uri(new URI("http://" + ipString + ":5800/api/utils" + command))
+                                              .POST(HttpRequest.BodyPublishers.ofString("")).build();
+          httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+        }
+        catch (Exception e) {
+          System.out.print("[Vision] Error while Sending command to photonvison device: " + ipString);
+        }
     }
     
     public static void updateShuffleboard() {

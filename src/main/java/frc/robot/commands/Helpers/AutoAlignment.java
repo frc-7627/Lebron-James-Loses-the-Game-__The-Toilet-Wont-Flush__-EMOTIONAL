@@ -26,8 +26,9 @@ public class AutoAlignment extends Command {
         private final Bluetooth led;
         private boolean leftcam;
         private double user_offset;
-    
         private Command driveCommand;
+
+        public static int autoAliging;
     
         public AutoAlignment(SwerveSubsystem module, Bluetooth led, double offset, boolean leftcam) {
                 this.drivebase = module;
@@ -42,6 +43,9 @@ public class AutoAlignment extends Command {
         /** Run once at Command Start */
         @Override
         public void initialize() {
+                autoAliging = 2;
+                SmartDashboard.putNumber("Commands/AutoAlign", autoAliging); //debug
+
                 DrivebaseConstants.x_offset = SmartDashboard.getNumber("Vision/x_offset", DrivebaseConstants.x_offset);
                 DrivebaseConstants.y_offset = SmartDashboard.getNumber("Vision/y_offset", DrivebaseConstants.y_offset);
                 DrivebaseConstants.y_offset_left = SmartDashboard.getNumber("Y_Offset_Left", DrivebaseConstants.y_offset_left);
@@ -92,13 +96,14 @@ public class AutoAlignment extends Command {
                         led.bluetoothOFF();
                         driveCommand = Commands.none();//new PathPlannerAuto(Commands.none(), drivebase.getPose());
                 }    
+            autoAliging = 1;
             driveCommand.initialize();
         }
     
         @Override
         public void execute() {
             driveCommand.execute();
-    
+            SmartDashboard.putNumber("Commands/AutoAlign", autoAliging); //debug
         }
     
         /**
@@ -110,6 +115,8 @@ public class AutoAlignment extends Command {
          */
         @Override
         public void end(boolean interrupted) {
+            autoAliging = 0;
+            SmartDashboard.putNumber("Commands/AutoAlign", autoAliging); //debug
             System.out.println("interupted!: " + interrupted + " Robot Pose: " + drivebase.getPose());
             led.bluetoothOFF();
             driveCommand.end(interrupted);
