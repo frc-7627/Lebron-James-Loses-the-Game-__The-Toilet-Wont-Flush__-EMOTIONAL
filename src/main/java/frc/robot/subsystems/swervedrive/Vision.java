@@ -365,14 +365,14 @@ public class Vision
         new Translation3d(Units.inchesToMeters(4.840),
                           Units.inchesToMeters(-10.776), // This is forward
                           Units.inchesToMeters(6.776)),
-        VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev));
-        /*LEFT_CAM("Camera_Left",
+        VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev)),
+        LEFT_CAM("Camera_Left",
         new Rotation3d(0, Units.degreesToRadians(0), 0),
         new Translation3d(Units.inchesToMeters(4.840),
                           Units.inchesToMeters(10.776),
-                          Units.inchesToMeters(6.775)),
+                          Units.inchesToMeters(6.776)),
         VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev));
-    */
+    
         /**
          * Latency alert to use when high latency is detected.
          */
