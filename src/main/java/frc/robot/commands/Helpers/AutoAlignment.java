@@ -20,7 +20,7 @@ import frc.robot.subsystems.swervedrive.Vision;
 
 public class AutoAlignment extends Command {
         PhotonCamera camera_right = new PhotonCamera("Camera_Right");
-        PhotonCamera camera_left = new PhotonCamera("Camera_Right");
+        PhotonCamera camera_left = new PhotonCamera("Camera_Left");
         private final SwerveSubsystem drivebase;
         private final Vision vision;
         private final Bluetooth led;
