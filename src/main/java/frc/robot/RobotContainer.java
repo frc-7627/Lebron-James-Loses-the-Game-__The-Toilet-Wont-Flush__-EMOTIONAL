@@ -199,7 +199,8 @@ public class RobotContainer
       driverXbox.a().whileTrue(Commands.runOnce(drivebase::zeroGyroWithAlliance));
       driverXbox.b().whileTrue(new playSong(elevator, "BlueLobster"));
       driverXbox.x().whileTrue(new Rainbow(led, 10));
-      driverXbox.y().whileTrue(Commands.none());
+      driverXbox.y().whileTrue(new InstantCommand( () -> {
+        System.out.println("Robot Pose: " +drivebase.getPose()); }));
 
       driverXbox.leftTrigger().whileTrue(new AutoAlignment(drivebase, led, Constants.DrivebaseConstants.y_offset_left, true));
       driverXbox.rightTrigger().whileTrue(new AutoAlignment(drivebase, led, Constants.DrivebaseConstants.y_offset_right, false));

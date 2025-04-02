@@ -4,6 +4,14 @@
 
 package frc.robot;
 
+import org.littletonrobotics.junction.LogFileUtil;
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGReader;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+
+import com.ctre.phoenix6.SignalLogger;
 import com.pathplanner.lib.pathfinding.LocalADStar;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 
@@ -21,7 +29,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * 
  * @see org.littletonrobotics.junction.LoggedRobot
  */
-public class Robot extends TimedRobot
+public class Robot extends LoggedRobot
 {
   private static Robot   instance;
   private        Command m_autonomousCommand;
@@ -75,7 +83,10 @@ public class Robot extends TimedRobot
 
   /**
    * This function is run when the robot is first started up and should be used for any initialization code.
+   * 
    */
+
+
   @Override
   public void robotInit()
   {
@@ -94,7 +105,37 @@ public class Robot extends TimedRobot
     {
       DriverStation.silenceJoystickConnectionWarning(true);
     }
+    // Set up data receivers & replay source
+        switch (Constants.currentMode) {
+            case REAL:
+                // Running on a real robot, log to a USB stick ("/U/logs")
+                Logger.addDataReceiver(new WPILOGWriter());
+                Logger.addDataReceiver(new NT4Publisher());
+                break;
+
+            case SIM:
+                // Running a physics simulator, log to NT
+                Logger.addDataReceiver(new NT4Publisher());
+                break;
+
+            case REPLAY:
+                // Replaying a log, set up replay source
+                setUseTiming(false); // Run as fast as possible
+                String logPath = LogFileUtil.findReplayLog();
+                Logger.setReplaySource(new WPILOGReader(logPath));
+                Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
+                break;
+        }
+
+        // See http://bit.ly/3YIzFZ6 for more information on timestamps in AdvantageKit.
+        // Logger.disableDeterministicTimestamps()
+
+        SignalLogger.enableAutoLogging(false);
+
+        // Start AdvantageKit logger
+        Logger.start();
   }
+
 
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics that you want ran

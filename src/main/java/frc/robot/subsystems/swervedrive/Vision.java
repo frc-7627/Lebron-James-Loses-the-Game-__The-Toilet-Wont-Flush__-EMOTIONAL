@@ -83,7 +83,7 @@ public class Vision
 
   private static double tagsSeen = 0;
 
-  private static double singleStDev = 1;
+  private static double singleStDev = 0.5;
   private static double multiStDev = 1;
 
       /**
@@ -360,18 +360,30 @@ public class Vision
        */
       enum Cameras
       {
-        RIGHT_CAM("Camera_Right",
+         RIGHT_CAM("Camera_Right",
         new Rotation3d(0, Units.degreesToRadians(0), 0),
         new Translation3d(Units.inchesToMeters(4.840),
                           Units.inchesToMeters(-10.776), // This is forward
                           Units.inchesToMeters(6.776)),
         VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev)),
-        LEFT_CAM("Camera_Left",
+       /*  Left_PI_CAM("PC_Camera SIG",
+        new Rotation3d(0, Units.degreesToRadians(0), 0),
+        new Translation3d(Units.inchesToMeters(5.840),
+                          Units.inchesToMeters(-11.776), // This is forward
+                          Units.inchesToMeters(7.776)),
+        VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev)), */
+        RIGHT_PI_CAM("PC_Camera_MA",
+        new Rotation3d(0, Units.degreesToRadians(0), 0),
+        new Translation3d(Units.inchesToMeters(5.840),
+                          Units.inchesToMeters(-10.776), // This is forward
+                          Units.inchesToMeters(7.776)),
+        VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev));
+        /*LEFT_CAM("Camera_Left",
         new Rotation3d(0, Units.degreesToRadians(0), 0),
         new Translation3d(Units.inchesToMeters(4.840),
                           Units.inchesToMeters(10.776),
                           Units.inchesToMeters(6.776)),
-        VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev));
+        VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev)); */
     
         /**
          * Latency alert to use when high latency is detected.

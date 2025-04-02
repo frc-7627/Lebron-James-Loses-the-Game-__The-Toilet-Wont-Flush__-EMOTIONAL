@@ -4,9 +4,16 @@
 
 package frc.robot;
 
+import org.littletonrobotics.junction.LogFileUtil;
+
 import com.pathplanner.lib.config.PIDConstants;
 
 import edu.wpi.first.math.util.Units;
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGReader;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean constants. This
@@ -20,6 +27,10 @@ import edu.wpi.first.math.util.Units;
  */
 public final class Constants
 {
+
+  //Logging mode for advantage kit logs. Switch between, REAL , SIM , and REPLAY based on whatever mode you need
+public static final Mode currentMode = Mode.REAL;
+
   // Enable this to allow for coach controller to cause simulated failures in subsystems
   public static final boolean skibbidi_mode = false;
   public static final boolean verbose_shuffleboard_logging = true; // debug
@@ -29,6 +40,9 @@ public final class Constants
   //public static final double LOOP_TIME  = 0.13; //s, 20ms + 110ms sprk max velocity lag
   public static final double MAX_SPEED  = Units.feetToMeters(13);
   // Maximum speed of the robot in meters per second, used to limit acceleration.
+
+ 
+
 
 //  public static final class AutonConstants
 //  {
@@ -62,6 +76,19 @@ public final class Constants
     //public static final double RIGHT_X_DEADBAND = 0.1;
     //public static final double TURN_CONSTANT    = 6;
   } 
+  public enum Mode {
+    // Running on a real robot
+
+    REAL,
+
+    //Running in the sim
+
+    SIM,
+
+    //Replaying from a log file
+
+    REPLAY
+  }
 }
 
 
