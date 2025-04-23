@@ -31,6 +31,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends LoggedRobot
 {
+  
+
   private static Robot   instance;
   private        Command m_autonomousCommand;
 
@@ -65,7 +67,7 @@ public class Robot extends LoggedRobot
    * @version 1.1
    */
   //public void LoggerSetup() {
-    //Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
+    //
 
     //if (isReal()) {
         //Logger.addDataReceiver(new WPILOGWriter()); // Log to a USB stick ("/U/logs")
@@ -105,12 +107,14 @@ public class Robot extends LoggedRobot
     {
       DriverStation.silenceJoystickConnectionWarning(true);
     }
+
+    Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
     // Set up data receivers & replay source
         switch (Constants.currentMode) {
             case REAL:
                 // Running on a real robot, log to a USB stick ("/U/logs")
-                Logger.addDataReceiver(new WPILOGWriter());
-                Logger.addDataReceiver(new NT4Publisher());
+                Logger.addDataReceiver(new WPILOGWriter());// Log to a USB stick ("/U/logs")
+                Logger.addDataReceiver(new NT4Publisher());// Publish data to NetworkTables 
                 break;
 
             case SIM:
@@ -121,9 +125,9 @@ public class Robot extends LoggedRobot
             case REPLAY:
                 // Replaying a log, set up replay source
                 setUseTiming(false); // Run as fast as possible
-                String logPath = LogFileUtil.findReplayLog();
-                Logger.setReplaySource(new WPILOGReader(logPath));
-                Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
+                String logPath = LogFileUtil.findReplayLog();// Pull the replay log from AdvantageScope (or prompt the user)
+                Logger.setReplaySource(new WPILOGReader(logPath));// Read replay log
+                Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));// Save outputs to a new log
                 break;
         }
 

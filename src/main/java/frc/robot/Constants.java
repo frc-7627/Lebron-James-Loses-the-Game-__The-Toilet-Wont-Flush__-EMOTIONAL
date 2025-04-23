@@ -29,7 +29,7 @@ public final class Constants
 {
 
   //Logging mode for advantage kit logs. Switch between, REAL , SIM , and REPLAY based on whatever mode you need
-public static final Mode currentMode = Mode.REAL;
+public static final Mode currentMode = Mode.REPLAY;
 
   // Enable this to allow for coach controller to cause simulated failures in subsystems
   public static final boolean skibbidi_mode = false;
