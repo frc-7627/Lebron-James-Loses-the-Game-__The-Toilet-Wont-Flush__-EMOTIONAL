@@ -20,22 +20,16 @@ import java.io.File;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.Bluetooth;
-import frc.robot.subsystems.arm.NotSwerveSubsystem;
-import frc.robot.subsystems.arm.Lebronavator;
-import frc.robot.subsystems.climber.AdultDiapers;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
-import frc.robot.commands.Endafector.*;
 import frc.robot.commands.Helpers.AutoAlignment;
 import frc.robot.commands.Helpers.DriveBasePoseAdjust;
 import frc.robot.commands.Helpers.DriveBaseRotationAdjust;
 import frc.robot.commands.Led.Rainbow;
-import frc.robot.commands.Climber.*;
-import frc.robot.commands.Elevator.*;
 import frc.robot.commands.teleop.*;
 import swervelib.SwerveInputStream;
 
@@ -57,14 +51,11 @@ public class RobotContainer
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve/"));
   //private final CaprisonCommands visionCommands = new CaprisonCommands();
-    private final NotSwerveSubsystem BidenFactor = new NotSwerveSubsystem();
-  private final Lebronavator elevator = new Lebronavator();
-  private final AdultDiapers climber = new AdultDiapers();
   private final Bluetooth led = new Bluetooth();
 
   // Command Classes
-  private final OperatorCommands opCommands = new OperatorCommands(elevator, BidenFactor, led, drivebase); 
-  private final CoachCommands chCommands = new CoachCommands(drivebase, elevator, BidenFactor, climber, led);
+  private final OperatorCommands opCommands = new OperatorCommands(led, drivebase); 
+  private final CoachCommands chCommands = new CoachCommands(drivebase, led);
 
   private double slowModeSpeed = 0.5;
   private Double slowMode = 1.0;
@@ -194,10 +185,10 @@ public class RobotContainer
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
 
       driverXbox.start().whileTrue(Commands.runOnce(Vision::updateShuffleboard));
-      driverXbox.back().whileTrue(Commands.runOnce(elevator::resetControlMode));
+      driverXbox.back().whileTrue(Commands.none());
 
       driverXbox.a().whileTrue(Commands.runOnce(drivebase::zeroGyroWithAlliance));
-      driverXbox.b().whileTrue(new playSong(elevator, "BlueLobster"));
+      driverXbox.b().whileTrue(Commands.none());
       driverXbox.x().whileTrue(new Rainbow(led, 10));
       driverXbox.y().whileTrue(new InstantCommand( () -> {
         System.out.println("Robot Pose: " +drivebase.getPose()); }));
@@ -207,40 +198,39 @@ public class RobotContainer
       driverXbox.rightBumper().whileTrue(Commands.runEnd(this::driveSlow, this::driveNormal));
 
       /** Operator Xbox */
-      BidenFactor.setDefaultCommand(new BobbyCoral(BidenFactor));
-      operatorXbox.start().whileTrue(new PartialIntake(BidenFactor, led));
-      operatorXbox.back().whileTrue(Commands.runOnce(elevator::resetEncoder));
+      operatorXbox.start().whileTrue(Commands.none());
+      operatorXbox.back().whileTrue(Commands.none());
  
-      operatorXbox.a().whileTrue(new ElevatorMove(elevator, 1));
-      operatorXbox.b().whileTrue(new ElevatorMove(elevator, 3));
-      operatorXbox.x().whileTrue(new ElevatorMove(elevator, 2));
-      operatorXbox.y().whileTrue(new ElevatorMove(elevator, 4));
+      operatorXbox.a().whileTrue(Commands.none());
+      operatorXbox.b().whileTrue(Commands.none());
+      operatorXbox.x().whileTrue(Commands.none());
+      operatorXbox.y().whileTrue(Commands.none());
 
-      operatorXbox.leftStick().whileTrue(new ManCoralForward(BidenFactor, led));
-      operatorXbox.rightStick().whileTrue(new ManCoralReverse(BidenFactor, led));
+      operatorXbox.leftStick().whileTrue(Commands.none());
+      operatorXbox.rightStick().whileTrue(Commands.none());
 
-      operatorXbox.pov(0).whileTrue(new ManElevatorUp(elevator, led));
-      operatorXbox.pov(90).whileTrue(new ManCoralForward(BidenFactor, led));
-      operatorXbox.pov(180).whileTrue(new ManElevatorDown(elevator, led));
-      operatorXbox.pov(270).whileTrue(new ManCoralReverse(BidenFactor, led));
+      operatorXbox.pov(0).whileTrue(Commands.none());
+      operatorXbox.pov(90).whileTrue(Commands.none());
+      operatorXbox.pov(180).whileTrue(Commands.none());
+      operatorXbox.pov(270).whileTrue(Commands.none());
 
-      operatorXbox.leftTrigger().whileTrue(opCommands.AutoStow());
-      operatorXbox.leftBumper().whileTrue( new IntakeCoral(BidenFactor, led));
-      operatorXbox.rightTrigger().whileTrue(opCommands.AutoEjectL4());
-      operatorXbox.rightBumper().whileTrue(new EjectCoral(BidenFactor, led));
+      operatorXbox.leftTrigger().whileTrue(Commands.none());
+      operatorXbox.leftBumper().whileTrue(Commands.none());
+      operatorXbox.rightTrigger().whileTrue(Commands.none());
+      operatorXbox.rightBumper().whileTrue(Commands.none());
 
       /** Coach Xbox */
       coachXbox.start().whileTrue(Commands.none());
       coachXbox.back().whileTrue(Commands.none());
       coachXbox.a().whileTrue(chCommands.breakDrivebase());
       coachXbox.b().whileTrue(chCommands.breakVision());
-      coachXbox.x().whileTrue(chCommands.breakElevator());
+      coachXbox.x().whileTrue(Commands.none());
       coachXbox.y().whileTrue(chCommands.breakLed());
 
-      coachXbox.leftStick().whileTrue(chCommands.breakClimber());
-      coachXbox.rightStick().whileTrue(chCommands.breakClimber());
+      coachXbox.leftStick().whileTrue(Commands.none());
+      coachXbox.rightStick().whileTrue(Commands.none());
 
-      coachXbox.leftTrigger().whileTrue(chCommands.breakEndefector());
+      coachXbox.leftTrigger().whileTrue(Commands.none());
       coachXbox.leftBumper().whileTrue(Commands.none());
       coachXbox.rightTrigger().whileTrue(Commands.none());
       coachXbox.rightBumper().whileTrue(Commands.none()); 
@@ -287,45 +277,45 @@ public class RobotContainer
     /* Rare Use Case - There is no thinkable reason to use these */
 
     // AutoOperator
-    NamedCommands.registerCommand("AutoStow", opCommands.AutoStow());
-    NamedCommands.registerCommand("AutoScoreL1", opCommands.AutoScoreL1()); 
-    NamedCommands.registerCommand("AutoScoreL2", opCommands.AutoScoreL2()); 
-    NamedCommands.registerCommand("AutoScoreL3", opCommands.AutoScoreL3()); 
-    NamedCommands.registerCommand("AutoScoreL4", opCommands.AutoScoreL4());
-    NamedCommands.registerCommand("AutoEjectL4", opCommands.AutoEjectL4());
-    NamedCommands.registerCommand("AutoL4Full", opCommands.AutoFullEjectL4());
-    NamedCommands.registerCommand("AutoL4ForAuto", opCommands.AutoEjectL4ForAuto());
+    NamedCommands.registerCommand("none", Commands.none());
+    NamedCommands.registerCommand("none", Commands.none()); 
+    NamedCommands.registerCommand("none", Commands.none()); 
+    NamedCommands.registerCommand("none", Commands.none()); 
+    NamedCommands.registerCommand("none", Commands.none());
+    NamedCommands.registerCommand("none", Commands.none());
+    NamedCommands.registerCommand("none", Commands.none());
+    NamedCommands.registerCommand("none", Commands.none());
 
     // Elevevator
-    NamedCommands.registerCommand("ElevatorMoveL1", new ElevatorMove(elevator, 1));
-    NamedCommands.registerCommand("ElevatorMoveL2", new ElevatorMove(elevator, 2)); 
-    NamedCommands.registerCommand("ElevatorMoveL3", new ElevatorMove(elevator, 3)); 
-    NamedCommands.registerCommand("ElevatorMoveL4", new ElevatorMove(elevator, 4));
+    NamedCommands.registerCommand("none", Commands.none());
+    NamedCommands.registerCommand("none", Commands.none());
+    NamedCommands.registerCommand("none", Commands.none());
+    NamedCommands.registerCommand("none", Commands.none());
 
     // Led
     NamedCommands.registerCommand("Rainbow", new Rainbow(led, 5.0));
 
 
     // Climber
-    NamedCommands.registerCommand("ClimberDown", new ClimberDown(climber, led)); // Manual
-    NamedCommands.registerCommand("ClimberUp", new ClimberUp(climber, led)); // Manual
-    NamedCommands.registerCommand("ClimberSlowDown", new ClimberSlowDown(climber, led)); // Manual
-    NamedCommands.registerCommand("ClimberSlowUp", new ClimberSlowUp(climber, led)); // Manual
+    NamedCommands.registerCommand("none", Commands.none());
+    NamedCommands.registerCommand("none", Commands.none());
+    NamedCommands.registerCommand("none", Commands.none());
+    NamedCommands.registerCommand("none", Commands.none());
 
     // Elevator
     //NamedCommands.registerCommand("ArmToStow", new ElevatorMove(climber));
-    NamedCommands.registerCommand("Horn", new horn(elevator));
-    NamedCommands.registerCommand("playSong", new playSong(elevator, "sus")); 
-    NamedCommands.registerCommand("ManElevatorDown", new ManElevatorDown(elevator, led)); // Manual
-    NamedCommands.registerCommand("ManElevatorUp", new ManElevatorUp(elevator, led)); // Manual
-    NamedCommands.registerCommand("Stow", new ElevatorMove(elevator, 0));
+    NamedCommands.registerCommand("none", Commands.none());
+    NamedCommands.registerCommand("none", Commands.none());
+    NamedCommands.registerCommand("none", Commands.none());
+    NamedCommands.registerCommand("none", Commands.none());
+    NamedCommands.registerCommand("none", Commands.none());
 
     /*  Endafector */
-    NamedCommands.registerCommand("EjectCoral", new EjectCoral(BidenFactor, led));
-    NamedCommands.registerCommand("PartialIntakeCoral", new PartialIntake(BidenFactor, led));
-    NamedCommands.registerCommand("IntakeCoral", new IntakeCoral(BidenFactor, led));
-    NamedCommands.registerCommand("ManCoralForward", new ManCoralForward(BidenFactor, led)); // Manual
-    NamedCommands.registerCommand("ManCoralReverse", new ManCoralReverse(BidenFactor, led)); // Manual
+    NamedCommands.registerCommand("none", Commands.none());
+    NamedCommands.registerCommand("none", Commands.none());
+    NamedCommands.registerCommand("none", Commands.none());
+    NamedCommands.registerCommand("none", Commands.none());
+    NamedCommands.registerCommand("none", Commands.none());
     
 
     // Drivebase
@@ -355,8 +345,6 @@ public class RobotContainer
   public void setDriveMode()
   {
     led.scroll("default");
-    elevator.StopMotor();
-    elevator.resetControlMode();
     configureBindings();
   }
 
@@ -409,8 +397,6 @@ public class RobotContainer
 
   public void autoInit() {
     led.blink("default");
-    elevator.StopMotor();
-    elevator.resetControlMode();
   }
 
   /**
@@ -421,8 +407,7 @@ public class RobotContainer
   public void disabledInit() {
     SmartDashboard.putData("Restart Photonvision", Commands.runOnce(Vision::restartPhotonvision));
     SmartDashboard.putData("Reboot Camera", Commands.runOnce(Vision::rebootPhotonvision));
-    elevator.playSong("BlueLobster"); // Play Amoung us theme to pass the time
-  }
+    }
 
   /**
    * Run every cycle when the robot is disabled in driverstation
