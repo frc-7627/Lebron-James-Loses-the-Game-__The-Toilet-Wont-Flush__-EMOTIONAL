@@ -107,6 +107,16 @@ public class OperatorCommands {
         return AutoScore(4);
     }
 
+    /**
+     * Does the following sequence:
+     * - Moves the elevator to position L4.
+     * - Outtake until scored while moving the elevator to position L4 high, 
+     * until one of those finishes or 1 second deadline reached.
+     * - Outtake until scored, with a deadline of 0.75 seconds.
+     * - Stows the elevator.
+     * 
+     * @return The command to eject at L4.
+     */
     public Command AutoEjectL4() {
         return new SequentialCommandGroup(
             new ElevatorMove(elevator, 4),
@@ -124,6 +134,15 @@ public class OperatorCommands {
         );
     }
 
+    /**
+     * Does the following sequence:
+     * - Moves the elevator to position L4.
+     * - Outtake until scored while moving the elevator to position L4 high, 
+     * until one of those finishes or 0.75 second deadline reached.
+     * - Outtake until scored, with a deadline of 0.75 seconds.
+     * DEPRECATED
+     * @return The command to eject at L4 specialized for autonomous.
+     */
     public Command AutoEjectL4ForAuto() {
         return new SequentialCommandGroup(
             new ElevatorMove(elevator, 4),
@@ -140,6 +159,15 @@ public class OperatorCommands {
         );
     }
 
+    /**
+     * Does the following sequence:
+     * - Moves the elevator to position L4.
+     * - Outakes until scored or 0.25s deadline reached.
+     * - Ejects at L4.
+     * DEPRECATED - 2008, remove at next available option
+     * @see AutoEjectL4
+     * @return The command to do whaaaaaa?
+     */
     public Command AutoFullEjectL4(){
         return new SequentialCommandGroup(
             new ElevatorMove(elevator, 4),
@@ -152,6 +180,13 @@ public class OperatorCommands {
         );
     }
 
+    /**
+     * Drive to pose, with an offset.
+     * If the best target exists, drive to it, else no-op.
+     * 
+     * DEPRECATED
+     * @return The command
+     */
     public Command driveToPoseOffset() {
         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust]] Seeking Target");
         @SuppressWarnings("removal")
@@ -172,6 +207,12 @@ public class OperatorCommands {
         }
     }
 
+    /**
+     * 
+     * 
+     * DEPRECATED
+     * @return
+     */
     public Command RIPOperatorLeft() {
         return new SequentialCommandGroup(
             new AutoAlignment(drivebase, led, Constants.DrivebaseConstants.y_offset_left, true),
@@ -180,6 +221,11 @@ public class OperatorCommands {
         );
     }
 
+
+    /**
+     * DEPRECATED
+     * @return
+     */
     public Command RIPOperatorRight() {
         return new SequentialCommandGroup(
             new AutoAlignment(drivebase, led, Constants.DrivebaseConstants.y_offset_right, false),

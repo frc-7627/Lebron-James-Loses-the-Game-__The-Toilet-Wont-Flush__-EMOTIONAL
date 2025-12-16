@@ -42,6 +42,12 @@
           "name": "AutoScoreL4"
         }
       }
+    },
+    {
+      "name": "DriveBasePoseAdjustR",
+      "waypointRelativePos": 0.7651228733459308,
+      "endWaypointRelativePos": null,
+      "command": null
     }
   ],
   "globalConstraints": {

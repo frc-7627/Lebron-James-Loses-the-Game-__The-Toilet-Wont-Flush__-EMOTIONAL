@@ -33,6 +33,12 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
+      "name": "DriveBasePoseAdjustR",
+      "waypointRelativePos": 0.7008506616257059,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
       "name": "Elevator UP",
       "waypointRelativePos": 0.75,
       "endWaypointRelativePos": null,

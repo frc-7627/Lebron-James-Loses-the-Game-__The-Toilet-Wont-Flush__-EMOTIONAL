@@ -21,6 +21,8 @@ import frc.robot.subsystems.swervedrive.Vision;
 public class AutoAlignment extends Command {
         PhotonCamera camera_right = new PhotonCamera("Camera_Right");
         PhotonCamera camera_left = new PhotonCamera("Camera_Left");
+        PhotonCamera Left_PI_CAM = new PhotonCamera("PC_Camera SIG");
+        PhotonCamera Right_PI_CAM = new PhotonCamera("PC_Camera MA");
         private final SwerveSubsystem drivebase;
         private final Vision vision;
         private final Bluetooth led;
@@ -55,28 +57,33 @@ public class AutoAlignment extends Command {
                 
                 @SuppressWarnings("removal")
                 //var resultL = camera_left.getLatestResult();
-                var resultR = camera_right.getLatestResult();
+                //var resultR = camera_right.getLatestResult();
+                var resultA = Left_PI_CAM.getLatestResult(); ++ Right_PI_CAM.getLatestResult();
+                // TODO add these ... I think
+                var resultLPi = Left_PI_CAM.getLatestResult();
+                var resultRPi = Right_PI_CAM.getLatestResult();
+                
 
-                /* PhotonPipelineResult result = resultR;
+                /* PhotonPipelineResult result = resultRPi;
                 // default to R if something happens
-                if (resultL.hasTargets() && resultR.hasTargets()) {
-                    if(resultL.getBestTarget().getPoseAmbiguity() > resultR.getBestTarget().getPoseAmbiguity()) {
-                        result = resultR;
+                if (resultLPi.hasTargets() && resultRPi.hasTargets()) {
+                    if(resultLPi.getBestTarget().getPoseAmbiguity() > resultRPi.getBestTarget().getPoseAmbiguity()) {
+                        result = resultRPi;
                     }
-                    else if(resultL.getBestTarget().getPoseAmbiguity() <= resultR.getBestTarget().getPoseAmbiguity()) {
-                        result = resultL;
+                    else if(resultLPi.getBestTarget().getPoseAmbiguity() <= resultRPi.getBestTarget().getPoseAmbiguity()) {
+                        result = resultLPi;
                     }
                 }
-                else if(resultL.hasTargets() && !resultR.hasTargets()) {
-                    result = resultL;
-                } */
-                PhotonPipelineResult result = resultR;
-                if(leftcam) result = resultR; 
+                else if(resultLPi.hasTargets() && !resultRPi.hasTargets()) {
+                    result = resultLPi;
+                } TODO: i changed the above to resultLPi / resultRPi , if needed just take pi off allat (idek if the above needs to be uncommeted but wtv)*/
+                PhotonPipelineResult result = resultRPi;
+                //if(leftcam) result = resultLPi; 
 
-                if (result.hasTargets()) {
+                if (resultLPi.hasTargets() || resultRPi.hasTargets()) {
                         System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Moving...");
 
-                        PhotonTrackedTarget bestTarget = result.getBestTarget();
+                        PhotonTrackedTarget bestTarget = resultRPi.getBestTarget();
                         for(PhotonTrackedTarget r : result.getTargets()) {
                             if(vision.getDistanceFromAprilTag(r.getFiducialId()) < 
                                     vision.getDistanceFromAprilTag(bestTarget.getFiducialId())) {

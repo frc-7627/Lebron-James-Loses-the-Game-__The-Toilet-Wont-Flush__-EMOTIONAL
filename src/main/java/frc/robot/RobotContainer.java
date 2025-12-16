@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import java.io.File;
+import org.littletonrobotics.junction.Logger;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.Bluetooth;
@@ -54,8 +55,7 @@ public class RobotContainer
 
   
   // The robot's subsystems and commands are defined here...
-  private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
-                                                                                "swerve/"));
+  private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),"swerve/"));
   //private final CaprisonCommands visionCommands = new CaprisonCommands();
     private final NotSwerveSubsystem BidenFactor = new NotSwerveSubsystem();
   private final Lebronavator elevator = new Lebronavator();
@@ -202,7 +202,7 @@ public class RobotContainer
       driverXbox.y().whileTrue(new InstantCommand( () -> {
         System.out.println("Robot Pose: " +drivebase.getPose()); }));
 
-      driverXbox.leftTrigger().whileTrue(new AutoAlignment(drivebase, led, Constants.DrivebaseConstants.y_offset_left, true));
+      driverXbox.leftTrigger().whileTrue(new AutoAlignment(drivebase, led, Constants.DrivebaseConstants.y_offset_left, false));
       driverXbox.rightTrigger().whileTrue(new AutoAlignment(drivebase, led, Constants.DrivebaseConstants.y_offset_right, false));
       driverXbox.rightBumper().whileTrue(Commands.runEnd(this::driveSlow, this::driveNormal));
 
@@ -319,6 +319,10 @@ public class RobotContainer
     NamedCommands.registerCommand("ManElevatorDown", new ManElevatorDown(elevator, led)); // Manual
     NamedCommands.registerCommand("ManElevatorUp", new ManElevatorUp(elevator, led)); // Manual
     NamedCommands.registerCommand("Stow", new ElevatorMove(elevator, 0));
+    NamedCommands.registerCommand("EncoderReset", Commands.runOnce(elevator::resetEncoder));
+    operatorXbox.back().whileTrue(Commands.runOnce(elevator::resetEncoder));
+
+
 
     /*  Endafector */
     NamedCommands.registerCommand("EjectCoral", new EjectCoral(BidenFactor, led));
@@ -424,6 +428,15 @@ public class RobotContainer
     elevator.playSong("BlueLobster"); // Play Amoung us theme to pass the time
   }
 
+
+// Periodically do things during teleop
+  public void teleopPeriodic(){
+     Pose2d currentPose = drivebase.getPose();
+    Logger.recordOutput("MyPose2d", currentPose);
+/*Logger.recordOutput("MyPose2dArray", poseA, poseB);
+Logger.recordOutput("MyPose2dArray", new Pose2d[] { poseA, poseB }); TODO: Log the ODEM */
+
+  }
   /**
    * Run every cycle when the robot is disabled in driverstation
    * 

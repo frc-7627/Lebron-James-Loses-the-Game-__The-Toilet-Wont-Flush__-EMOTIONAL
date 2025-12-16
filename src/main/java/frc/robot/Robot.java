@@ -4,23 +4,31 @@
 
 package frc.robot;
 
+import java.io.File;
+
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+import org.littletonrobotics.urcl.URCL;
 
 import com.ctre.phoenix6.SignalLogger;
 import com.pathplanner.lib.pathfinding.LocalADStar;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to each mode, as
@@ -33,6 +41,9 @@ public class Robot extends LoggedRobot
 {
   
 
+
+
+    //private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve/"));
   private static Robot   instance;
   private        Command m_autonomousCommand;
 
@@ -42,6 +53,21 @@ public class Robot extends LoggedRobot
 
   public Robot()
   {
+
+
+    Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
+
+if (isReal()) {
+    Logger.addDataReceiver(new WPILOGWriter()); // Log to a USB stick ("/U/logs")
+    Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
+} else {
+    setUseTiming(false); // Run as fast as possible
+    String logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
+    Logger.setReplaySource(new WPILOGReader(logPath)); // Read replay log
+    Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim"))); // Save outputs to a new log
+}
+
+Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
     instance = this;
     
     //LoggerSetup();
@@ -134,10 +160,14 @@ public class Robot extends LoggedRobot
         // See http://bit.ly/3YIzFZ6 for more information on timestamps in AdvantageKit.
         // Logger.disableDeterministicTimestamps()
 
-        SignalLogger.enableAutoLogging(false);
+        SignalLogger.enableAutoLogging(true);
 
         // Start AdvantageKit logger
-        Logger.start();
+        DataLogManager.start();
+        URCL.start();
+
+        // If logging only to DataLog
+        URCL.start(DataLogManager.getLog());
   }
 
 
@@ -151,6 +181,8 @@ public class Robot extends LoggedRobot
   @Override
   public void robotPeriodic()
   {
+   /*  Pose2d currentPose = drivebase.getPose();
+    Logger.recordOutput("MyPose2d", currentPose); todo: diffrently  */
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic

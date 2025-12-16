@@ -29,7 +29,7 @@ public final class Constants
 {
 
   //Logging mode for advantage kit logs. Switch between, REAL , SIM , and REPLAY based on whatever mode you need
-public static final Mode currentMode = Mode.REPLAY;
+public static final Mode currentMode = Mode.REAL; //TODO: CHECK THIS EVERY TIME YOU DEPLOY OR ELSE THE CODE WILL NOT THE CODE
 
   // Enable this to allow for coach controller to cause simulated failures in subsystems
   public static final boolean skibbidi_mode = false;
@@ -56,8 +56,8 @@ public static final Mode currentMode = Mode.REPLAY;
 
     public static double x_offset = Units.inchesToMeters(16.6220472441);
     public static double y_offset = 0.0; // L = 0.2 R = 0.6
-    public static double y_offset_left = Units.inchesToMeters(-6.268); // add inches to center //TODO: When we get to an actual field add about 1.5 inches
-    public static double y_offset_right = Units.inchesToMeters(6.268); // add inches away from center
+    public static double y_offset_left = Units.inchesToMeters(-4.268); // add inches to center //TODO: When I add those pi cams these will need to be retuned
+    public static double y_offset_right = Units.inchesToMeters(8.268); // add inches away from center
 
     //public static final PIDConstants TRANSLATION_PID = new PIDConstants(0.7, 0, 0);
     //public static final PIDConstants ANGLE_PID       = new PIDConstants(0.4, 0, 0.01);

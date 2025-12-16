@@ -20,11 +20,14 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTablesJNI;
 import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.IterativeRobotBase;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.commands.Elevator.playSong;
+
 import java.awt.Desktop;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -360,24 +363,24 @@ public class Vision
        */
       enum Cameras
       {
-         RIGHT_CAM("Camera_Right",
+         /* RIGHT_CAM("Camera_Right",
         new Rotation3d(0, Units.degreesToRadians(0), 0),
         new Translation3d(Units.inchesToMeters(4.840),
                           Units.inchesToMeters(-10.776), // This is forward
                           Units.inchesToMeters(6.776)),
-        VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev)),
-       /*  Left_PI_CAM("PC_Camera SIG",
-        new Rotation3d(0, Units.degreesToRadians(0), 0),
+        VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev)) */
+         Left_PI_CAM("PC_Camera SIG",
+        new Rotation3d(0, Units.degreesToRadians(30), 25), //TODO: When these cameras get put on, ask for the pitch and put in in "Units.degreesToRadians(0)"
         new Translation3d(Units.inchesToMeters(5.840),
                           Units.inchesToMeters(-11.776), // This is forward
                           Units.inchesToMeters(7.776)),
-        VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev)), */
+        VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev)),
         RIGHT_PI_CAM("PC_Camera_MA",
-        new Rotation3d(0, Units.degreesToRadians(0), 0),
+        new Rotation3d(0, Units.degreesToRadians(30), 25,
         new Translation3d(Units.inchesToMeters(5.840),
                           Units.inchesToMeters(-10.776), // This is forward
                           Units.inchesToMeters(7.776)),
-        VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev));
+        VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev)); 
         /*LEFT_CAM("Camera_Left",
         new Rotation3d(0, Units.degreesToRadians(0), 0),
         new Translation3d(Units.inchesToMeters(4.840),
@@ -392,7 +395,7 @@ public class Vision
         /**
          * Camera instance for comms.
          */
-        public final  PhotonCamera                 camera;
+        public   PhotonCamera                 camera;  //TODO: was final
         /**
          * Pose estimator for camera.
          */
@@ -439,6 +442,20 @@ public class Vision
               latencyAlert = new Alert("'" + name + "' Camera is experiencing high latency.", AlertType.kWarning);
         
               camera = new PhotonCamera(name);
+
+              System.out.println("Checking if Camera_Right is conncected ... Connection?: " + camera.isConnected() );
+                
+              int iteration = 0;
+              while(camera.isConnected() == false){
+                iteration++;
+                System.out.println("Looping check if Camera_Right is conncected ... Connection?:" + camera.isConnected() + iteration);
+                camera = null;
+                camera = new PhotonCamera(name);
+                if(iteration>10){
+                  System.out.println("Breaking Off Camera reconnection attempt loop ... Good Luck!");
+                  break;
+                }
+              };
         
               // https://docs.wpilib.org/en/stable/docs/software/basic-programming/coordinate-system.html
               robotToCamTransform = new Transform3d(robotToCamTranslation, robotToCamRotation);
@@ -674,8 +691,8 @@ public class Vision
     }
 
     public static void restartPhotonvision() {
-      sendPhotonVisionCommand("10.76.27.10", "restartProgram");
-      sendPhotonVisionCommand("10.76.27.11", "restartProgram");
+      //sendPhotonVisionCommand("10.76.27.10", "restartProgram");
+      sendPhotonVisionCommand("10.76.27.15:5800", "restartProgram"); //TODO: check this at some point
     }
 
     public static void rebootPhotonvision() {

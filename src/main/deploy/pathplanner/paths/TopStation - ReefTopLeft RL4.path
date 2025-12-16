@@ -42,6 +42,12 @@
           "name": "ElevatorMoveL4"
         }
       }
+    },
+    {
+      "name": "DriveBasePoseAdjustR",
+      "waypointRelativePos": 0.5307183364839332,
+      "endWaypointRelativePos": null,
+      "command": null
     }
   ],
   "globalConstraints": {
