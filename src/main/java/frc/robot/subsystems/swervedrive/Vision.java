@@ -376,7 +376,7 @@ public class Vision
                           Units.inchesToMeters(7.776)),
         VecBuilder.fill(singleStDev, singleStDev, singleStDev), VecBuilder.fill(multiStDev, multiStDev, multiStDev)),
         RIGHT_PI_CAM("PC_Camera_MA",
-        new Rotation3d(0, Units.degreesToRadians(30), 25,
+        new Rotation3d(0, Units.degreesToRadians(30), 25),
         new Translation3d(Units.inchesToMeters(5.840),
                           Units.inchesToMeters(-10.776), // This is forward
                           Units.inchesToMeters(7.776)),
