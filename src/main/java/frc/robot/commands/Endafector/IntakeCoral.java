@@ -21,11 +21,10 @@ public class IntakeCoral extends Command {
     * 3. Once the coral touches the back TOF sensor, the coral's position
     * is guranteed, and the command finishes.
     *
-    * Uses leds to indicate the status of the gamepiece, 
+    * Uses leds to indicate the status of the coral, 
     * the statuses are as follows:
-    *   blinking eggPlant: Endafector Running: No gamepiece detected
-    *   vomitGreen: Endafector Stopped: Gamepiece is secure
-    *   led off: Command interupted
+    *   vomitGreen: Command finished, and coral is secure.
+    *   led off: Command interupted.
     *
     * @requires AdultDiapers
     * @requires led - For Visual notifications
