@@ -21,8 +21,8 @@ public class IntakeCoral extends Command {
     * 3. Once the coral touches the back TOF sensor, the coral's position
     * is guranteed, and the command finishes.
     *
-    * Uses leds to indicate the status of the coral, 
-    * the statuses are as follows:
+    * Uses progress bar to indicate state:
+    *   yellow: Command in progress.
     *   vomitGreen: Command finished, and coral is secure.
     *   led off: Command interupted.
     *
