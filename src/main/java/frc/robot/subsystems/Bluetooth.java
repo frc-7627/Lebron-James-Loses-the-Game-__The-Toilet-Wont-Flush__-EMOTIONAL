@@ -28,10 +28,29 @@ public class Bluetooth extends SubsystemBase{
 
   private CANdle candle = new CANdle(3);
   private String defaultColor = "orange";
+  private String completionColor = "vomitGreen";
+  private String interruptColor = "eggPlant";
 
 
   // Animations
-  private RainbowAnimation rainbowAnim = new RainbowAnimation(0.25, 0.5, 76);
+  private RainbowAnimation rainbowAnim = new RainbowAnimation(0.25, 0.5, Constants.BluetoothConstants.numLEDs);
+
+  /**
+   * Current number of steps in progress.
+   */
+  private int stepsInProgress = 0;
+  /**
+   * Total number of steps for complete progress.
+   */
+  private int totalStepsInProgress = 0;
+  /**
+   * Color of progress bar.
+   */
+  private String progressBarColor = "";
+  /**
+   * True, if in progress bar mode. False, otherwise.
+   */
+  private boolean inProgressBarMode = false;
 
   // Bofa these bluetooth
 
@@ -70,6 +89,7 @@ public class Bluetooth extends SubsystemBase{
    *      eggPlant
    *      vomitGreen
    *      beige
+   *      yellow
    *      red
    *      blue
    *      white
@@ -87,6 +107,8 @@ public class Bluetooth extends SubsystemBase{
         return new int[]{137, 162, 3};
       case "beige":
         return new int[]{227, 180, 77};
+      case "yellow":
+        return new int[]{235, 229, 52};
       case "red":
         return new int[]{255, 0, 0};
       case "blue":
@@ -182,6 +204,103 @@ public class Bluetooth extends SubsystemBase{
       rGBvalue[0], rGBvalue[1], rGBvalue[2], 0, 0.1, 20, Direction.Forward, 0);
     //Anim.setSpeed(0.000000009);
     candle.animate(Anim, 0);
+  }
+
+  /**
+   * Update the LED strip to reflect the progress bar data.
+   * 
+   * Sets the active and inactive LEDs according to the number of steps in progress
+   * and total number of steps.
+   */
+  void updateProgressBarLEDs() {
+    int rgb[] = findColorValues(progressBarColor);
+
+    int numLEDsActive = (Constants.BluetoothConstants.numLEDs * stepsInProgress) / totalStepsInProgress;
+    int numLEDsInactive = Constants.BluetoothConstants.numLEDs - numLEDsActive;
+
+    candle.setLEDs(rgb[0], rgb[1], rgb[2], 0, 0, numLEDsActive);
+
+    if (numLEDsInactive > 0) {
+      candle.setLEDs(0, 0, 0, 0, numLEDsActive + 1, numLEDsInactive);
+    }
+  }
+
+  /**
+   * Makes the LED strip begin acting as a progress bar.
+   * 
+   * 1. Sets the color and total steps of the progress bar.
+   * 2. Enter progress bar mode.
+   * 3. Update the LEDs.
+   * 
+   * @param color The color of the progress bar.
+   * @param totalSteps The total number of steps of the task.
+   * @return void
+   */
+  public void initProgressBar(String color, int totalSteps) {
+    stepsInProgress = 0;
+    totalStepsInProgress = totalSteps;
+    progressBarColor = color;
+    inProgressBarMode = true;
+
+    updateProgressBarLEDs();
+  }
+
+  /**
+   * Step the progress bar by one, returning whether it was the last step.
+   * 
+   * @return True, if this step was the last step. False, otherwise.
+   */
+  public boolean stepProgressBar() {
+    if (stepsInProgress < totalStepsInProgress) {
+      stepsInProgress += 1;
+      updateProgressBarLEDs();
+      
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  /**
+   * Interrupt the progress bar.
+   * 
+   * Sets the LED strip to the interrupt color and exits progress bar mode.
+   */
+  public void interruptProgressBar() {
+    int rgb[] = findColorValues(interruptColor);
+
+    candle.setLEDs(rgb[0], rgb[1], rgb[2]);
+
+    endProgressBar();
+  }
+
+  /**
+   * Complete the progress bar.
+   * 
+   * Sets the LED strip to the completion color, and exits progress bar mode.
+   */
+  public void completeProgressBar() {
+    int rgb[] = findColorValues(completionColor);
+
+    candle.setLEDs(rgb[0], rgb[1], rgb[2]);
+
+    endProgressBar();
+  }
+
+  /**
+   * Exit progress bar mode.
+   */
+  void endProgressBar() {
+    inProgressBarMode = false;
+  }
+
+  /**
+   * Determine whether currently in progress bar mode.
+   * 
+   * @return True, if in progress bar mode. False, otherwise.
+   */
+  public boolean isInProgressBarMode() {
+    return inProgressBarMode;
   }
 
   // Level 5 town hall ran out of elixer
