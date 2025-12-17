@@ -15,7 +15,7 @@ public class IntakeCoral extends Command {
     * Ensures the coral is in position for scoring.
     * 
     * 1. Waits for the coral to reach the forward TOF sensor. When it does,
-    * load the coral forwards.
+    * loads the coral forwards.
     * 2. Once the coral is forward enough that it leaves the back TOF sensor,
     * loads the coral backwards.
     * 3. Once the coral touches the back TOF sensor, the coral's position
@@ -43,6 +43,8 @@ public class IntakeCoral extends Command {
         module.load();
 
         state = CoralIntakeState.CORAL_ENTERING;
+
+        led.initProgressBar("yellow", 3);
     }
 
     /**
@@ -73,21 +75,27 @@ public class IntakeCoral extends Command {
         switch (state) {
             case CORAL_ENTERING:
                 if (module.CoralTouchFront()) {
-                    System.out.println("Coral reached front sensor, now loading forward.");
+                    System.out.println("\nCoral reached front sensor, now loading forward.");
+                    led.stepProgressBar();
+
                     state = CoralIntakeState.CORAL_LOADING_FORWARD;
                     module.loadSlow();
                 }
                 break;
             case CORAL_LOADING_FORWARD:
                 if (module.CoralLeaveBack()) {
-                    System.out.println("Coral left back sensor, now loading back.");
+                    System.out.println("\nCoral left back sensor, now loading back.");
+                    led.stepProgressBar();
+
                     state = CoralIntakeState.CORAL_LOADING_BACK;
                     module.loadSlowReverse(); 
                 }
                 break;
             case CORAL_LOADING_BACK:
                 if (module.CoralTouchBack()) {
-                    System.out.println("Coral in position!");
+                    System.out.println("\nCoral in position!");
+                    led.stepProgressBar();
+
                     state = CoralIntakeState.CORAL_IN_POSITION;
                 }
                 break;
@@ -105,10 +113,14 @@ public class IntakeCoral extends Command {
       */
     @Override
     public void end(boolean interrupted) {
-        System.out.println("state f: " + interrupted);
         module.stop();
-        if(!interrupted) led.color("vomitGreen");
-        else led.bluetoothOFF();
+
+        if (interrupted) {
+            System.out.println("Intaking coral interrupted!");
+            led.interruptProgressBar();
+        } else {
+            led.completeProgressBar();
+        }
     }
 
     /** 
