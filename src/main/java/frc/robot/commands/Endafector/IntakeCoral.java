@@ -71,7 +71,6 @@ public class IntakeCoral extends Command {
 
     @Override
     public void execute() {
-        System.out.print("run");
         switch (state) {
             case CORAL_ENTERING:
                 if (module.CoralTouchFront()) {
