@@ -58,7 +58,7 @@ public class AutoAlignment extends Command {
                 @SuppressWarnings("removal")
                 //var resultL = camera_left.getLatestResult();
                 //var resultR = camera_right.getLatestResult();
-                var resultA = Left_PI_CAM.getLatestResult(); ++ Right_PI_CAM.getLatestResult();
+                //var resultA = Left_PI_CAM.getLatestResult(); ++ Right_PI_CAM.getLatestResult();
                 // TODO add these ... I think
                 var resultLPi = Left_PI_CAM.getLatestResult();
                 var resultRPi = Right_PI_CAM.getLatestResult();
