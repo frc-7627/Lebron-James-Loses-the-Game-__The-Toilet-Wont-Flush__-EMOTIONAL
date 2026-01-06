@@ -75,7 +75,7 @@ public class IntakeCoral extends Command {
      */
     public void stepProgressBar() {
         progressBar.stepProgressBar();
-        led.updateProgressBarLEDs(progressBar);
+        led.updateWithProgressBar(progressBar);
     }
 
     /**
@@ -83,7 +83,7 @@ public class IntakeCoral extends Command {
      */
     public void interruptProgressBar() {
         progressBar.interrupt();
-        led.updateProgressBarLEDs(progressBar);
+        led.updateWithProgressBar(progressBar);
     }
 
     /**
@@ -91,7 +91,7 @@ public class IntakeCoral extends Command {
      */
     public void completeProgressBar() {
         progressBar.complete();
-        led.updateProgressBarLEDs(progressBar);
+        led.updateWithProgressBar(progressBar);
     }
 
     @Override

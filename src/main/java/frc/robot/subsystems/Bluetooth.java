@@ -189,12 +189,14 @@ public class Bluetooth extends SubsystemBase{
   }
 
   /**
-   * Update the LED strip to reflect the progress bar data.
+   * Update the LED strip to reflect the given progress bar.
    * 
    * Sets the active and inactive LEDs according to the number of steps in progress
-   * and total number of steps.
+   * and total number of steps, or indicates interruption or completion if necessary.
+   * 
+   * @param progressBar The given progress bar.
    */
-  public void updateProgressBarLEDs(ProgressBar progressBar) {
+  public void updateWithProgressBar(ProgressBar progressBar) {
     switch (progressBar.getStatus()) {
       case IN_PROGRESS:
         int rgb[] = findColorValues(progressBar.getColor());
