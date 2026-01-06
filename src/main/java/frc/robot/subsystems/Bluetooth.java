@@ -28,6 +28,8 @@ public class Bluetooth extends SubsystemBase{
 
   private CANdle candle = new CANdle(3);
 
+  private String defaultColor = Constants.BluetoothConstants.DEFAULT_COLOR;
+
 
   // Animations
   private RainbowAnimation rainbowAnim = new RainbowAnimation(0.25, 0.5, Constants.BluetoothConstants.NUM_LEDS);
@@ -118,6 +120,10 @@ public class Bluetooth extends SubsystemBase{
   public void setColor(int r, int g, int b) {
     //candle.clearAnimation(0);
     candle.setLEDs(r, g, b);
+  }
+
+  public void setDefaultColor(String defaultColor) {
+    this.defaultColor = defaultColor;
   }
 
 
