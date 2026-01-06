@@ -68,7 +68,11 @@ public static final Mode currentMode = Mode.REAL; //TODO: CHECK THIS EVERY TIME 
   }
 
   public static final class BluetoothConstants {
-    public static final int numLEDs = 13;
+    public static final int NUM_LEDS = 13;
+    
+    public static final String DEFAULT_COLOR = "orange";
+    public static final String COMPLETION_COLOR = "vomitGreen";
+    public static final String INTERRUPTION_COLOR = "eggPlant";
   }
 
  public static class OperatorConstants

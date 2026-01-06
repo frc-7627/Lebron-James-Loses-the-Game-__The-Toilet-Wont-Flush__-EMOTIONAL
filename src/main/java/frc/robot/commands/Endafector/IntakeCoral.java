@@ -3,6 +3,7 @@ package frc.robot.commands.Endafector;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.subsystems.Bluetooth;
+import frc.robot.subsystems.ProgressBar;
 import frc.robot.subsystems.arm.NotSwerveSubsystem;
 
 /** See Constructor for details */
@@ -10,6 +11,7 @@ public class IntakeCoral extends Command {
     private NotSwerveSubsystem module;
     private Bluetooth led;
     private CoralIntakeState state;
+    private ProgressBar progressBar;
 
     /**
     * Ensures the coral is in position for scoring.
@@ -33,6 +35,7 @@ public class IntakeCoral extends Command {
     public IntakeCoral(NotSwerveSubsystem module, Bluetooth led) {
         this.module = module;
         this.led = led;
+        this.progressBar = new ProgressBar(3, "yellow");
         addRequirements(module);
         addRequirements(led);
      }
@@ -43,8 +46,6 @@ public class IntakeCoral extends Command {
         module.load();
 
         state = CoralIntakeState.CORAL_ENTERING;
-
-        led.initProgressBar("yellow", 3);
     }
 
     /**
@@ -69,13 +70,37 @@ public class IntakeCoral extends Command {
         CORAL_IN_POSITION,
     }
 
+    /**
+     * Step the progress bar.
+     */
+    public void stepProgressBar() {
+        progressBar.stepProgressBar();
+        led.updateProgressBarLEDs(progressBar);
+    }
+
+    /**
+     * Interrupt the progress bar.
+     */
+    public void interruptProgressBar() {
+        progressBar.interrupt();
+        led.updateProgressBarLEDs(progressBar);
+    }
+
+    /**
+     * Complete the progress bar.
+     */
+    public void completeProgressBar() {
+        progressBar.complete();
+        led.updateProgressBarLEDs(progressBar);
+    }
+
     @Override
     public void execute() {
         switch (state) {
             case CORAL_ENTERING:
                 if (module.CoralTouchFront()) {
                     System.out.println("\nCoral reached front sensor, now loading forward.");
-                    led.stepProgressBar();
+                    stepProgressBar();
 
                     state = CoralIntakeState.CORAL_LOADING_FORWARD;
                     module.loadSlow();
@@ -84,7 +109,7 @@ public class IntakeCoral extends Command {
             case CORAL_LOADING_FORWARD:
                 if (module.CoralLeaveBack()) {
                     System.out.println("\nCoral left back sensor, now loading back.");
-                    led.stepProgressBar();
+                    stepProgressBar();
 
                     state = CoralIntakeState.CORAL_LOADING_BACK;
                     module.loadSlowReverse(); 
@@ -93,7 +118,7 @@ public class IntakeCoral extends Command {
             case CORAL_LOADING_BACK:
                 if (module.CoralTouchBack()) {
                     System.out.println("\nCoral in position!");
-                    led.stepProgressBar();
+                    stepProgressBar();
 
                     state = CoralIntakeState.CORAL_IN_POSITION;
                 }
@@ -115,10 +140,11 @@ public class IntakeCoral extends Command {
         module.stop();
 
         if (interrupted) {
-            System.out.println("Intaking coral interrupted!");
-            led.interruptProgressBar();
+            System.out.println("\nIntaking coral interrupted!");
+            interruptProgressBar();
         } else {
-            led.completeProgressBar();
+            System.out.println("\nIntaking coral completed!");
+            completeProgressBar();
         }
     }
 

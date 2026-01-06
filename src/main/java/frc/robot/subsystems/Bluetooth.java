@@ -27,30 +27,10 @@ import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 public class Bluetooth extends SubsystemBase{
 
   private CANdle candle = new CANdle(3);
-  private String defaultColor = "orange";
-  private String completionColor = "vomitGreen";
-  private String interruptColor = "eggPlant";
 
 
   // Animations
-  private RainbowAnimation rainbowAnim = new RainbowAnimation(0.25, 0.5, Constants.BluetoothConstants.numLEDs);
-
-  /**
-   * Current number of steps in progress.
-   */
-  private int stepsInProgress = 0;
-  /**
-   * Total number of steps for complete progress.
-   */
-  private int totalStepsInProgress = 0;
-  /**
-   * Color of progress bar.
-   */
-  private String progressBarColor = "";
-  /**
-   * True, if in progress bar mode. False, otherwise.
-   */
-  private boolean inProgressBarMode = false;
+  private RainbowAnimation rainbowAnim = new RainbowAnimation(0.25, 0.5, Constants.BluetoothConstants.NUM_LEDS);
 
   // Bofa these bluetooth
 
@@ -116,7 +96,7 @@ public class Bluetooth extends SubsystemBase{
       case "white":
         return new int[]{255, 255, 255};
       case "default":
-        return findColorValues(defaultColor);
+        return findColorValues(Constants.BluetoothConstants.DEFAULT_COLOR);
       default:
         System.out.print("[Bluetooth] Unkown argument passed!");
         return new int[]{0, 0, 0};
@@ -138,10 +118,6 @@ public class Bluetooth extends SubsystemBase{
   public void setColor(int r, int g, int b) {
     //candle.clearAnimation(0);
     candle.setLEDs(r, g, b);
-  }
-
-  public void setDefaultColor(String color) {
-    defaultColor = color;
   }
 
 
@@ -212,95 +188,49 @@ public class Bluetooth extends SubsystemBase{
    * Sets the active and inactive LEDs according to the number of steps in progress
    * and total number of steps.
    */
-  void updateProgressBarLEDs() {
-    int rgb[] = findColorValues(progressBarColor);
+  public void updateProgressBarLEDs(ProgressBar progressBar) {
+    switch (progressBar.getStatus()) {
+      case IN_PROGRESS:
+        int rgb[] = findColorValues(progressBar.getColor());
 
-    int numLEDsActive = (Constants.BluetoothConstants.numLEDs * stepsInProgress) / totalStepsInProgress;
-    int numLEDsInactive = Constants.BluetoothConstants.numLEDs - numLEDsActive;
+        int numLEDsActive = (Constants.BluetoothConstants.NUM_LEDS * progressBar.getStepsInProgress()) / progressBar.getTotalStepsInProgress();
+        int numLEDsInactive = Constants.BluetoothConstants.NUM_LEDS - numLEDsActive;
 
-    candle.setLEDs(rgb[0], rgb[1], rgb[2], 0, 0, numLEDsActive);
+        candle.setLEDs(rgb[0], rgb[1], rgb[2], 0, 0, numLEDsActive);
 
-    if (numLEDsInactive > 0) {
-      candle.setLEDs(0, 0, 0, 0, numLEDsActive + 1, numLEDsInactive);
+        if (numLEDsInactive > 0) {
+          candle.setLEDs(0, 0, 0, 0, numLEDsActive + 1, numLEDsInactive);
+        }
+        return;
+      case INTERRUPTED:
+        indicateInterruption();
+        return;
+      case COMPLETED:
+        indicateCompletion();
+        return;
     }
   }
 
   /**
-   * Makes the LED strip begin acting as a progress bar.
+   * Indicate interruption.
    * 
-   * 1. Sets the color and total steps of the progress bar.
-   * 2. Enter progress bar mode.
-   * 3. Update the LEDs.
-   * 
-   * @param color The color of the progress bar.
-   * @param totalSteps The total number of steps of the task.
-   * @return void
+   * Sets the LED strip to the interruption color.
    */
-  public void initProgressBar(String color, int totalSteps) {
-    stepsInProgress = 0;
-    totalStepsInProgress = totalSteps;
-    progressBarColor = color;
-    inProgressBarMode = true;
-
-    updateProgressBarLEDs();
-  }
-
-  /**
-   * Step the progress bar by one, returning whether it was the last step.
-   * 
-   * @return True, if this step was the last step. False, otherwise.
-   */
-  public boolean stepProgressBar() {
-    if (stepsInProgress < totalStepsInProgress) {
-      stepsInProgress += 1;
-      updateProgressBarLEDs();
-      
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  /**
-   * Interrupt the progress bar.
-   * 
-   * Sets the LED strip to the interrupt color and exits progress bar mode.
-   */
-  public void interruptProgressBar() {
-    int rgb[] = findColorValues(interruptColor);
+  public void indicateInterruption() {
+    int rgb[] = findColorValues(Constants.BluetoothConstants.INTERRUPTION_COLOR);
 
     candle.setLEDs(rgb[0], rgb[1], rgb[2]);
-
-    endProgressBar();
   }
 
   /**
-   * Complete the progress bar.
+   * Indicate completion.
    * 
-   * Sets the LED strip to the completion color, and exits progress bar mode.
+   * Sets the LED strip to the completion color.
    */
-  public void completeProgressBar() {
-    int rgb[] = findColorValues(completionColor);
+  public void indicateCompletion() {
+    int rgb[] = findColorValues(Constants.BluetoothConstants.COMPLETION_COLOR);
 
     candle.setLEDs(rgb[0], rgb[1], rgb[2]);
-
-    endProgressBar();
-  }
-
-  /**
-   * Exit progress bar mode.
-   */
-  void endProgressBar() {
-    inProgressBarMode = false;
-  }
-
-  /**
-   * Determine whether currently in progress bar mode.
-   * 
-   * @return True, if in progress bar mode. False, otherwise.
-   */
-  public boolean isInProgressBarMode() {
-    return inProgressBarMode;
   }
 
   // Level 5 town hall ran out of elixer
@@ -313,7 +243,7 @@ public class Bluetooth extends SubsystemBase{
    */
   public void bluetoothOFF(){
     candle.clearAnimation(0);
-    scroll(defaultColor);
+    scroll(Constants.BluetoothConstants.DEFAULT_COLOR);
   }
 
 
