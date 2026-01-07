@@ -122,8 +122,7 @@ public class AutoAlignment extends Command {
 
 
         if (bestTarget != null) {
-            autoAliging = 1;
-            driveCommand.initialize();
+
             int tagID = bestTarget.getFiducialId();
             // Transform2d pose = new Transform2d(drivebase.getPose().getX(),
             // drivebase.getPose().getY(), drivebase.getPose().getRotation());
@@ -135,10 +134,12 @@ public class AutoAlignment extends Command {
             led.color("orange");
             System.out.println("Goal Pose: " + newPose);
             driveCommand = drivebase.driveToPose(newPose); // , drivebase.getPose());
+            autoAliging = 1;
         } else {
             led.bluetoothOFF();
             driveCommand = Commands.none();
         }
+        driveCommand.initialize();
     }
 
     @Override
