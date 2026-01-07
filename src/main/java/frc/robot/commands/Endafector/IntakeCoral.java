@@ -14,35 +14,31 @@ public class IntakeCoral extends Command {
     private ProgressBar progressBar;
 
     /**
-    * Ensures the coral is in position for scoring.
-    * 
-    * 1. Waits for the coral to reach the forward TOF sensor. When it does,
-    * loads the coral forwards.
-    * 2. Once the coral is forward enough that it leaves the back TOF sensor,
-    * loads the coral backwards.
-    * 3. Once the coral touches the back TOF sensor, the coral's position
-    * is guranteed, and the command finishes.
-    *
-    * Uses progress bar to indicate state:
-    *   yellow: Command in progress.
-    *   vomitGreen: Command finished, and coral is secure.
-    *   led off: Command interupted.
-    *
-    * @requires AdultDiapers
-    * @requires led - For Visual notifications
-    * @version 1.0
-    */
+     * Ensures the coral is in position for scoring.
+     * 
+     * 1. Waits for the coral to reach the forward TOF sensor. When it does, loads the coral
+     * forwards. 2. Once the coral is forward enough that it leaves the back TOF sensor, loads the
+     * coral backwards. 3. Once the coral touches the back TOF sensor, the coral's position is
+     * guranteed, and the command finishes.
+     *
+     * Uses progress bar to indicate state: yellow: Command in progress. vomitGreen: Command
+     * finished, and coral is secure. led off: Command interupted.
+     *
+     * @requires AdultDiapers
+     * @requires led - For Visual notifications
+     * @version 1.0
+     */
     public IntakeCoral(NotSwerveSubsystem module, Bluetooth led) {
         this.module = module;
         this.led = led;
         this.progressBar = new ProgressBar(3, "yellow");
         addRequirements(module);
         addRequirements(led);
-     }
+    }
 
     /** Run once at Command Start */
     @Override
-    public void initialize()  {
+    public void initialize() {
         module.load();
 
         state = CoralIntakeState.CORAL_ENTERING;
@@ -112,7 +108,7 @@ public class IntakeCoral extends Command {
                     stepProgressBar();
 
                     state = CoralIntakeState.CORAL_LOADING_BACK;
-                    module.loadSlowReverse(); 
+                    module.loadSlowReverse();
                 }
                 break;
             case CORAL_LOADING_BACK:
@@ -129,12 +125,11 @@ public class IntakeCoral extends Command {
     }
 
 
-     /** 
-      * Run once at Command End 
-      * 
-      * @param interupted - False if Command ended gracefully.
-      *                     True if interrupted by something else.
-      */
+    /**
+     * Run once at Command End
+     * 
+     * @param interupted - False if Command ended gracefully. True if interrupted by something else.
+     */
     @Override
     public void end(boolean interrupted) {
         module.stop();
@@ -148,15 +143,14 @@ public class IntakeCoral extends Command {
         }
     }
 
-    /** 
-      * Checks if it's time to end the Command.
-      * 
-      * This is exactly when the coral is in position.
-      * 
-      * @return True - End the Command
-      *         False - Keep running Periodic
-      */
-    @Override 
+    /**
+     * Checks if it's time to end the Command.
+     * 
+     * This is exactly when the coral is in position.
+     * 
+     * @return True - End the Command False - Keep running Periodic
+     */
+    @Override
     public boolean isFinished() {
         return (state == CoralIntakeState.CORAL_IN_POSITION);
     }
