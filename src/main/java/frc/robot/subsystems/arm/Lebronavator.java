@@ -30,6 +30,7 @@ import frc.robot.Constants;
  * Capable of audio and music playback
  * 
  * Uses two TalonFX motor controllers
+ * 
  * @see com.ctre.phoenix6.Orchestra
  * @see com.ctre.phoenix6.hardware.TalonFX
  */
@@ -41,14 +42,15 @@ public class Lebronavator extends SubsystemBase {
     private static double kS = 0.25; // Add 0.25 V output to overcome static friction
     private static double kV = 0.12; // A velocity target of 1 rps results in 0.12 V output
     private static double kA = 0.01; // An acceleration of 1 rps/s requires 0.01 V output
-    private static double kP = 4.8;  // A position error of 2.5 rotations results in 12 V output
-    private static double kI = 0;    // no output for integrated error
-    private static double kD = 0.1;  // A velocity error of 1 rps results in 0.1 V output
+    private static double kP = 4.8; // A position error of 2.5 rotations results in 12 V output
+    private static double kI = 0; // no output for integrated error
+    private static double kD = 0.1; // A velocity error of 1 rps results in 0.1 V output
 
     private static double MotionMagicCruiseVelocity = 80; // Target cruise velocity of 80 rps
-    private static double MotionMagicAcceleration = 160; // Target acceleration of 160 rps/s (0.5 seconds)
+    private static double MotionMagicAcceleration = 160; // Target acceleration of 160 rps/s (0.5
+                                                         // seconds)
     private static double MotionMagicJerk = 1600; // Target jerk of 1600 rps/s/s (0.1 seconds)
-    
+
     private static double maxUpSpeed = 0.85;
     private static double maxDownSpeed = 0.75;
 
@@ -69,12 +71,11 @@ public class Lebronavator extends SubsystemBase {
 
 
 
-    /** 
+    /**
      * Initializes the Elevator subsystem
      * 
-     * Configures two TalonFX motor controllers
-     * with a follower config
-     * And puts them in an orchestra for music playback
+     * Configures two TalonFX motor controllers with a follower config And puts them in an orchestra
+     * for music playback
      * 
      * @see com.ctre.phoenix6.configs.TalonFXConfiguration
      * @see com.ctre.phoenix6.Orchestra
@@ -113,7 +114,7 @@ public class Lebronavator extends SubsystemBase {
         motionMagicConfigs.MotionMagicCruiseVelocity = MotionMagicCruiseVelocity;
         motionMagicConfigs.MotionMagicAcceleration = MotionMagicAcceleration;
         motionMagicConfigs.MotionMagicJerk = MotionMagicJerk;
-       // motionMagicConfigs.Mot
+        // motionMagicConfigs.Mot
 
         var talonFXConfig_left = new TalonFXConfiguration();
         talonFXConfig_left.CurrentLimits.withStatorCurrentLimitEnable(true);
@@ -133,7 +134,7 @@ public class Lebronavator extends SubsystemBase {
 
         //
 
-        //talonFXConfig_left.null
+        // talonFXConfig_left.null
 
         // Save configs to motors
         m_talonFX_right.getConfigurator().apply(talonFXConfig_right);
@@ -149,12 +150,11 @@ public class Lebronavator extends SubsystemBase {
 
 
     /**
-     * Plays a constant tone based on provided input
-     * using the talonFX controllers
+     * Plays a constant tone based on provided input using the talonFX controllers
      * 
      * Only use this when elevator is at 0
      * 
-     * @param freq the frequency in hz of the tone 
+     * @param freq the frequency in hz of the tone
      * @return void
      * @version 1.0
      */
@@ -164,25 +164,23 @@ public class Lebronavator extends SubsystemBase {
     }
 
     /**
-    * Plays a CHRP file using Pheonix Orchestra using both
-    * TalonFX motor controllers, limited to the amount of talonFXs
-    * used by subsystem
-    *
-    * Only use this when elevator is at 0
-    *
-    * MIDI files can be converted to CHRP files in the
-    * Pheonix Tuner X utilites
-    * 
-    * @param filename the name of the CHRP file as String (without the extension)
-    * @return void
-    * @version 1.0
-    */
+     * Plays a CHRP file using Pheonix Orchestra using both TalonFX motor controllers, limited to
+     * the amount of talonFXs used by subsystem
+     *
+     * Only use this when elevator is at 0
+     *
+     * MIDI files can be converted to CHRP files in the Pheonix Tuner X utilites
+     * 
+     * @param filename the name of the CHRP file as String (without the extension)
+     * @return void
+     * @version 1.0
+     */
     public void playSong(String filename) {
         // Add motors
         m_Orchestra.addInstrument(m_talonFX_left);
         m_Orchestra.addInstrument(m_talonFX_right);
 
-        //filename = "vsauce"; // Bypass filename due to some unknown argument passing issue 
+        // filename = "vsauce"; // Bypass filename due to some unknown argument passing issue
 
         // Load song and play
         String filePath = Filesystem.getDeployDirectory() + "/midi/" + filename + ".chrp";
@@ -195,20 +193,19 @@ public class Lebronavator extends SubsystemBase {
 
 
     /**
-     * Resets the control modes of both TalonFXs
-     * Must use after playing audio on the Motor Controllers
-     * To revert them back to position control for elevator use
+     * Resets the control modes of both TalonFXs Must use after playing audio on the Motor
+     * Controllers To revert them back to position control for elevator use
      * 
      * @return void
      * @version 1.0
      */
     public void resetControlMode() {
-         // Clean up orchestra
+        // Clean up orchestra
         m_Orchestra.stop();
         m_Orchestra.clearInstruments();
 
         // create a Motion Magic request, voltage output
-        //final MotionMagicVoltage m_request = new MotionMagicVoltage(0);
+        // final MotionMagicVoltage m_request = new MotionMagicVoltage(0);
         m_talonFX_right.setControl(m_request.withPosition(getPosition()));
 
         // Setup follower config
@@ -216,9 +213,8 @@ public class Lebronavator extends SubsystemBase {
     }
 
     /**
-     * Moves the elevator to the provided encoder positon, 
-     * using the MotionMagic motion controller built into 
-     * the talonFXs
+     * Moves the elevator to the provided encoder positon, using the MotionMagic motion controller
+     * built into the talonFXs
      * 
      * @param position the goal encoder positon
      * @return void
@@ -229,7 +225,7 @@ public class Lebronavator extends SubsystemBase {
      */
     public void move(double position) {
         // create a Motion Magic request, voltage output
-        //final MotionMagicVoltage m_request = new MotionMagicVoltage(0);
+        // final MotionMagicVoltage m_request = new MotionMagicVoltage(0);
 
         // set target position
         System.out.print("new target: " + position);
@@ -238,9 +234,8 @@ public class Lebronavator extends SubsystemBase {
     }
 
     /**
-     * Slowly moves the Elevator upwards at a constant speed,
-     * defined in the instance variable shimSpeed, used for
-     * manual control and fine adjustments
+     * Slowly moves the Elevator upwards at a constant speed, defined in the instance variable
+     * shimSpeed, used for manual control and fine adjustments
      * 
      * @return void
      * @version 1.0
@@ -251,21 +246,19 @@ public class Lebronavator extends SubsystemBase {
     }
 
     /**
-     * Slowly moves the Elevator downwards at a constant speed,
-     * defined in the instance variable shimSpeed, used for 
-     * manual control and fine adjustments
+     * Slowly moves the Elevator downwards at a constant speed, defined in the instance variable
+     * shimSpeed, used for manual control and fine adjustments
      * 
      * @return void
      * @version 1.0
      */
-    public void shimDown() { 
+    public void shimDown() {
         goalPosition = getPosition() - 1;
         m_talonFX_right.setControl(m_request.withPosition(goalPosition));
     }
 
     /**
-     * Stops all motors, and sets the left motor to follow 
-     * the right motor again
+     * Stops all motors, and sets the left motor to follow the right motor again
      * 
      * @return void
      * @version 1.0
@@ -276,8 +269,8 @@ public class Lebronavator extends SubsystemBase {
 
 
     /**
-     * Returns the current encoder postion of the right motor,
-     * 0 is it's initial position on startup (down)
+     * Returns the current encoder postion of the right motor, 0 is it's initial position on startup
+     * (down)
      * 
      * @return Endcoder positon as double
      * @version 1.0
@@ -325,94 +318,110 @@ public class Lebronavator extends SubsystemBase {
     }
 
     /**
-    * Similates an issue with the current subsystem
-    * Only works if skibbidi-mode is enabled
-    *
-    * Resets elevator positions, making AutoOP not function
-    * 
-    * @return void
-    * @version 1.0
-    */
+     * Similates an issue with the current subsystem Only works if skibbidi-mode is enabled
+     *
+     * Resets elevator positions, making AutoOP not function
+     * 
+     * @return void
+     * @version 1.0
+     */
     public void simulateFault() {
         // Check for Coach Mode
-        if(!Constants.skibbidi_mode) {
+        if (!Constants.skibbidi_mode) {
             System.out.println("[Endefector] Coach Controller Disabled!");
             return; // Do not finish running method
         }
 
         // Danger Zone
-       // m_talonFX_right.setPosition(getPosition() + (Math.random() * 15));
+        // m_talonFX_right.setPosition(getPosition() + (Math.random() * 15));
         System.out.println("[Elevator] broken");
 
     }
 
     /**
-     * Gets all fields and getter methods in this class and 
-     * places their values from shuffleboard
+     * Gets all fields and getter methods in this class and places their values from shuffleboard
      * 
      * @return void
      * @version 1.0
      */
     public void pushData() {
-        String shuffleboardName = this.getClass().getCanonicalName().replace('.', '/').substring(10);
+        String shuffleboardName =
+                this.getClass().getCanonicalName().replace('.', '/').substring(10);
 
         Method[] methods = this.getClass().getDeclaredMethods();
-        for (Method method:methods)
-        {
-            if(method.getName().substring(0, 3).equals("get")) {
+        for (Method method : methods) {
+            if (method.getName().substring(0, 3).equals("get")) {
                 try {
                     Object value = method.invoke(this);
-                    if(value == null) value = 0.0; // Set to zero in case we can't run method
-                    SmartDashboard.putNumber(shuffleboardName + "/" + method.getName().substring(3), Double.parseDouble(value.toString()));
-                    //System.out.println(method.getName().substring(3) + " value:" + Double.parseDouble(value.toString()));
-                } catch(IllegalAccessException e) {
-                    System.out.println("[" + shuffleboardName + "] Somthing went wrong getting Shuffleboard data for: " + method.getName());
-                } catch(InvocationTargetException e) {
-                    System.out.println("[" + shuffleboardName + "] Somthing went wrong getting Shuffleboard data for: " + method.getName());
+                    if (value == null)
+                        value = 0.0; // Set to zero in case we can't run method
+                    SmartDashboard.putNumber(shuffleboardName + "/" + method.getName().substring(3),
+                            Double.parseDouble(value.toString()));
+                    // System.out.println(method.getName().substring(3) + " value:" +
+                    // Double.parseDouble(value.toString()));
+                } catch (IllegalAccessException e) {
+                    System.out.println("[" + shuffleboardName
+                            + "] Somthing went wrong getting Shuffleboard data for: "
+                            + method.getName());
+                } catch (InvocationTargetException e) {
+                    System.out.println("[" + shuffleboardName
+                            + "] Somthing went wrong getting Shuffleboard data for: "
+                            + method.getName());
                 }
             }
         }
         Field[] declaredFields = this.getClass().getDeclaredFields();
-        for (Field field : declaredFields) {  
+        for (Field field : declaredFields) {
             if (field.getType().isPrimitive()) {
                 try {
-                    SmartDashboard.putNumber(shuffleboardName + "/" + field.getName(), field.getDouble(this.getClass()));
-                    //System.out.println(field.getName() + " value: " + field.getDouble(this.getClass()));
-                } catch(IllegalAccessException e) {
-                    System.out.println("[" + shuffleboardName + "] Somthing went wrong getting Shuffleboard data for: " + field.getName());
+                    SmartDashboard.putNumber(shuffleboardName + "/" + field.getName(),
+                            field.getDouble(this.getClass()));
+                    // System.out.println(field.getName() + " value: " +
+                    // field.getDouble(this.getClass()));
+                } catch (IllegalAccessException e) {
+                    System.out.println("[" + shuffleboardName
+                            + "] Somthing went wrong getting Shuffleboard data for: "
+                            + field.getName());
                 }
             }
-        }   
+        }
     }
 
     /**
-     * Gets all feilds in this class and updates their values from shuffleboard
-     * !! Make sure to run pushData first !!
+     * Gets all feilds in this class and updates their values from shuffleboard !! Make sure to run
+     * pushData first !!
      * 
      * @return void
      * @version 1.0
      */
     public void pullData() {
-        String shuffleboardName = this.getClass().getCanonicalName().replace('.', '/').substring(10);
+        String shuffleboardName =
+                this.getClass().getCanonicalName().replace('.', '/').substring(10);
         Field[] declaredFields = this.getClass().getDeclaredFields();
         for (Field field : declaredFields) {
             if (field.getType().isPrimitive() && !Modifier.isStatic(field.getModifiers())) {
                 try {
-                    field.setDouble(this, SmartDashboard.getNumber(shuffleboardName + "/const/" + field.getName(), field.getDouble(this.getClass())));
-                    System.out.println(field.getName() + " set " + field.getDouble(this.getClass()));
-                } catch(IllegalAccessException e) {
-                    System.out.println("[" + shuffleboardName + "] Somthing went wrong getting Shuffleboard data for: " + field.getName());
+                    field.setDouble(this,
+                            SmartDashboard.getNumber(shuffleboardName + "/const/" + field.getName(),
+                                    field.getDouble(this.getClass())));
+                    System.out
+                            .println(field.getName() + " set " + field.getDouble(this.getClass()));
+                } catch (IllegalAccessException e) {
+                    System.out.println("[" + shuffleboardName
+                            + "] Somthing went wrong getting Shuffleboard data for: "
+                            + field.getName());
                 }
             }
-        }   
+        }
     }
 
     public void kaboom() {
-        if(currentFilter.calculate(getRightCurrent()) > avgCurrentLimit && goalPosition < getPosition()) {
+        if (currentFilter.calculate(getRightCurrent()) > avgCurrentLimit
+                && goalPosition < getPosition()) {
             goalPosition = getPosition() + 5;
             m_talonFX_right.setControl(m_request.withPosition(goalPosition));
-        }
-        else if(currentFilter.calculate(getRightCurrent()) > avgCurrentLimit && goalPosition > getPosition()) {
+        } else if (currentFilter.calculate(getRightCurrent()) > avgCurrentLimit
+                && goalPosition > getPosition()) {
             goalPosition = getPosition() - 5;
             m_talonFX_right.setControl(m_request.withPosition(goalPosition));
         }
@@ -423,15 +432,14 @@ public class Lebronavator extends SubsystemBase {
     }
 
     /** Run once every periodic call */
-    /** 
-     *  Run once every periodic call as
-     *  long as the Command is running 
+    /**
+     * Run once every periodic call as long as the Command is running
      */
     @Override
     public void periodic() {
         checkBounds();
-      //  kaboom(); TODO: FIX AND PUT BACK, CHECK SINS
-        if(Constants.verbose_shuffleboard_logging) {
+        // kaboom(); TODO: FIX AND PUT BACK, CHECK SINS
+        if (Constants.verbose_shuffleboard_logging) {
             pushData();
             pullData();
         }

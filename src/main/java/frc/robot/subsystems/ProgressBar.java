@@ -66,6 +66,7 @@ public class ProgressBar {
      * Step the progress bar, if possible.
      * 
      * Will only step if the progress bar is in progress and is not full.
+     * 
      * @return Whether the progress bar was changed.
      */
     public boolean stepProgressBar() {
@@ -84,6 +85,7 @@ public class ProgressBar {
      * Interrupt the progress bar, if possible.
      * 
      * Changes the status to interrupted if the progress bar is in progress.
+     * 
      * @return Whether the progress bar was changed.
      */
     public boolean interrupt() {
@@ -100,6 +102,7 @@ public class ProgressBar {
      * Complete the progress bar, if possible.
      * 
      * Changes the status to completed if the progress bar is in progress.
+     * 
      * @return Whether the progress bar was changed.
      */
     public boolean complete() {
