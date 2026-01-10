@@ -19,140 +19,145 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.swervedrive.Vision;
 
 public class AutoAlignment extends Command {
-        PhotonCamera camera_right = new PhotonCamera("Camera_Right");
-        PhotonCamera camera_left = new PhotonCamera("Camera_Left");
-        PhotonCamera Left_PI_CAM = new PhotonCamera("PC_Camera SIG");
-        PhotonCamera Right_PI_CAM = new PhotonCamera("PC_Camera MA");
-        private final SwerveSubsystem drivebase;
-        private final Vision vision;
-        private final Bluetooth led;
-        private boolean leftcam;
-        private double user_offset;
-        private Command driveCommand;
+    PhotonCamera camera_right = new PhotonCamera("Camera_Right");
+    PhotonCamera camera_left = new PhotonCamera("Camera_Left");
+    PhotonCamera Left_PI_CAM = new PhotonCamera("PC_Camera SIG");
+    PhotonCamera Right_PI_CAM = new PhotonCamera("PC_Camera MA");
+    private final SwerveSubsystem drivebase;
+    private final Vision vision;
+    private final Bluetooth led;
+    private boolean leftcam;
+    private double user_offset;
+    private Command driveCommand;
 
-        public static int autoAliging;
-    
-        public AutoAlignment(SwerveSubsystem module, Bluetooth led, double offset, boolean leftcam) {
-                this.drivebase = module;
-                this.vision = drivebase.getVision();
-                this.led = led;
-                user_offset = offset;
-                this.leftcam = leftcam;
-                addRequirements(drivebase);
-                addRequirements(led);
-        }
-    
-        /** Run once at Command Start */
-        @Override
-        public void initialize() {
-                autoAliging = 2;
-                SmartDashboard.putNumber("Commands/AutoAlign", autoAliging); //debug
+    public static int autoAliging;
 
-                DrivebaseConstants.x_offset = SmartDashboard.getNumber("Vision/x_offset", DrivebaseConstants.x_offset);
-                DrivebaseConstants.y_offset = SmartDashboard.getNumber("Vision/y_offset", DrivebaseConstants.y_offset);
-                DrivebaseConstants.y_offset_left = SmartDashboard.getNumber("Y_Offset_Left", DrivebaseConstants.y_offset_left);
-                DrivebaseConstants.y_offset_right = SmartDashboard.getNumber("Y_Offset_Right", DrivebaseConstants.y_offset_right);
-                System.out.println("x_offset: " + DrivebaseConstants.x_offset + " y_offset: " + DrivebaseConstants.y_offset);
-                System.out.println("[LimeLightCommands/DriveBaseRotationAdjust]] Seeking Target");
-                
-                @SuppressWarnings("removal")
-                //var resultL = camera_left.getLatestResult();
-                //var resultR = camera_right.getLatestResult();
-                //TODO: var resultA = Left_PI_CAM.getLatestResult(); ++ Right_PI_CAM.getLatestResult();
-                // TODO add these ... I think
-                var resultLPi = Left_PI_CAM.getLatestResult();
-                var resultRPi = Right_PI_CAM.getLatestResult();
-                
-
-                 PhotonPipelineResult result = resultRPi;
-                 PhotonTrackedTarget bestTarget;
-                // default to R if something happens
-                if (resultLPi.hasTargets() && resultRPi.hasTargets()) {
-                    if(resultLPi.getBestTarget().getPoseAmbiguity() > resultRPi.getBestTarget().getPoseAmbiguity()) {
-                        result = resultRPi;
-                        bestTarget = resultRPi.getBestTarget();
-                    }
-                    else if(resultLPi.getBestTarget().getPoseAmbiguity() < resultRPi.getBestTarget().getPoseAmbiguity()) {
-                        result = resultLPi;
-                        bestTarget = resultLPi.getBestTarget();
-                    }
-                }
-                else if(resultLPi.hasTargets() && !resultRPi.hasTargets()) {
-                    result = resultLPi;
-                    bestTarget = resultLPi.getBestTarget();
-                }
-                else if(!resultLPi.hasTargets() && resultRPi.hasTargets()) {
-                    result = resultRPi;
-                    bestTarget = resultRPi.getBestTarget();
-                } else {
-                    led.bluetoothOFF();
-                    driveCommand = Commands.none();
-                    bestTarget = null;
-                }
-            
-                
-
-
-                //PhotonPipelineResult result = resultRPi;
-                //if(leftcam) result = resultLPi; 
-
-                  if (resultLPi.hasTargets() || resultRPi.hasTargets()) {
-                        System.out.println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Moving...");
-                        bestTarget = resultRPi.getBestTarget();
-                        for(PhotonTrackedTarget r : result.getTargets()) {
-                            if(vision.getDistanceFromAprilTag(r.getFiducialId()) < 
-                                    vision.getDistanceFromAprilTag(bestTarget.getFiducialId())) {
-                                System.out.println("tag:" + r.getFiducialId());
-                                bestTarget = r;
-                            }
-                        } 
-                    }
-                else {
-                        led.bluetoothOFF();
-                        driveCommand = Commands.none();//new PathPlannerAuto(Commands.none(), drivebase.getPose());
-                        bestTarget = null;
-                }
-            autoAliging = 1;
-            driveCommand.initialize();
-            int tagID = bestTarget.getFiducialId();
-            //Transform2d pose = new Transform2d(drivebase.getPose().getX(), drivebase.getPose().getY(), drivebase.getPose().getRotation());
-            Pose2d newPose = Vision.getAprilTagPose(tagID, new Transform2d(DrivebaseConstants.x_offset, DrivebaseConstants.y_offset + user_offset, new Rotation2d(Math.toRadians(180))));
-            System.out.println(newPose.toString());
-            led.color("orange");
-            System.out.println("Goal Pose: " + newPose);
-            driveCommand = drivebase.driveToPose(newPose); //, drivebase.getPose());
-        }
-    
-        @Override
-        public void execute() {
-            driveCommand.execute();
-            SmartDashboard.putNumber("Commands/AutoAlign", autoAliging); //debug
-        }
-    
-        /**
-         * Moves the Climber Up, but at a lower speed until interrupted
-         *
-         * @requires AdultDiapers
-         * @requires led - For visual manual control in use notification
-         * @version 1.0
-         */
-        @Override
-        public void end(boolean interrupted) {
-            autoAliging = 0;
-            SmartDashboard.putNumber("Commands/AutoAlign", autoAliging); //debug
-            System.out.println("interupted!: " + interrupted + " Robot Pose: " + drivebase.getPose());
-            led.bluetoothOFF();
-            driveCommand.end(interrupted);
-        }
-        
-        /** 
-          * Checks if it's time to end the Command 
-          * 
-          * @return True - End the Command
-          *         False - Keep running Periodic
-          */
-        @Override
-        public boolean isFinished() {
-            return driveCommand.isFinished();
-        }
+    public AutoAlignment(SwerveSubsystem module, Bluetooth led, double offset, boolean leftcam) {
+        this.drivebase = module;
+        this.vision = drivebase.getVision();
+        this.led = led;
+        user_offset = offset;
+        this.leftcam = leftcam;
+        addRequirements(drivebase);
+        addRequirements(led);
     }
+
+    /** Run once at Command Start */
+    @Override
+    public void initialize() {
+        autoAliging = 2;
+        SmartDashboard.putNumber("Commands/AutoAlign", autoAliging); // debug
+
+        DrivebaseConstants.x_offset =
+                SmartDashboard.getNumber("Vision/x_offset", DrivebaseConstants.x_offset);
+        DrivebaseConstants.y_offset =
+                SmartDashboard.getNumber("Vision/y_offset", DrivebaseConstants.y_offset);
+        DrivebaseConstants.y_offset_left =
+                SmartDashboard.getNumber("Y_Offset_Left", DrivebaseConstants.y_offset_left);
+        DrivebaseConstants.y_offset_right =
+                SmartDashboard.getNumber("Y_Offset_Right", DrivebaseConstants.y_offset_right);
+        System.out.println("x_offset: " + DrivebaseConstants.x_offset + " y_offset: "
+                + DrivebaseConstants.y_offset);
+        System.out.println("[LimeLightCommands/DriveBaseRotationAdjust]] Seeking Target");
+
+        @SuppressWarnings("removal")
+        // var resultL = camera_left.getLatestResult();
+        // var resultR = camera_right.getLatestResult();
+        // TODO: var resultA = Left_PI_CAM.getLatestResult(); ++ Right_PI_CAM.getLatestResult();
+        // TODO add these ... I think
+        var resultLPi = Left_PI_CAM.getLatestResult();
+        var resultRPi = Right_PI_CAM.getLatestResult();
+
+
+        PhotonPipelineResult result = resultRPi;
+        PhotonTrackedTarget bestTarget;
+        // default to R if something happens
+        if (resultLPi.hasTargets() && resultRPi.hasTargets()) {
+            if (resultLPi.getBestTarget().getPoseAmbiguity() > resultRPi.getBestTarget()
+                    .getPoseAmbiguity()) {
+                result = resultRPi;
+                bestTarget = resultRPi.getBestTarget();
+            } else if (resultLPi.getBestTarget().getPoseAmbiguity() < resultRPi.getBestTarget()
+                    .getPoseAmbiguity()) {
+                result = resultLPi;
+                bestTarget = resultLPi.getBestTarget();
+            }
+        } else if (resultLPi.hasTargets() && !resultRPi.hasTargets()) {
+            result = resultLPi;
+            bestTarget = resultLPi.getBestTarget();
+        } else if (!resultLPi.hasTargets() && resultRPi.hasTargets()) {
+            result = resultRPi;
+            bestTarget = resultRPi.getBestTarget();
+        } else {
+            led.bluetoothOFF();
+            driveCommand = Commands.none();
+            bestTarget = null;
+        }
+
+
+
+        // PhotonPipelineResult result = resultRPi;
+        // if(leftcam) result = resultLPi;
+
+        if (resultLPi.hasTargets() || resultRPi.hasTargets()) {
+            System.out
+                    .println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Moving...");
+            bestTarget = resultRPi.getBestTarget();
+            for (PhotonTrackedTarget r : result.getTargets()) {
+                if (vision.getDistanceFromAprilTag(r.getFiducialId()) < vision
+                        .getDistanceFromAprilTag(bestTarget.getFiducialId())) {
+                    System.out.println("tag:" + r.getFiducialId());
+                    bestTarget = r;
+                }
+            }
+        } else {
+            led.bluetoothOFF();
+            driveCommand = Commands.none();// new PathPlannerAuto(Commands.none(),
+                                           // drivebase.getPose());
+            bestTarget = null;
+        }
+        autoAliging = 1;
+        driveCommand.initialize();
+        int tagID = bestTarget.getFiducialId();
+        // Transform2d pose = new Transform2d(drivebase.getPose().getX(),
+        // drivebase.getPose().getY(), drivebase.getPose().getRotation());
+        Pose2d newPose = Vision.getAprilTagPose(tagID, new Transform2d(DrivebaseConstants.x_offset,
+                DrivebaseConstants.y_offset + user_offset, new Rotation2d(Math.toRadians(180))));
+        System.out.println(newPose.toString());
+        led.color("orange");
+        System.out.println("Goal Pose: " + newPose);
+        driveCommand = drivebase.driveToPose(newPose); // , drivebase.getPose());
+    }
+
+    @Override
+    public void execute() {
+        driveCommand.execute();
+        SmartDashboard.putNumber("Commands/AutoAlign", autoAliging); // debug
+    }
+
+    /**
+     * Moves the Climber Up, but at a lower speed until interrupted
+     *
+     * @requires AdultDiapers
+     * @requires led - For visual manual control in use notification
+     * @version 1.0
+     */
+    @Override
+    public void end(boolean interrupted) {
+        autoAliging = 0;
+        SmartDashboard.putNumber("Commands/AutoAlign", autoAliging); // debug
+        System.out.println("interupted!: " + interrupted + " Robot Pose: " + drivebase.getPose());
+        led.bluetoothOFF();
+        driveCommand.end(interrupted);
+    }
+
+    /**
+     * Checks if it's time to end the Command
+     * 
+     * @return True - End the Command False - Keep running Periodic
+     */
+    @Override
+    public boolean isFinished() {
+        return driveCommand.isFinished();
+    }
+}
