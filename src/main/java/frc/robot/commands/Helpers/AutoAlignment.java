@@ -72,23 +72,31 @@ public class AutoAlignment extends Command {
         PhotonPipelineResult result = resultRPi;
         PhotonTrackedTarget bestTarget;
         // default to R if something happens
-        if (resultLPi.hasTargets() && resultRPi.hasTargets()) {
+
+        boolean bothTargets = resultLPi.hasTargets() && resultRPi.hasTargets();
+        boolean leftTargetsNoRightTargets = resultLPi.hasTargets() && !resultRPi.hasTargets();
+        boolean rightTargetsNoLeftTargets = !resultLPi.hasTargets() && resultRPi.hasTargets();
+        boolean eitherTargets = resultLPi.hasTargets() || resultRPi.hasTargets();
+
+        if (bothTargets) {
+            // Both have targets, pick lower of the best of the two ambiguities.
             if (resultLPi.getBestTarget().getPoseAmbiguity() > resultRPi.getBestTarget()
                     .getPoseAmbiguity()) {
                 result = resultRPi;
                 bestTarget = resultRPi.getBestTarget();
-            } else if (resultLPi.getBestTarget().getPoseAmbiguity() < resultRPi.getBestTarget()
-                    .getPoseAmbiguity()) {
+            } else {
+                // Favor left if equal.
                 result = resultLPi;
                 bestTarget = resultLPi.getBestTarget();
             }
-        } else if (resultLPi.hasTargets() && !resultRPi.hasTargets()) {
+        } else if (leftTargetsNoRightTargets) {
             result = resultLPi;
             bestTarget = resultLPi.getBestTarget();
-        } else if (!resultLPi.hasTargets() && resultRPi.hasTargets()) {
+        } else if (rightTargetsNoLeftTargets) {
             result = resultRPi;
             bestTarget = resultRPi.getBestTarget();
         } else {
+            // No targets found in either
             led.bluetoothOFF();
             driveCommand = Commands.none();
             bestTarget = null;
@@ -99,10 +107,10 @@ public class AutoAlignment extends Command {
         // PhotonPipelineResult result = resultRPi;
         // if(leftcam) result = resultLPi;
 
-        if (resultLPi.hasTargets() || resultRPi.hasTargets()) {
+        if (eitherTargets) {
             System.out
                     .println("[LimeLightCommands/DriveBaseRotationAdjust] Target Found! Moving...");
-            bestTarget = resultRPi.getBestTarget();
+            // bestTarget = resultRPi.getBestTarget();
             for (PhotonTrackedTarget r : result.getTargets()) {
                 if (vision.getDistanceFromAprilTag(r.getFiducialId()) < vision
                         .getDistanceFromAprilTag(bestTarget.getFiducialId())) {
@@ -110,23 +118,28 @@ public class AutoAlignment extends Command {
                     bestTarget = r;
                 }
             }
+        }
+
+
+        if (bestTarget != null) {
+
+            int tagID = bestTarget.getFiducialId();
+            // Transform2d pose = new Transform2d(drivebase.getPose().getX(),
+            // drivebase.getPose().getY(), drivebase.getPose().getRotation());
+            Pose2d newPose = Vision.getAprilTagPose(tagID,
+                    new Transform2d(DrivebaseConstants.x_offset,
+                            DrivebaseConstants.y_offset + user_offset,
+                            new Rotation2d(Math.toRadians(180))));
+            System.out.println(newPose.toString());
+            led.color("orange");
+            System.out.println("Goal Pose: " + newPose);
+            driveCommand = drivebase.driveToPose(newPose); // , drivebase.getPose());
+            autoAliging = 1;
         } else {
             led.bluetoothOFF();
-            driveCommand = Commands.none();// new PathPlannerAuto(Commands.none(),
-                                           // drivebase.getPose());
-            bestTarget = null;
+            driveCommand = Commands.none();
         }
-        autoAliging = 1;
         driveCommand.initialize();
-        int tagID = bestTarget.getFiducialId();
-        // Transform2d pose = new Transform2d(drivebase.getPose().getX(),
-        // drivebase.getPose().getY(), drivebase.getPose().getRotation());
-        Pose2d newPose = Vision.getAprilTagPose(tagID, new Transform2d(DrivebaseConstants.x_offset,
-                DrivebaseConstants.y_offset + user_offset, new Rotation2d(Math.toRadians(180))));
-        System.out.println(newPose.toString());
-        led.color("orange");
-        System.out.println("Goal Pose: " + newPose);
-        driveCommand = drivebase.driveToPose(newPose); // , drivebase.getPose());
     }
 
     @Override
